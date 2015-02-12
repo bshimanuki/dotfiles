@@ -1,0 +1,8 @@
+set hlsearch
+set incsearch
+set scrolloff=5
+set tabstop=2
+set noexpandtab
+set shiftwidth=2
+set cleanindent
+

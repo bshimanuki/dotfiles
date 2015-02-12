@@ -1,0 +1,182 @@
+"Vundle
+	set nocompatible
+	filetype off
+
+	if has('unix')
+		runtime! debian.vim
+		let vimpath=$HOME.'/.vim'
+	endif
+
+	if has('win32')
+		let vimpath=$HOME.'/vimfiles'
+	endif
+
+	exec 'set rtp+='.vimpath.'/bundle/Vundle.vim'
+	call vundle#begin(vimpath.'/bundle')
+
+	Plugin 'Lokaltog/vim-easymotion'
+	Plugin 'MarcWeber/vim-addon-mw-utils'
+	Plugin 'bling/vim-airline'
+	Plugin 'embear/vim-localvimrc'
+	Plugin 'garbas/vim-snipmate'
+	Plugin 'gerw/vim-latex-suite'
+	Plugin 'gmarik/Vundle.vim'
+	Plugin 'justinmk/vim-ipmotion'
+	Plugin 'kien/ctrlp.vim'
+	Plugin 'majutsushi/tagbar'
+	Plugin 'mattn/emmet-vim'
+	Plugin 'scrooloose/nerdcommenter'
+	Plugin 'scrooloose/nerdtree'
+	Plugin 'terryma/vim-multiple-cursors'
+	Plugin 'tomtom/tlib_vim'
+	Plugin 'tpope/vim-fugitive'
+	Plugin 'tpope/vim-surround.git'
+	Plugin 'tpope/vim-unimpaired'
+	if has('unix')
+		Plugin 'Valloric/YouCompleteMe'
+		Plugin 'scrooloose/syntastic'
+	endif
+	"Plugin 'Rip-Rip/clang_complete'
+	call vundle#end()
+
+"Other Plugins
+runtime macros/matchit.vim
+
+"Airline
+	if has('gui_running')
+		let g:airline_theme='bubblegum'
+	else
+		let g:airline_theme='monochrome'
+	endif
+	let g:airline#extensions#tabline#enabled=1
+	"let g:airline_powerline_fonts=1
+	let g:timeoutlen=50
+	if !exists('g:airline_symbols')
+		let g:airline_symbols={}
+	endif
+	let g:airline_symbols.space="\ua0"
+	let g:airline#extensions#whitespace#checks=['indent'] "no 'trailing'
+
+"Easymotion
+	noremap <Plug>(easymotion-prefix) <Nop>
+
+"Emmet
+	let g:user_emmet_install_global=0
+
+"Eclim
+	let g:EclimCompletionMethod='omnifunc'
+	let s:eclipse_home=$ECLIPSE_HOME
+	if has("win32")
+		let s:null_file='NUL'
+	else
+		let s:null_file='/dev/null'
+	endif
+	exec 'command! StartEclim !'.s:eclipse_home.'/eclimd > '.s:null_file.' 2>&1 &'
+
+"Latex Suite
+	let g:tex_flavor='latex'
+
+"Local vimrc
+	let g:localvimrc_persistent=1
+	let g:localvimrc_persistence_file=vimpath.'/.localvimrc_persistent'
+
+"YouCompleteMe
+	let g:ycm_global_ycm_extra_conf=vimpath.'/.ycm_extra_conf.py'
+	let g:ycm_disable_for_files_larger_than_kb=10000
+	let g:ycm_collect_identifiers_from_tag_files=1
+	let g:ycm_collect_identifiers_from_comments_and_strings=1
+	let g:ycm_filetype_blacklist={
+			\ 'tagbar' : 1,
+			\ 'qf' : 1,
+			\ 'notes' : 1,
+			\ 'markdown' : 1,
+			\ 'unite' : 1,
+			\ 'text' : 1,
+			\ 'vimwiki' : 1,
+			\ 'pandoc' : 1,
+			\ 'infolog' : 1,
+			\ 'mail' : 1,
+			\ 'tex' : 1
+			\}
+
+"Config
+if has("patch-7.4.338")
+	set breakindent
+endif
+set fileformats=unix,dos
+set number
+filetype plugin indent on
+syntax on
+set showcmd cmdheight=2
+set tabstop=2 shiftwidth=2
+set nofoldenable foldmethod=syntax
+set laststatus=2
+set linebreak
+set lazyredraw
+set scrolloff=8 sidescrolloff=8
+set modeline
+set visualbell t_vb=
+autocmd GUIEnter * set t_vb=
+set ruler
+set mouse=a
+set backspace=indent,eol,start
+set display=lastline,uhex
+set whichwrap+=<,>,[,]
+set wildmenu wildmode=list,full
+let mapleader="\\"
+set notimeout ttimeout ttimeoutlen=200
+set splitbelow splitright
+
+"Font, Colorscheme
+if has('unix')
+	set guifont=Lucida\ Console\ 11
+endif
+if has('win32')
+	set guifont=Lucida_Console:h11
+endif
+if has('gui_running')
+	colorscheme torte
+	set cursorline
+	hi CursorLine guibg=gray20
+else
+	colorscheme koehler
+endif
+hi Cursor guibg=RoyalBlue ctermbg=lightblue
+hi MatchParen guibg=lightblue guifg=black ctermbg=lightblue ctermfg=black
+hi Folded guibg=SlateGray guifg=darkblue ctermbg=gray ctermfg=darkblue
+
+"Searching
+set incsearch hlsearch
+nnoremap <silent><Space> :noh<CR>
+vnoremap <silent><Space> <Esc>:noh<CR>gv
+
+"Memory
+set history=100
+set spelllang=en_us
+exec 'set spellfile='.vimpath.'/spell/en.utf-8.add'
+
+"Shell
+set shellslash
+set grepprg=grep\ -nH\$*
+
+"Remaps
+command! Q q
+command! W w
+command! Wq wq
+command! WQ wq
+nnoremap gb :bn<CR>
+nnoremap gB :bp<CR>
+noremap  <buffer> <silent> <Up>   gk
+noremap  <buffer> <silent> <Down> gj
+noremap  <buffer> <silent> <Home> g<Home>
+noremap  <buffer> <silent> <End>  g<End>
+inoremap <buffer> <silent> <Up>   <C-o>gk
+inoremap <buffer> <silent> <Down> <C-o>gj
+inoremap <buffer> <silent> <Home> <C-o>g<Home>
+inoremap <buffer> <silent> <End>  <C-o>g<End>
+
+"Automatically open, but do not go to (if there are errors) the quickfix /
+"location list window, or close it when is has become empty.
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
