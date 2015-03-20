@@ -56,6 +56,7 @@ runtime macros/matchit.vim
 	endif
 	let g:airline_symbols.space="\ua0"
 	let g:airline#extensions#whitespace#checks=['indent'] "no 'trailing'
+	let g:airline#extensions#eclim#enabled=1
 
 "Easymotion
 	noremap <Plug>(easymotion-prefix) <Nop>
@@ -75,6 +76,9 @@ runtime macros/matchit.vim
 
 "Latex Suite
 	let g:tex_flavor='latex'
+	"imap <C-space> <Plug>IMAP_JumpForward
+	"nmap <C-space> <Plug>IMAP_JumpForward
+	"vmap <C-space> <Plug>IMAP_JumpForward
 
 "Local vimrc
 	let g:localvimrc_persistent=1
@@ -101,7 +105,9 @@ runtime macros/matchit.vim
 
 "Config
 if has("patch-7.4.338")
+	let &showbreak='....'
 	set breakindent
+	set breakindentopt=shift:0
 endif
 set fileformats=unix,dos
 set number
@@ -166,17 +172,14 @@ command! Wq wq
 command! WQ wq
 nnoremap gb :bn<CR>
 nnoremap gB :bp<CR>
-noremap  <buffer> <silent> <Up>   gk
-noremap  <buffer> <silent> <Down> gj
-noremap  <buffer> <silent> <Home> g<Home>
-noremap  <buffer> <silent> <End>  g<End>
-inoremap <buffer> <silent> <Up>   <C-o>gk
-inoremap <buffer> <silent> <Down> <C-o>gj
-inoremap <buffer> <silent> <Home> <C-o>g<Home>
-inoremap <buffer> <silent> <End>  <C-o>g<End>
+noremap  <Up>   gk
+noremap  <Down> gj
+noremap  <Home> g<Home>
+noremap  <End>  g<End>
 
 "Automatically open, but do not go to (if there are errors) the quickfix /
 "location list window, or close it when is has become empty.
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
+autocmd FileType help setlocal nospell

@@ -33,7 +33,7 @@ prompt suse
 case $TERM in
 	xterm*)
 		precmd(){print -Pn "\e]0;zsh %~\a"}
-		preexec(){print -Pn "\e]0;zsh %~: $1\a"}
+		preexec(){print -Pn "\e]0;$1 (zsh:%~)\a"}
 		;;
 esac
 

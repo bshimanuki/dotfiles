@@ -5,6 +5,7 @@ skip_global_compinit=1
 export PATH=${PATH}:/opt/android-studio/sdk/tools
 export PATH=${PATH}:/opt/android-studio/sdk/platform-tools
 export PATH=${PATH}:/opt/android-studio/bin
+export PATH=${PATH}:~/bin
 export ANDROID_HOME=/opt/android-studio/sdk
 export LD_LIBRARY_PATH=/usr/local/lib
 export ECLIPSE_HOME=/opt/eclipse

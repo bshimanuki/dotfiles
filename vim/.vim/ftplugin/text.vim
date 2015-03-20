@@ -1,2 +1,1 @@
-EmmetInstall
 setlocal spell

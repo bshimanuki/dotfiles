@@ -19,6 +19,7 @@ _darcs
 
 \..*\.sw.
 
+winstow\.bat
 \.zshhistory
 \.bash_history
 .*\.log
