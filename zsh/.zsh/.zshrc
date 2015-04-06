@@ -8,6 +8,7 @@ fi
 alias ls='ls --color=auto -F'
 alias la='ls -A'
 alias lla='ll -A'
+alias s='ls'
 
 # Remove
 alias rm='nocorrect rm -I'
