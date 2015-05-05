@@ -149,7 +149,7 @@ else
 	colorscheme koehler
 endif
 hi Cursor guibg=RoyalBlue ctermbg=lightblue
-hi MatchParen guibg=lightblue guifg=red ctermbg=lightblue ctermfg=red
+hi MatchParen guibg=lightblue guifg=cyan ctermbg=lightblue ctermfg=cyan
 hi Folded guibg=SlateGray guifg=darkblue ctermbg=gray ctermfg=darkblue
 
 "Searching
