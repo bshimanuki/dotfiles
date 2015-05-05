@@ -132,6 +132,7 @@ set wildmenu wildmode=list,full
 let mapleader="\\"
 set notimeout ttimeout ttimeoutlen=200
 set splitbelow splitright
+set diffopt+=vertical
 
 "Font, Colorscheme
 if has('unix')
@@ -148,7 +149,7 @@ else
 	colorscheme koehler
 endif
 hi Cursor guibg=RoyalBlue ctermbg=lightblue
-hi MatchParen guibg=lightblue guifg=black ctermbg=lightblue ctermfg=black
+hi MatchParen guibg=lightblue guifg=red ctermbg=lightblue ctermfg=red
 hi Folded guibg=SlateGray guifg=darkblue ctermbg=gray ctermfg=darkblue
 
 "Searching
