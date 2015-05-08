@@ -1,0 +1,5 @@
+[user]
+	name = Brian Shimanuki
+	email = brianshimanuki@gmail.com
+[core]
+	excludesfile = ~/.gitignore_global
