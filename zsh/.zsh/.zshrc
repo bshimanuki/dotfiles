@@ -13,6 +13,10 @@ alias s='ls'
 # Remove
 alias rm='nocorrect rm -I'
 
+# Directory
+unsetopt auto_pushd
+unsetopt pushd_ignore_dups
+
 # Completion
 autoload -Uz compinit
 compinit
