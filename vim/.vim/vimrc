@@ -84,6 +84,11 @@ runtime macros/matchit.vim
 	let g:localvimrc_persistent=1
 	let g:localvimrc_persistence_file=vimpath.'/.localvimrc_persistent'
 
+"Syntastic
+	let g:syntastic_always_populate_loc_list = 1
+	let g:syntastic_check_on_open=1
+	let g:syntastic_check_on_wq=0
+
 "YouCompleteMe
 	let g:ycm_global_ycm_extra_conf=vimpath.'/.ycm_extra_conf.py'
 	let g:ycm_disable_for_files_larger_than_kb=10000
