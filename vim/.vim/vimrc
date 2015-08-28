@@ -43,11 +43,7 @@
 runtime macros/matchit.vim
 
 "Airline
-	if has('gui_running')
-		let g:airline_theme='bubblegum'
-	else
-		let g:airline_theme='monochrome'
-	endif
+	let g:airline_theme='bubblegum'
 	let g:airline#extensions#tabline#enabled=1
 	"let g:airline_powerline_fonts=1
 	let g:timeoutlen=50
