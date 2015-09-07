@@ -134,6 +134,12 @@ let mapleader="\\"
 set notimeout ttimeout ttimeoutlen=200
 set splitbelow splitright
 set diffopt+=vertical
+set history=100
+
+"Searching
+set incsearch hlsearch
+nnoremap <silent><Space> :noh<CR>
+vnoremap <silent><Space> <Esc>:noh<CR>gv
 
 "Font, Colorscheme
 if has('gui_running')
@@ -154,16 +160,15 @@ endif
 hi Cursor guibg=RoyalBlue ctermbg=lightblue
 hi MatchParen guibg=lightblue guifg=cyan ctermbg=lightblue ctermfg=cyan
 hi Folded guibg=SlateGray guifg=darkblue ctermbg=gray ctermfg=darkblue
+hi DiffDelete ctermfg=lightblue
 
-"Searching
-set incsearch hlsearch
-nnoremap <silent><Space> :noh<CR>
-vnoremap <silent><Space> <Esc>:noh<CR>gv
-
-"Memory
-set history=100
+"Spell
 set spelllang=en_us
 exec 'set spellfile='.vimpath.'/spell/en.utf-8.add'
+hi SpellBad ctermfg=lightred
+hi SpellCap ctermfg=darkblue
+hi SpellRare ctermfg=darkmagenta
+hi SpellLocal ctermfg=darkcyan
 
 "Shell
 set shellslash
