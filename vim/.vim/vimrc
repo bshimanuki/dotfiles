@@ -103,6 +103,7 @@ runtime macros/matchit.vim
 			\ 'mail' : 1,
 			\ 'tex' : 1
 			\}
+	nnoremap <leader>f :YcmCompleter GoTo<CR>
 
 "Config
 if has("patch-7.4.338")
