@@ -31,6 +31,11 @@ flags = [
 # Other headers
 '-isystem',
 '/usr/include',
+# Project headers
+'-I',
+'.',
+'-I',
+'./include',
 ]
 
 
