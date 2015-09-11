@@ -1,0 +1,8 @@
+style=attach
+indent=force-tab
+indent-preprocessor
+indent-col1-comments
+pad-oper
+unpad-paren
+align-pointer=name
+min-conditional-indent=1
