@@ -1,4 +1,4 @@
-"Vundle
+" Vundle
 	set nocompatible
 	filetype off
 
@@ -36,31 +36,31 @@
 		Plugin 'Valloric/YouCompleteMe'
 		Plugin 'scrooloose/syntastic'
 	endif
-	"Plugin 'Rip-Rip/clang_complete'
+	" Plugin 'Rip-Rip/clang_complete'
 	call vundle#end()
 
-"Other Plugins
+" Other Plugins
 runtime macros/matchit.vim
 
-"Airline
+" Airline
 	let g:airline_theme='bubblegum'
 	let g:airline#extensions#tabline#enabled=1
-	"let g:airline_powerline_fonts=1
+	" let g:airline_powerline_fonts=1
 	let g:timeoutlen=50
 	if !exists('g:airline_symbols')
 		let g:airline_symbols={}
 	endif
 	let g:airline_symbols.space="\ua0"
-	let g:airline#extensions#whitespace#checks=['indent'] "no 'trailing'
+	let g:airline#extensions#whitespace#checks=['indent'] " no 'trailing'
 	let g:airline#extensions#eclim#enabled=1
 
-"Easymotion
+" Easymotion
 	noremap <Plug>(easymotion-prefix) <Nop>
 
-"Emmet
+" Emmet
 	let g:user_emmet_install_global=0
 
-"Eclim
+" Eclim
 	let g:EclimCompletionMethod='omnifunc'
 	let s:eclipse_home=$ECLIPSE_HOME
 	if has("win32")
@@ -70,22 +70,26 @@ runtime macros/matchit.vim
 	endif
 	exec 'command! StartEclim !'.s:eclipse_home.'/eclimd > '.s:null_file.' 2>&1 &'
 
-"Latex Suite
+" Latex Suite
 	let g:tex_flavor='latex'
-	"imap <C-space> <Plug>IMAP_JumpForward
-	"nmap <C-space> <Plug>IMAP_JumpForward
-	"vmap <C-space> <Plug>IMAP_JumpForward
+	" imap <C-space> <Plug>IMAP_JumpForward
+	" nmap <C-space> <Plug>IMAP_JumpForward
+	" vmap <C-space> <Plug>IMAP_JumpForward
 
-"Local vimrc
+" Local vimrc
 	let g:localvimrc_persistent=1
 	let g:localvimrc_persistence_file=vimpath.'/.localvimrc_persistent'
 
-"Syntastic
+
+" NERD Commenter
+	let g:NERDSpaceDelims=1
+
+" Syntastic
 	let g:syntastic_always_populate_loc_list = 1
 	let g:syntastic_check_on_open=1
 	let g:syntastic_check_on_wq=0
 
-"YouCompleteMe
+" YouCompleteMe
 	let g:ycm_global_ycm_extra_conf=vimpath.'/.ycm_extra_conf.py'
 	let g:ycm_disable_for_files_larger_than_kb=10000
 	let g:ycm_collect_identifiers_from_tag_files=1
@@ -105,7 +109,7 @@ runtime macros/matchit.vim
 			\}
 	nnoremap <leader>f :YcmCompleter GoTo<CR>
 
-"Config
+" Config
 if has("patch-7.4.338")
 	let &showbreak='....'
 	set breakindent
@@ -137,12 +141,12 @@ set splitbelow splitright
 set diffopt+=vertical
 set history=100
 
-"Searching
+" Searching
 set incsearch hlsearch
 nnoremap <silent><Space> :noh<CR>
 vnoremap <silent><Space> <Esc>:noh<CR>gv
 
-"Font, Colorscheme
+" Font, Colorscheme
 if has('gui_running')
 	colorscheme torte
 	set cursorline
@@ -163,7 +167,7 @@ hi MatchParen guibg=lightblue guifg=cyan ctermbg=lightblue ctermfg=cyan
 hi Folded guibg=SlateGray guifg=darkblue ctermbg=gray ctermfg=darkblue
 hi DiffDelete ctermfg=lightblue
 
-"Spell
+" Spell
 set spelllang=en_us
 exec 'set spellfile='.vimpath.'/spell/en.utf-8.add'
 hi SpellBad ctermfg=lightred
@@ -171,11 +175,11 @@ hi SpellCap ctermfg=darkblue
 hi SpellRare ctermfg=darkmagenta
 hi SpellLocal ctermfg=darkblue
 
-"Shell
+" Shell
 set shellslash
 set grepprg=grep\ -nH\$*
 
-"Remaps
+" Remaps
 command! Q q
 command! W w
 command! Wq wq
@@ -187,8 +191,8 @@ noremap  <Down> gj
 noremap  <Home> g<Home>
 noremap  <End>  g<End>
 
-"Automatically open, but do not go to (if there are errors) the quickfix /
-"location list window, or close it when is has become empty.
+" Automatically open, but do not go to (if there are errors) the quickfix /
+" location list window, or close it when is has become empty.
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 

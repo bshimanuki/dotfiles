@@ -6,6 +6,6 @@ from stl_printers import register_libstdcxx_printers
 register_libstdcxx_printers (None)
 import boost_printers
 boost_printers.register_printers()
-#from libwx.v28.printers import register_libwx_printers
-#register_libwx_printers (None)
+# from libwx.v28.printers import register_libwx_printers
+# register_libwx_printers (None)
 end
