@@ -37,8 +37,14 @@ promptinit
 prompt suse
 case $TERM in
 	xterm*)
-		precmd(){print -Pn "\e]0;zsh %~\a"}
-		preexec(){print -Pn "\e]0;$1 (zsh:%~)\a"}
+		precmd(){print -Pn "\e]0;%~/ >\a"}
+		preexec(){print -Pn "\e]0;%~/ > $1\a"}
+		;;
+esac
+case "$TERM" in
+	screen*)
+		precmd(){print -Pn "\033]2;%~/ >\033\\"}
+		preexec(){print -Pn "\033]2;%~/ > $1\033\\"}
 		;;
 esac
 

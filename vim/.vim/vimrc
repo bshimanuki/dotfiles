@@ -72,9 +72,9 @@ runtime macros/matchit.vim
 
 " Latex Suite
 	let g:tex_flavor='latex'
-	" imap <C-space> <Plug>IMAP_JumpForward
-	" nmap <C-space> <Plug>IMAP_JumpForward
-	" vmap <C-space> <Plug>IMAP_JumpForward
+	imap <C-space> <Plug>IMAP_JumpForward
+	nmap <C-space> <Plug>IMAP_JumpForward
+	vmap <C-space> <Plug>IMAP_JumpForward
 
 " Local vimrc
 	let g:localvimrc_persistent=1
@@ -179,6 +179,17 @@ hi SpellLocal ctermfg=darkblue
 set shellslash
 set grepprg=grep\ -nH\$*
 
+" Tmux
+if exists('$TMUX')
+	let s:cwd=fnamemodify(".", ":p:~")
+	let s:file=expand("%:.")
+	if empty(s:file)
+		let s:file="[No Name]"
+	endif
+	let &t_ti="\<Esc>]2;" . s:cwd . " > (VIM) " . s:file . "\<Esc>\\" . &t_ti
+	set notitle
+endif
+
 " Remaps
 command! Q q
 command! W w
@@ -190,6 +201,10 @@ noremap  <Up>   gk
 noremap  <Down> gj
 noremap  <Home> g<Home>
 noremap  <End>  g<End>
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
 " Automatically open, but do not go to (if there are errors) the quickfix /
 " location list window, or close it when is has become empty.
