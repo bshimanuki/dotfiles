@@ -20,7 +20,7 @@ unsetopt pushd_ignore_dups
 # Completion
 autoload -Uz compinit
 compinit
-setopt autolist completealiases
+setopt autolist completealiases globdots
 unsetopt listambiguous
 zmodload zsh/complist
 bindkey -M menuselect '^M' .accept-line
