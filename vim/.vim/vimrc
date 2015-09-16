@@ -32,7 +32,7 @@
 	Plugin 'tpope/vim-fugitive'
 	Plugin 'tpope/vim-surround.git'
 	Plugin 'tpope/vim-unimpaired'
-	if has('unix')
+	if has('unix') && !has('win32unix')
 		Plugin 'Valloric/YouCompleteMe'
 		Plugin 'scrooloose/syntastic'
 	endif
@@ -43,7 +43,11 @@
 runtime macros/matchit.vim
 
 " Airline
-	let g:airline_theme='bubblegum'
+	if has('gui_running') || &t_Co==256
+		let g:airline_theme='bubblegum'
+	else
+		let g:airline_theme='monochrome'
+	endif
 	let g:airline#extensions#tabline#enabled=1
 	" let g:airline_powerline_fonts=1
 	let g:timeoutlen=50
@@ -153,8 +157,10 @@ if has('gui_running')
 	hi CursorLine guibg=gray20
 else
 	colorscheme koehler
-	set cursorline
-	hi CursorLine cterm=NONE ctermbg=236
+	if &t_Co==256
+		set cursorline
+		hi CursorLine cterm=NONE ctermbg=236
+	endif
 endif
 if has('unix')
 	set guifont=Lucida\ Console\ 11
@@ -166,6 +172,12 @@ hi Cursor guibg=RoyalBlue ctermbg=lightblue
 hi MatchParen guibg=lightblue guifg=cyan ctermbg=lightblue ctermfg=cyan
 hi Folded guibg=SlateGray guifg=darkblue ctermbg=gray ctermfg=darkblue
 hi DiffDelete ctermfg=lightblue
+if has('win32unix')
+	let &t_ti.="\e[1 q"
+	let &t_SI.="\e[5 q"
+	let &t_EI.="\e[1 q"
+	let &t_te.="\e[0 q"
+endif
 
 " Spell
 set spelllang=en_us
