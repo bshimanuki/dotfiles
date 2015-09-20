@@ -29,15 +29,15 @@ zstyle ':prezto:load' pmodule \
 	'editor' \
 	'history' \
 	'directory' \
-	'archive' \
 	'spectrum' \
-	'utility' \
-	'git' \
 	'command-not-found' \
-	'completion' \
 	'syntax-highlighting' \
 	'history-substring-search' \
-	#'prompt'
+	'git' \
+	'archive' \
+	'utility' \
+	'completion' \
+	# 'prompt'
 
 #
 # Editor
@@ -54,7 +54,7 @@ zstyle ':prezto:module:editor' key-bindings 'vi'
 #
 
 # Ignore submodules when they are 'dirty', 'untracked', 'all', or 'none'.
-# zstyle ':prezto:module:git:status:ignore' submodules 'all'
+zstyle ':prezto:module:git:status:ignore' submodules 'all'
 
 #
 # GNU Utility
@@ -125,9 +125,9 @@ zstyle ':prezto:module:prompt' theme 'sorin'
 zstyle ':prezto:module:syntax-highlighting' highlighters \
 	'main' \
 	'brackets' \
-	'pattern' \
-	'cursor' \
-	'root'
+	# 'pattern' \
+	# 'cursor' \
+	# 'root'
 
 # Set syntax highlighting styles.
 # zstyle ':prezto:module:syntax-highlighting' styles \

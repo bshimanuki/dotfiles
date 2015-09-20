@@ -1,26 +1,27 @@
+# Don't recompile zcompdump
+alias compinit='compinit -C'
+
 # Prezto
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+	source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
 # Aliases
-# List directory
 alias ls='ls --color=auto -F'
 alias la='ls -A'
 alias lla='ll -A'
 alias s='ls'
-
-# Remove
 alias rm='nocorrect rm -I'
+alias gt='git status'
 
 # Directory
 unsetopt auto_pushd
 unsetopt pushd_ignore_dups
+typeset -U path
+path=(~/bin $path)
 
 # Completion
-autoload -Uz compinit
-compinit
-setopt autolist completealiases globdots
+setopt autolist completealiases
 unsetopt listambiguous
 zmodload zsh/complist
 bindkey -M menuselect '^M' .accept-line
@@ -28,7 +29,7 @@ bindkey '^[[Z' reverse-menu-complete
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 
 # Globbing
-setopt glob extendedglob autocd
+setopt glob globdots extendedglob autocd
 unsetopt caseglob
 
 # Prompt
@@ -47,12 +48,6 @@ case "$TERM" in
 		preexec(){print -Pn "\033]2;%~/ > $1\033\\"}
 		;;
 esac
-
-# Lines configured by user
-typeset -U path
-path=(~/bin $path)
-setopt HIST_IGNORE_DUPS
-bindkey -v
 
 # Delete word
 bindkey -M emacs '^[[3;5~' kill-word
@@ -85,3 +80,4 @@ fi
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
+setopt HIST_IGNORE_DUPS
