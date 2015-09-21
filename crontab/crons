@@ -1,0 +1,4 @@
+### pass this file to the crontab command
+
+# Recompile zsh completions
+@reboot sleep 60 && rm $ZDOTDIR/.zcompdump && compinit -i # JOB_ID_1
