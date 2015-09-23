@@ -55,8 +55,7 @@ runtime macros/matchit.vim
 		let g:airline_symbols={}
 	endif
 	let g:airline_symbols.space="\ua0"
-	let g:airline#extensions#whitespace#checks=['indent'] " no 'trailing'
-	let g:airline#extensions#eclim#enabled=1
+	let g:airline_section_y='' " turn off file encoding, file format
 
 " Easymotion
 	noremap <Plug>(easymotion-prefix) <Nop>
@@ -88,10 +87,16 @@ runtime macros/matchit.vim
 " NERD Commenter
 	let g:NERDSpaceDelims=1
 
+" NERD Tree
+	nnoremap <leader>n :NERDTreeToggle<CR>
+
 " Syntastic
 	let g:syntastic_always_populate_loc_list = 1
 	let g:syntastic_check_on_open=1
 	let g:syntastic_check_on_wq=0
+
+" Tagbar
+	nnoremap <leader>t :TagbarOpen fj<CR>
 
 " YouCompleteMe
 	let g:ycm_global_ycm_extra_conf=vimpath.'/.ycm_extra_conf.py'
@@ -159,7 +164,7 @@ else
 	colorscheme koehler
 	if &t_Co==256
 		set cursorline
-		hi CursorLine cterm=NONE ctermbg=236
+		hi CursorLine cterm=NONE ctermbg=236 " 236=Gray19
 	endif
 endif
 if has('unix')
@@ -169,8 +174,8 @@ if has('win32')
 	set guifont=Lucida_Console:h11
 endif
 hi Cursor guibg=RoyalBlue ctermbg=lightblue
-hi MatchParen guibg=lightblue guifg=cyan ctermbg=lightblue ctermfg=cyan
-hi Folded guibg=SlateGray guifg=darkblue ctermbg=gray ctermfg=darkblue
+hi MatchParen guibg=darkblue guifg=cyan ctermbg=darkblue ctermfg=cyan
+hi Folded guibg=Gray11 guifg=darkcyan ctermbg=234 ctermfg=darkcyan " 234=Gray11
 hi DiffDelete ctermfg=lightblue
 if has('win32unix')
 	let &t_ti.="\e[1 q"
