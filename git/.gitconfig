@@ -2,6 +2,8 @@
 	name = Brian Shimanuki
 	email = bshimanuki@mit.edu
 [core]
-	excludesfile = ~/.gitignore_global
+	excludesfile = .gitignore_global
+[include]
+	path = .gitconfig_system
 [push]
 	default = simple
