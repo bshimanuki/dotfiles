@@ -83,7 +83,6 @@ runtime macros/matchit.vim
 	let g:localvimrc_persistent=1
 	let g:localvimrc_persistence_file=vimpath.'/.localvimrc_persistent'
 
-
 " NERD Commenter
 	let g:NERDSpaceDelims=1
 
