@@ -206,12 +206,12 @@ if exists('$TMUX')
 endif
 
 " Remaps
+"" Save and Quit
 command! Q q
 command! W w
 command! Wq wq
 command! WQ wq
-nnoremap gb :bn<CR>
-nnoremap gB :bp<CR>
+"" Movement
 noremap  <Up>   gk
 noremap  <Down> gj
 noremap  <Home> g<Home>
@@ -220,6 +220,17 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+nnoremap gb :bn<CR>
+nnoremap gB :bp<CR>
+"" Function Movement
+noremap <silent> [[ :call search('^\(\w.*\)\={','sb')<CR>
+noremap <silent> ]] :call search('^\(\w.*\)\={','s')<CR>
+noremap <silent> [] :call search('^\(\w.*\)\=}','sb')<CR>
+noremap <silent> ][ :call search('^\(\w.*\)\=}','s')<CR>
+vnoremap <silent> [[ ?^\(\w.*\)\={<CR> :<C-u>call histdel('/',-1)<CR> :let @/=histget('/',-1)<CR>gv^
+vnoremap <silent> ]] /^\(\w.*\)\={<CR> :<C-u>call histdel('/',-1)<CR> :let @/=histget('/',-1)<CR>gv^
+vnoremap <silent> [] ?^\(\w.*\)\=}<CR> :<C-u>call histdel('/',-1)<CR> :let @/=histget('/',-1)<CR>gv^
+vnoremap <silent> ][ /^\(\w.*\)\=}<CR> :<C-u>call histdel('/',-1)<CR> :let @/=histget('/',-1)<CR>gv^
 
 " Automatically open, but do not go to (if there are errors) the quickfix /
 " location list window, or close it when is has become empty.
