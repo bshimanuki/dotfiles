@@ -16,7 +16,7 @@ alias gt='git status'
 
 # Directory
 unsetopt auto_pushd
-unsetopt pushd_ignore_dups
+unsetopt cd_able_vars
 typeset -U path
 path=(~/bin $path)
 
