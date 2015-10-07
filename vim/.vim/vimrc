@@ -21,7 +21,6 @@
 	Plugin 'garbas/vim-snipmate'
 	Plugin 'gerw/vim-latex-suite'
 	Plugin 'gmarik/Vundle.vim'
-	Plugin 'justinmk/vim-ipmotion'
 	Plugin 'kien/ctrlp.vim'
 	Plugin 'majutsushi/tagbar'
 	Plugin 'mattn/emmet-vim'
