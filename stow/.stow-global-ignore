@@ -25,5 +25,3 @@ winstow\.bat
 .*\.log
 README.*
 COPYING
-
-^/crontab/ # crons need to be added to crontab
