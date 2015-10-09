@@ -1,4 +1,4 @@
-set formatprg=astyle
+set formatprg=clang-format
 let g:pyclewn_args="--prefix=L"
 nmap <C-F9> :w <CR>:make %:r CXXFLAGS:="-Wall -g" <CR>
 nmap <C-F10> :!%:r <CR>

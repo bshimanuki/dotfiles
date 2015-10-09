@@ -192,7 +192,7 @@ hi SpellLocal ctermfg=darkblue
 
 " Shell
 set shellslash
-set grepprg=grep\ -nH\$*
+set grepprg=grep\ -nH\ $*
 
 " Tmux
 if exists('$TMUX')

@@ -118,5 +118,5 @@ bind 'set completion-ignore-case on'
 bind 'set completion-prefix-display-length 5'
 bind 'set completion-map-case on'
 bind 'set show-all-if-ambiguous'
-# bind 'set editing-mode vi'
+bind 'set editing-mode vi'
 bind TAB:menu-complete

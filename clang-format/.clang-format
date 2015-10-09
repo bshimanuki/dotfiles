@@ -1,0 +1,25 @@
+---
+BasedOnStyle: Google
+ColumnLimit: 0
+TabWidth: 2
+UseTab: Always
+AlignAfterOpenBracket: false
+AlignOperands: false
+---
+Language: Cpp
+Standard: Cpp11
+ConstructorInitializerIndentWidth: 2
+AlignEscapedNewlinesLeft: false
+AlignTrailingComments: false
+AlwaysBreakTemplateDeclarations: false
+AlwaysBreakBeforeMultilineStrings: false
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+DerivePointerAlignment: false
+IndentCaseLabels: false
+MaxEmptyLinesToKeep: 2
+PointerAlignment: Right
+SpacesBeforeTrailingComments: 1
+SpacesInContainerLiterals: false
+SpaceBeforeParens: Never
+...
+

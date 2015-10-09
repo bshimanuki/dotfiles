@@ -1,5 +1,5 @@
 style=attach
-indent=force-tab
+indent=force-tab=2
 indent-preprocessor
 indent-col1-comments
 pad-oper
