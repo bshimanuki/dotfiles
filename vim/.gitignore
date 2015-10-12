@@ -1,2 +1,3 @@
 .vim/bundle
 .vim/.localvimrc_persistent
+.vim/.netrwhist
