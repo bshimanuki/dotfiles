@@ -24,8 +24,8 @@ path=(~/bin $path)
 setopt autolist completealiases
 unsetopt listambiguous
 zmodload zsh/complist
-bindkey -M menuselect '^M' .accept-line
-bindkey '^[[Z' reverse-menu-complete
+bindkey -M menuselect "^M" .accept-line
+bindkey "\e[Z" reverse-menu-complete
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 
 # Globbing
@@ -48,13 +48,6 @@ case "$TERM" in
 		preexec(){print -Pn "\033]2;%~/ > $1\033\\"}
 		;;
 esac
-
-# Delete word
-bindkey -M emacs '^[[3;5~' kill-word
-
-# Bind ctrl-left / ctrl-right
-bindkey "\e[1;5D" backward-word
-bindkey "\e[1;5C" forward-word
 
 # Help
 autoload -U run-help
@@ -81,3 +74,16 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 setopt HIST_IGNORE_DUPS
+
+# Key Bindings
+bindkey '\e[1;5D' backward-word # ctrl-left
+bindkey '\e[1;5C' forward-word # ctrl-right
+
+bindkey '^H' backward-delete-char
+bindkey '^W' backward-kill-word
+bindkey '^U' kill-line
+bindkey -r '^X'
+bindkey '^P' history-substring-search-up
+bindkey '^N' history-substring-search-down
+bindkey -a '^P' history-substring-search-up
+bindkey -a '^N' history-substring-search-down
