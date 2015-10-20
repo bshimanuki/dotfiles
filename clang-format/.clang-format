@@ -3,23 +3,24 @@ BasedOnStyle: Google
 ColumnLimit: 0
 TabWidth: 2
 UseTab: Always
+AccessModifierOffset: -2
 AlignAfterOpenBracket: false
 AlignOperands: false
----
-Language: Cpp
-Standard: Cpp11
-ConstructorInitializerIndentWidth: 2
 AlignEscapedNewlinesLeft: false
 AlignTrailingComments: false
 AlwaysBreakTemplateDeclarations: false
 AlwaysBreakBeforeMultilineStrings: false
+ConstructorInitializerIndentWidth: 2
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
-DerivePointerAlignment: false
 IndentCaseLabels: false
 MaxEmptyLinesToKeep: 2
-PointerAlignment: Right
 SpacesBeforeTrailingComments: 1
 SpacesInContainerLiterals: false
 SpaceBeforeParens: Never
+---
+Language: Cpp
+Standard: Cpp11
+DerivePointerAlignment: false
+PointerAlignment: Right
 ...
 
