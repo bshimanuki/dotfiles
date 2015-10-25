@@ -127,6 +127,7 @@ set fileformats=unix,dos
 set number
 filetype plugin indent on
 syntax on
+set cinoptions=:0,l1,g0
 set showcmd cmdheight=2
 set tabstop=2 shiftwidth=2
 set nofoldenable foldmethod=syntax
