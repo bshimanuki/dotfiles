@@ -13,6 +13,7 @@ alias lla='ll -A'
 alias s='ls'
 alias rm='nocorrect rm -I'
 alias gt='git status'
+alias tpwd='[ -n "$TMUX" ] && tmux set-environment -g PWD $PWD'
 
 # Directory
 unsetopt auto_pushd
