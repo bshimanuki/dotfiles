@@ -18,5 +18,8 @@ export LD_LIBRARY_PATH=/usr/local/lib
 export ECLIPSE_HOME=/opt/eclipse
 export CLASSPATH=.:bin:lib/\*:/usr/share/java/\*
 
+## Python
+export PYTHONSTARTUP=~/.pythonrc.py
+
 
 # Check system environmental variables in /etc/environment
