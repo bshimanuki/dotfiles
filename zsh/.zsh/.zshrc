@@ -13,8 +13,7 @@ alias lla='ll -A'
 alias s='ls'
 alias rm='nocorrect rm -I'
 alias gt='git status'
-alias tpwd='[ -n "$TMUX" ] && tmux set-environment -g PWD $PWD'
-
+alias tpwd='[ -n "$TMUX" ] && tmux set-option default-command "cd $PWD && $SHELL -l"'
 # Directory
 unsetopt auto_pushd
 unsetopt cd_able_vars
