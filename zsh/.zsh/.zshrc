@@ -14,6 +14,7 @@ alias s='ls'
 alias rm='nocorrect rm -I'
 alias gt='git status'
 alias tpwd='[ -n "$TMUX" ] && tmux set-option default-command "cd $PWD && $SHELL -l"'
+alias mmv='noglob zmv -W'
 # Directory
 unsetopt auto_pushd
 unsetopt cd_able_vars
