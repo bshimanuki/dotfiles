@@ -149,6 +149,7 @@ set notimeout ttimeout ttimeoutlen=200
 set splitbelow splitright
 set diffopt+=vertical
 set history=100
+set wildignore=bin
 
 " Searching
 set incsearch hlsearch
