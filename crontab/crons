@@ -1,4 +1,4 @@
 ### pass this file to the crontab command
 
 # Recompile zsh completions
-@reboot sleep 60 && zsh -c 'rm $ZDOTDIR/.zcompdump && compinit -i' # JOB_ID_1
+@reboot sleep 60 && zsh -c 'rm -f $ZDOTDIR/.zcompdump && autoload -U compinit && compinit -i' # JOB_ID_1
