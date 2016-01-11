@@ -12,9 +12,11 @@ alias la='ls -A'
 alias lla='ll -A'
 alias s='ls'
 alias rm='nocorrect rm -I'
+setopt rm_star_silent
 alias gt='git status'
 alias tpwd='[ -n "$TMUX" ] && tmux set-option default-command "cd $PWD && $SHELL -l"'
 alias mmv='noglob zmv -W'
+
 # Directory
 unsetopt auto_pushd
 unsetopt cd_able_vars
@@ -49,6 +51,10 @@ case "$TERM" in
 		preexec(){print -Pn "\033]2;%~/ > $1\033\\"}
 		;;
 esac
+
+# Python
+source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+alias mkvirtualenv='mkvirtualenv -p /usr/bin/python2'
 
 # Help
 autoload -U run-help

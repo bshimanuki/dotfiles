@@ -19,7 +19,10 @@ export ECLIPSE_HOME=/opt/eclipse
 export CLASSPATH=.:bin:lib/\*:/usr/share/java/\*
 
 ## Python
-export PYTHONSTARTUP=~/.pythonrc.py
-
+export PYTHONSTARTUP=~/.python/pythonrc.py
+export WORKON_HOME=~/.python/venv
+export VIRTUALENVWRAPPER_PYTHON=python3
+export PIP_VIRTUALENV_BASE=$WORKON_HOME
+# source virtualenvwrapper.sh in .zprofile
 
 # Check system environmental variables in /etc/environment
