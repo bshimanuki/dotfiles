@@ -24,7 +24,7 @@ typeset -U path
 path=(~/bin $path)
 
 # Completion
-setopt autolist completealiases
+setopt autolist
 unsetopt listambiguous
 zmodload zsh/complist
 bindkey -M menuselect "^M" .accept-line
