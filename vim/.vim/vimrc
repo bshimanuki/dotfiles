@@ -16,12 +16,14 @@
 
 	Plugin 'Lokaltog/vim-easymotion'
 	Plugin 'MarcWeber/vim-addon-mw-utils'
-	Plugin 'bling/vim-airline'
+	Plugin 'vim-airline/vim-airline'
+	Plugin 'vim-airline/vim-airline-themes'
 	Plugin 'embear/vim-localvimrc'
 	Plugin 'garbas/vim-snipmate'
 	Plugin 'gerw/vim-latex-suite'
 	Plugin 'gmarik/Vundle.vim'
 	Plugin 'kien/ctrlp.vim'
+	Plugin 'kovisoft/slimv'
 	Plugin 'majutsushi/tagbar'
 	Plugin 'mattn/emmet-vim'
 	Plugin 'scrooloose/nerdcommenter'
@@ -92,6 +94,9 @@ runtime macros/matchit.vim
 	let g:syntastic_always_populate_loc_list = 1
 	let g:syntastic_check_on_open=1
 	let g:syntastic_check_on_wq=0
+
+" Slimv
+	let g:lisp_rainbow = 1
 
 " Tagbar
 	nnoremap <leader>t :TagbarOpen fj<CR>
