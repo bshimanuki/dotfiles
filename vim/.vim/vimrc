@@ -21,7 +21,6 @@
 	Plugin 'embear/vim-localvimrc'
 	Plugin 'garbas/vim-snipmate'
 	Plugin 'gerw/vim-latex-suite'
-	Plugin 'gmarik/Vundle.vim'
 	Plugin 'jpalardy/vim-slime'
 	Plugin 'kien/ctrlp.vim'
 	Plugin 'luochen1990/rainbow'
@@ -34,6 +33,7 @@
 	Plugin 'tpope/vim-fugitive'
 	Plugin 'tpope/vim-surround.git'
 	Plugin 'tpope/vim-unimpaired'
+	Plugin 'VundleVim/Vundle.vim'
 	if has('unix') && !has('win32unix')
 		Plugin 'Valloric/YouCompleteMe'
 		Plugin 'scrooloose/syntastic'
