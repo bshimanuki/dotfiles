@@ -22,8 +22,9 @@
 	Plugin 'garbas/vim-snipmate'
 	Plugin 'gerw/vim-latex-suite'
 	Plugin 'gmarik/Vundle.vim'
+	Plugin 'jpalardy/vim-slime'
 	Plugin 'kien/ctrlp.vim'
-	Plugin 'kovisoft/slimv'
+	Plugin 'luochen1990/rainbow'
 	Plugin 'majutsushi/tagbar'
 	Plugin 'mattn/emmet-vim'
 	Plugin 'scrooloose/nerdcommenter'
@@ -90,10 +91,37 @@ runtime macros/matchit.vim
 " NERD Tree
 	nnoremap <leader>n :NERDTreeToggle<CR>
 
+" Rainbow Parentheses
+	let paren_colors = ['red', 'darkcyan', 'lightyellow', 'darkgreen', 'lightblue', 'brown', 'darkmagenta', 'gray']
+	let g:rainbow_active = 1
+	let g:rainbow_conf = {
+		\ 'guifgs': paren_colors,
+		\ 'ctermfgs': paren_colors,
+		\ 'operators': '_,_',
+		\ 'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+		\ 'separately': {
+		\  '*': 0,
+		\  'clojure': {},
+		\  'lisp': {},
+		\  'scheme': {},
+		\ }
+		\}
+
 " Syntastic
 	let g:syntastic_always_populate_loc_list = 1
 	let g:syntastic_check_on_open=1
 	let g:syntastic_check_on_wq=0
+
+" Slime
+	let g:slime_target = 'tmux'
+	let g:slime_default_config = {'socket_name': 'default', 'target_pane': '0'}
+	let g:slime_dont_ask_default = 1
+	let g:slime_no_mappings = 1
+	let g:slime_python_ipython = 1
+	xmap <leader>s <Plug>SlimeRegionSend
+	nmap <leader>s <Plug>SlimeMotionSend
+	nmap <leader>ss <Plug>SlimeParagraphSend
+	nmap <leader>sv <Plug>SlimeConfig
 
 " Slimv
 	let g:lisp_rainbow = 1
@@ -108,18 +136,18 @@ runtime macros/matchit.vim
 	let g:ycm_collect_identifiers_from_tag_files=1
 	let g:ycm_collect_identifiers_from_comments_and_strings=1
 	let g:ycm_filetype_blacklist={
-			\ 'tagbar' : 1,
-			\ 'qf' : 1,
-			\ 'notes' : 1,
-			\ 'markdown' : 1,
-			\ 'unite' : 1,
-			\ 'text' : 1,
-			\ 'vimwiki' : 1,
-			\ 'pandoc' : 1,
-			\ 'infolog' : 1,
-			\ 'mail' : 1,
-			\ 'tex' : 1
-			\}
+		\ 'tagbar' : 1,
+		\ 'qf' : 1,
+		\ 'notes' : 1,
+		\ 'markdown' : 1,
+		\ 'unite' : 1,
+		\ 'text' : 1,
+		\ 'vimwiki' : 1,
+		\ 'pandoc' : 1,
+		\ 'infolog' : 1,
+		\ 'mail' : 1,
+		\ 'tex' : 1
+		\}
 	nnoremap <leader>f :YcmCompleter GoTo<CR>
 
 " Config
