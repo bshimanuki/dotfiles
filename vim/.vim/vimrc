@@ -77,9 +77,8 @@ runtime macros/matchit.vim
 
 " Latex Suite
 	let g:tex_flavor='latex'
-	imap <C-space> <Plug>IMAP_JumpForward
-	nmap <C-space> <Plug>IMAP_JumpForward
-	vmap <C-space> <Plug>IMAP_JumpForward
+	imap <C-f> <Plug>IMAP_JumpForward
+	map <C-f> <Plug>IMAP_JumpForward
 
 " Local vimrc
 	let g:localvimrc_persistent=1
@@ -92,11 +91,11 @@ runtime macros/matchit.vim
 	nnoremap <leader>n :NERDTreeToggle<CR>
 
 " Rainbow Parentheses
-	let paren_colors = ['red', 'darkcyan', 'lightyellow', 'darkgreen', 'lightblue', 'brown', 'darkmagenta', 'gray']
+	let s:paren_colors = ['red', 'darkcyan', 'lightyellow', 'darkgreen', 'lightblue', 'brown', 'darkmagenta', 'gray']
 	let g:rainbow_active = 1
 	let g:rainbow_conf = {
-		\ 'guifgs': paren_colors,
-		\ 'ctermfgs': paren_colors,
+		\ 'guifgs': s:paren_colors,
+		\ 'ctermfgs': s:paren_colors,
 		\ 'operators': '_,_',
 		\ 'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
 		\ 'separately': {
@@ -249,10 +248,10 @@ command! W w
 command! Wq wq
 command! WQ wq
 "" Movement
-noremap  <Up>   gk
-noremap  <Down> gj
-noremap  <Home> g<Home>
-noremap  <End>  g<End>
+noremap <Up> gk
+noremap <Down> gj
+noremap <Home> g<Home>
+noremap <End> g<End>
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
