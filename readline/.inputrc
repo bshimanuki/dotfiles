@@ -1,1 +1,21 @@
 set editing-mode vi
+set completion-ignore-case on
+set show-all-if-ambiguous on
+set history-preserve-point on
+set expand-tilde on
+set menu-complete-display-prefix
+set mark-symlinked-directories on
+set colored-stats on
+
+$if mode=vi
+	set keymap vi-command
+	"j": history-search-forward
+	"k": history-search-backward
+	"\e[A": history-search-backward # up
+	"\e[B": history-search-forward # down
+	set keymap vi-insert
+	Tab: menu-complete
+	"\e[Z": menu-complete-backward
+	"\e[A": history-search-backward # up
+	"\e[B": history-search-forward # down
+$endif
