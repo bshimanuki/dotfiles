@@ -32,7 +32,7 @@
 	Plugin 'terryma/vim-multiple-cursors'
 	Plugin 'tomtom/tlib_vim'
 	Plugin 'tpope/vim-fugitive'
-	Plugin 'tpope/vim-surround.git'
+	Plugin 'tpope/vim-surround'
 	Plugin 'tpope/vim-unimpaired'
 	if has('unix') && !has('win32unix')
 		" Plugin 'Valloric/YouCompleteMe'
@@ -121,9 +121,6 @@ runtime macros/matchit.vim
 	nmap <leader>s <Plug>SlimeMotionSend
 	nmap <leader>ss <Plug>SlimeParagraphSend
 	nmap <leader>sv <Plug>SlimeConfig
-
-" Slimv
-	let g:lisp_rainbow=1
 
 " Tagbar
 	nnoremap <leader>t :TagbarOpen fj<CR>
@@ -245,6 +242,8 @@ endif
 " Remaps
 "" Save and Quit
 command! -bang Q q<bang>
+command! -bang Qa qa<bang>
+command! -bang QA qa<bang>
 command! W w
 command! Wq wq
 command! WQ wq
