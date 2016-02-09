@@ -8,3 +8,5 @@ call IMAP('((', '((', 'tex')
 call IMAP('[[', '[[', 'tex')
 call IMAP('$$', '$$', 'tex')
 call IMAP('~~', '~~', 'tex')
+
+silent! unmap <Plug>
