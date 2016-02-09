@@ -12,3 +12,4 @@ setlocal iskeyword+=:
 command! FreezeImap let b:Imap_FreezeImap=1
 command! UnfreezeImap let b:Imap_FreezeImap=0
 command! Wordcount w !detex |wc -w
+nmap \le <Plug>Tex_LeftRight
