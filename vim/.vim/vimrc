@@ -1,16 +1,21 @@
+set nocompatible
+filetype off
+
+if has('unix')
+	runtime! debian.vim
+	let vimpath=$HOME.'/.vim'
+	exec 'set rtp+='.vimpath.'/ycm/YouCompleteMe'
+endif
+
+if has('win32')
+	let vimpath=$HOME.'/vimfiles'
+endif
+
+if has('win32') || has('win32unix')
+	let g:loaded_youcompleteme=1
+endif
+
 " Vundle
-	set nocompatible
-	filetype off
-
-	if has('unix')
-		runtime! debian.vim
-		let vimpath=$HOME.'/.vim'
-	endif
-
-	if has('win32')
-		let vimpath=$HOME.'/vimfiles'
-	endif
-
 	exec 'set rtp+='.vimpath.'/bundle/Vundle.vim'
 	call vundle#begin(vimpath.'/bundle')
 
