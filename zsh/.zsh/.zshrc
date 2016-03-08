@@ -7,7 +7,7 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Aliases
-alias ls='ls --color=auto -F'
+alias ls='ls --color=auto -F -v'
 alias la='ls -A'
 alias lla='ll -A'
 alias s='ls'
@@ -53,7 +53,7 @@ case "$TERM" in
 esac
 
 # Python
-source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+[ -f /usr/share/virtualenvwrapper/virtualenvwrapper.sh ] && source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
 alias mkvirtualenv='mkvirtualenv -p /usr/bin/python2'
 
 # Help
@@ -66,31 +66,31 @@ alias help=run-help
 # Finally, make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
-    function zle-line-init () {
-        printf '%s' "${terminfo[smkx]}"
-    }
-    function zle-line-finish () {
-        printf '%s' "${terminfo[rmkx]}"
-    }
-    zle -N zle-line-init
-    zle -N zle-line-finish
-fi
+	function zle-line-init () {
+	printf '%s' "${terminfo[smkx]}"
+}
+function zle-line-finish () {
+printf '%s' "${terminfo[rmkx]}"
+		}
+		zle -N zle-line-init
+		zle -N zle-line-finish
+	fi
 
-# History
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
-setopt HIST_IGNORE_DUPS
+	# History
+	HISTFILE=~/.zsh_history
+	HISTSIZE=10000
+	SAVEHIST=10000
+	setopt HIST_IGNORE_DUPS
 
-# Key Bindings
-bindkey '\e[1;5D' backward-word # ctrl-left
-bindkey '\e[1;5C' forward-word # ctrl-right
+	# Key Bindings
+	bindkey '\e[1;5D' backward-word # ctrl-left
+	bindkey '\e[1;5C' forward-word # ctrl-right
 
-bindkey '^H' backward-delete-char
-bindkey '^W' backward-kill-word
-bindkey '^U' kill-line
-bindkey -r '^X'
-bindkey '^P' history-substring-search-up
-bindkey '^N' history-substring-search-down
-bindkey -a '^P' history-substring-search-up
-bindkey -a '^N' history-substring-search-down
+	bindkey '^H' backward-delete-char
+	bindkey '^W' backward-kill-word
+	bindkey '^U' kill-line
+	bindkey -r '^X'
+	bindkey '^P' history-substring-search-up
+	bindkey '^N' history-substring-search-down
+	bindkey -a '^P' history-substring-search-up
+	bindkey -a '^N' history-substring-search-down
