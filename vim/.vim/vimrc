@@ -57,7 +57,6 @@ runtime macros/matchit.vim
 	endif
 	let g:airline#extensions#tabline#enabled=1
 	" let g:airline_powerline_fonts=1
-	let g:timeoutlen=50
 	if !exists('g:airline_symbols')
 		let g:airline_symbols={}
 	endif
@@ -180,7 +179,7 @@ set display=lastline,uhex
 set whichwrap+=<,>,[,]
 set wildmenu wildmode=list,full
 let mapleader="\\"
-set notimeout ttimeout ttimeoutlen=200
+set notimeout ttimeout ttimeoutlen=0
 set splitbelow splitright
 set diffopt+=vertical
 set history=100
