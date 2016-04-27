@@ -28,7 +28,7 @@ setopt autolist
 unsetopt listambiguous
 zmodload zsh/complist
 bindkey -M menuselect "^M" .accept-line
-bindkey "\e[Z" reverse-menu-complete
+bindkey "\e[Z" reverse-menu-complete # shift-tab
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 
 # Globbing
@@ -45,7 +45,7 @@ case $TERM in
 		preexec(){print -Pn "\e]0;%~/ > $1\a"}
 		;;
 esac
-case "$TERM" in
+case $TERM in
 	screen*)
 		precmd(){print -Pn "\033]2;%~/ >\033\\"}
 		preexec(){print -Pn "\033]2;%~/ > $1\033\\"}
@@ -83,12 +83,15 @@ printf '%s' "${terminfo[rmkx]}"
 	setopt HIST_IGNORE_DUPS
 
 	# Key Bindings
+	KEYTIMEOUT=1
+
 	bindkey '\e[1;5D' backward-word # ctrl-left
 	bindkey '\e[1;5C' forward-word # ctrl-right
 
 	bindkey '^H' backward-delete-char
 	bindkey '^W' backward-kill-word
 	bindkey '^U' kill-line
+	bindkey -as '\e' '\a'
 	bindkey -r '^X'
 	bindkey '^P' history-substring-search-up
 	bindkey '^N' history-substring-search-down
