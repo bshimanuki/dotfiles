@@ -38,7 +38,8 @@ unsetopt caseglob
 # Prompt
 autoload promptinit
 promptinit
-prompt suse
+# prompt suse
+export PS1="%2>>%n%>>@%2>>%m%>>:%~/> "
 case $TERM in
 	xterm*)
 		precmd(){print -Pn "\e]0;%~/ >\a"}
