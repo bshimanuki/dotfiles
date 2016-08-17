@@ -2,13 +2,13 @@ set nocompatible
 filetype off
 
 if has('unix')
-	runtime! debian.vim
-	let vimpath=$HOME.'/.vim'
-	exec 'set rtp+='.vimpath.'/ycm/YouCompleteMe'
+	runtime debian.vim
+	let g:vimpath=$HOME.'/.vim'
+	exec 'set rtp+='.g:vimpath.'/ycm/YouCompleteMe'
 endif
 
 if has('win32')
-	let vimpath=$HOME.'/vimfiles'
+	let g:vimpath=$HOME.'/vimfiles'
 endif
 
 if has('win32') || has('win32unix')
@@ -16,21 +16,27 @@ if has('win32') || has('win32unix')
 endif
 
 " Vundle
-	exec 'set rtp+='.vimpath.'/bundle/Vundle.vim'
-	call vundle#begin(vimpath.'/bundle')
+function VundleEnabled(plugin)
+	let l:plugin_path=g:vimpath.'/bundle/'.a:plugin
+	return &rtp =~# l:plugin_path && isdirectory(l:plugin_path.'/.git')
+endfunction
 
-	Plugin 'bkad/CamelCaseMotion'
-	Plugin 'ciaranm/detectindent'
+exec 'set rtp+='.g:vimpath.'/bundle/Vundle.vim'
+if !VundleEnabled('Vundle.vim')
+	echomsg 'Vundle not installed.'
+else
+	call vundle#begin(g:vimpath.'/bundle')
+
 	Plugin 'Lokaltog/vim-easymotion'
 	Plugin 'MarcWeber/vim-addon-mw-utils'
 	Plugin 'VundleVim/Vundle.vim'
-	Plugin 'vim-airline/vim-airline'
-	Plugin 'vim-airline/vim-airline-themes'
+	Plugin 'bkad/CamelCaseMotion'
+	Plugin 'ciaranm/detectindent'
 	Plugin 'embear/vim-localvimrc'
 	Plugin 'garbas/vim-snipmate'
 	Plugin 'gerw/vim-latex-suite'
-	Plugin 'haya14busa/incsearch.vim'
 	Plugin 'haya14busa/incsearch-easymotion.vim'
+	Plugin 'haya14busa/incsearch.vim'
 	Plugin 'jpalardy/vim-slime'
 	Plugin 'kien/ctrlp.vim'
 	Plugin 'luochen1990/rainbow'
@@ -43,17 +49,17 @@ endif
 	Plugin 'tpope/vim-fugitive'
 	Plugin 'tpope/vim-surround'
 	Plugin 'tpope/vim-unimpaired'
+	Plugin 'vim-airline/vim-airline'
+	Plugin 'vim-airline/vim-airline-themes'
 	if has('unix') && !has('win32unix')
 		" Plugin 'Valloric/YouCompleteMe'
 		Plugin 'scrooloose/syntastic'
 	endif
 	" Plugin 'Rip-Rip/clang_complete'
 	call vundle#end()
+endif
 
-" Other Plugins
-runtime macros/matchit.vim
-
-" Airline
+if VundleEnabled('vim-airline')
 	if has('gui_running') || &t_Co==256
 		let g:airline_theme='bubblegum'
 	else
@@ -66,52 +72,52 @@ runtime macros/matchit.vim
 	endif
 	let g:airline_symbols.space="\ua0"
 	let g:airline_section_y='' " turn off file encoding, file format
+endif
 
-" CamelCaseMotion
+if VundleEnabled('CamelCaseMotion')
 	call camelcasemotion#CreateMotionMappings(',')
+endif
 
-" Easymotion
+if VundleEnabled('vim-easymotion')
 	noremap <Plug>(easymotion-prefix) <Nop>
+endif
 
-" Emmet
+if VundleEnabled('emmet-vim')
 	let g:user_emmet_install_global=0
+endif
 
-" Eclim
-	let g:EclimCompletionMethod='omnifunc'
-	let s:eclipse_home=$ECLIPSE_HOME
-	if has("win32")
-		let s:null_file='NUL'
-	else
-		let s:null_file='/dev/null'
-	endif
-	exec 'command! StartEclim !'.s:eclipse_home.'/eclimd > '.s:null_file.' 2>&1 &'
-
-" Incsearch
+if VundleEnabled('incsearch.vim')
 	map /  <Plug>(incsearch-forward)
 	map ?  <Plug>(incsearch-backward)
 	map g/ <Plug>(incsearch-stay)
+endif
 
-" Incsearch
+if VundleEnabled('incsearch-easymotion.vim')
 	map z/ <Plug>(incsearch-easymotion-/)
 	map z? <Plug>(incsearch-easymotion-?)
 	map zg/ <Plug>(incsearch-easymotion-stay)
+endif
 
-" Latex Suite
+if VundleEnabled('vim-latex-suite')
 	let g:tex_flavor='latex'
 	imap <C-f> <Plug>IMAP_JumpForward
 	map <C-f> <Plug>IMAP_JumpForward
+endif
 
-" Local vimrc
+if VundleEnabled('vim-localvimrc')
 	let g:localvimrc_persistent=1
-	let g:localvimrc_persistence_file=vimpath.'/.localvimrc_persistent'
+	let g:localvimrc_persistence_file=g:vimpath.'/.localvimrc_persistent'
+endif
 
-" NERD Commenter
+if VundleEnabled('nerdcommenter')
 	let g:NERDSpaceDelims=1
+endif
 
-" NERD Tree
+if VundleEnabled('nerdtree')
 	nnoremap <leader>n :NERDTreeToggle<CR>
+endif
 
-" Rainbow Parentheses
+if VundleEnabled('rainbow')
 	let s:paren_colors=['red', 'darkcyan', 'lightyellow', 'darkgreen', 'lightblue', 'brown', 'darkmagenta', 'gray']
 	let g:rainbow_active=1
 	let g:rainbow_conf={
@@ -126,13 +132,15 @@ runtime macros/matchit.vim
 		\  'scheme': {},
 		\ }
 		\}
+endif
 
-" Syntastic
+if VundleEnabled('syntastic')
 	let g:syntastic_always_populate_loc_list=1
 	let g:syntastic_check_on_open=1
 	let g:syntastic_check_on_wq=0
+endif
 
-" Slime
+if VundleEnabled('vim-slime')
 	let g:slime_target='tmux'
 	let g:slime_default_config={'socket_name': 'default', 'target_pane': '0'}
 	let g:slime_dont_ask_default=1
@@ -142,13 +150,28 @@ runtime macros/matchit.vim
 	nmap <leader>s <Plug>SlimeMotionSend
 	nmap <leader>ss <Plug>SlimeParagraphSend
 	nmap <leader>sv <Plug>SlimeConfig
+endif
 
-" Tagbar
+if VundleEnabled('tagbar')
 	nnoremap <leader>t :TagbarOpen fj<CR>
+endif
 
-" YouCompleteMe
+" Other Plugins
+runtime macros/matchit.vim
+
+"" Eclim
+	let g:EclimCompletionMethod='omnifunc'
+	let s:eclipse_home=$ECLIPSE_HOME
+	if has("win32")
+		let s:null_file='NUL'
+	else
+		let s:null_file='/dev/null'
+	endif
+	exec 'command! StartEclim !'.s:eclipse_home.'/eclimd > '.s:null_file.' 2>&1 &'
+
+"" YouCompleteMe
 	let g:ycm_confirm_extra_conf=0
-	let g:ycm_global_ycm_extra_conf=vimpath.'/.ycm_extra_conf.py'
+	let g:ycm_global_ycm_extra_conf=g:vimpath.'/.ycm_extra_conf.py'
 	let g:ycm_seed_identifiers_with_syntax=1
 	let g:ycm_disable_for_files_larger_than_kb=10000
 	let g:ycm_collect_identifiers_from_tag_files=1
@@ -240,7 +263,7 @@ endif
 
 " Spell
 set spelllang=en_us
-exec 'set spellfile='.vimpath.'/spell/en.utf-8.add'
+exec 'set spellfile='.g:vimpath.'/spell/en.utf-8.add'
 hi SpellBad ctermfg=lightred
 hi SpellCap ctermfg=darkblue
 hi SpellRare ctermfg=darkmagenta
@@ -302,5 +325,3 @@ nnoremap <leader>tc :NERDTreeClose<CR> <C-w><C-p> :TagbarClose<CR>
 " location list window, or close it when is has become empty.
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
-
-autocmd FileType help setlocal nospell

@@ -23,5 +23,7 @@ winstow\.bat
 \.zshhistory
 \.bash_history
 .*\.log
+
 README.*
+LICENSE.*
 COPYING
