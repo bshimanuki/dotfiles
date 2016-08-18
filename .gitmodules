@@ -1,11 +1,12 @@
-[submodule "Vundle"]
-	path = vim/.vim/bundle/Vundle.vim
-	url = https://github.com/VundleVim/Vundle.vim.git
-	ignore = dirty
 [submodule "YouCompleteMe"]
 	path = vim/.vim/ycm/YouCompleteMe
 	url = git@github.com:bshimanuki/YouCompleteMe.git
 	ignore = dirty
+[submodule "vim-plug"]
+	path = vim/.vim/plugged/vim-plug
+	url = https://git::@github.com/junegunn/vim-plug.git
+	ignore = dirty
+	shallow = true
 [submodule "zprezto"]
 	path = zsh/.zsh/.zprezto
 	url = https://github.com/sorin-ionescu/prezto.git

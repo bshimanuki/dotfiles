@@ -4,62 +4,60 @@ filetype off
 if has('unix')
 	runtime debian.vim
 	let g:vimpath=$HOME.'/.vim'
-	exec 'set rtp+='.g:vimpath.'/ycm/YouCompleteMe'
 endif
 
 if has('win32')
 	let g:vimpath=$HOME.'/vimfiles'
 endif
 
-if has('win32') || has('win32unix')
-	let g:loaded_youcompleteme=1
+if has('unix') && !has('win32unix')
+	exec 'set rtp+='.g:vimpath.'/ycm/YouCompleteMe'
 endif
 
-" Vundle
-function VundleEnabled(plugin)
-	let l:plugin_path=g:vimpath.'/bundle/'.a:plugin
+function PluginEnabled(plugin)
+	let l:plugin_path=g:vimpath.'/plugged/'.a:plugin
 	return &rtp =~# l:plugin_path && isdirectory(l:plugin_path.'/.git')
 endfunction
 
-exec 'set rtp+='.g:vimpath.'/bundle/Vundle.vim'
-if !VundleEnabled('Vundle.vim')
-	echomsg 'Vundle not installed.'
+" vim-plug
+if !filereadable(g:vimpath.'/autoload/plug.vim')
+	echomsg 'vim-plug not installed.'
 else
-	call vundle#begin(g:vimpath.'/bundle')
+	call plug#begin(g:vimpath.'/plugged')
 
-	Plugin 'Lokaltog/vim-easymotion'
-	Plugin 'MarcWeber/vim-addon-mw-utils'
-	Plugin 'VundleVim/Vundle.vim'
-	Plugin 'bkad/CamelCaseMotion'
-	Plugin 'ciaranm/detectindent'
-	Plugin 'embear/vim-localvimrc'
-	Plugin 'garbas/vim-snipmate'
-	Plugin 'gerw/vim-latex-suite'
-	Plugin 'haya14busa/incsearch-easymotion.vim'
-	Plugin 'haya14busa/incsearch.vim'
-	Plugin 'jpalardy/vim-slime'
-	Plugin 'kien/ctrlp.vim'
-	Plugin 'luochen1990/rainbow'
-	Plugin 'majutsushi/tagbar'
-	Plugin 'mattn/emmet-vim'
-	Plugin 'scrooloose/nerdcommenter'
-	Plugin 'scrooloose/nerdtree'
-	Plugin 'terryma/vim-multiple-cursors'
-	Plugin 'tomtom/tlib_vim'
-	Plugin 'tpope/vim-fugitive'
-	Plugin 'tpope/vim-surround'
-	Plugin 'tpope/vim-unimpaired'
-	Plugin 'vim-airline/vim-airline'
-	Plugin 'vim-airline/vim-airline-themes'
+	Plug 'Lokaltog/vim-easymotion'
+	Plug 'MarcWeber/vim-addon-mw-utils'
+	Plug 'VundleVim/Vundle.vim'
+	Plug 'bkad/CamelCaseMotion'
+	Plug 'ciaranm/detectindent'
+	Plug 'embear/vim-localvimrc'
+	Plug 'garbas/vim-snipmate'
+	Plug 'gerw/vim-latex-suite'
+	Plug 'haya14busa/incsearch-easymotion.vim'
+	Plug 'haya14busa/incsearch.vim'
+	Plug 'jpalardy/vim-slime'
+	Plug 'kien/ctrlp.vim'
+	Plug 'luochen1990/rainbow'
+	Plug 'majutsushi/tagbar'
+	Plug 'mattn/emmet-vim'
+	Plug 'scrooloose/nerdcommenter'
+	Plug 'scrooloose/nerdtree'
+	Plug 'terryma/vim-multiple-cursors'
+	Plug 'tomtom/tlib_vim'
+	Plug 'tpope/vim-fugitive'
+	Plug 'tpope/vim-surround'
+	Plug 'tpope/vim-unimpaired'
+	Plug 'vim-airline/vim-airline'
+	Plug 'vim-airline/vim-airline-themes'
 	if has('unix') && !has('win32unix')
-		" Plugin 'Valloric/YouCompleteMe'
-		Plugin 'scrooloose/syntastic'
+		" Plug 'Valloric/YouCompleteMe'
+		Plug 'scrooloose/syntastic'
 	endif
-	" Plugin 'Rip-Rip/clang_complete'
-	call vundle#end()
+	" Plug 'Rip-Rip/clang_complete'
+	call plug#end()
 endif
 
-if VundleEnabled('vim-airline')
+if PluginEnabled('vim-airline')
 	if has('gui_running') || &t_Co==256
 		let g:airline_theme='bubblegum'
 	else
@@ -74,50 +72,50 @@ if VundleEnabled('vim-airline')
 	let g:airline_section_y='' " turn off file encoding, file format
 endif
 
-if VundleEnabled('CamelCaseMotion')
+if PluginEnabled('CamelCaseMotion')
 	call camelcasemotion#CreateMotionMappings(',')
 endif
 
-if VundleEnabled('vim-easymotion')
+if PluginEnabled('vim-easymotion')
 	noremap <Plug>(easymotion-prefix) <Nop>
 endif
 
-if VundleEnabled('emmet-vim')
+if PluginEnabled('emmet-vim')
 	let g:user_emmet_install_global=0
 endif
 
-if VundleEnabled('incsearch.vim')
+if PluginEnabled('incsearch.vim')
 	map /  <Plug>(incsearch-forward)
 	map ?  <Plug>(incsearch-backward)
 	map g/ <Plug>(incsearch-stay)
 endif
 
-if VundleEnabled('incsearch-easymotion.vim')
+if PluginEnabled('incsearch-easymotion.vim')
 	map z/ <Plug>(incsearch-easymotion-/)
 	map z? <Plug>(incsearch-easymotion-?)
 	map zg/ <Plug>(incsearch-easymotion-stay)
 endif
 
-if VundleEnabled('vim-latex-suite')
+if PluginEnabled('vim-latex-suite')
 	let g:tex_flavor='latex'
 	imap <C-f> <Plug>IMAP_JumpForward
 	map <C-f> <Plug>IMAP_JumpForward
 endif
 
-if VundleEnabled('vim-localvimrc')
+if PluginEnabled('vim-localvimrc')
 	let g:localvimrc_persistent=1
 	let g:localvimrc_persistence_file=g:vimpath.'/.localvimrc_persistent'
 endif
 
-if VundleEnabled('nerdcommenter')
+if PluginEnabled('nerdcommenter')
 	let g:NERDSpaceDelims=1
 endif
 
-if VundleEnabled('nerdtree')
+if PluginEnabled('nerdtree')
 	nnoremap <leader>n :NERDTreeToggle<CR>
 endif
 
-if VundleEnabled('rainbow')
+if PluginEnabled('rainbow')
 	let s:paren_colors=['red', 'darkcyan', 'lightyellow', 'darkgreen', 'lightblue', 'brown', 'darkmagenta', 'gray']
 	let g:rainbow_active=1
 	let g:rainbow_conf={
@@ -134,13 +132,13 @@ if VundleEnabled('rainbow')
 		\}
 endif
 
-if VundleEnabled('syntastic')
+if PluginEnabled('syntastic')
 	let g:syntastic_always_populate_loc_list=1
 	let g:syntastic_check_on_open=1
 	let g:syntastic_check_on_wq=0
 endif
 
-if VundleEnabled('vim-slime')
+if PluginEnabled('vim-slime')
 	let g:slime_target='tmux'
 	let g:slime_default_config={'socket_name': 'default', 'target_pane': '0'}
 	let g:slime_dont_ask_default=1
@@ -152,7 +150,7 @@ if VundleEnabled('vim-slime')
 	nmap <leader>sv <Plug>SlimeConfig
 endif
 
-if VundleEnabled('tagbar')
+if PluginEnabled('tagbar')
 	nnoremap <leader>t :TagbarOpen fj<CR>
 endif
 
