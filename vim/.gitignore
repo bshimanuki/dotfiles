@@ -1,4 +1,5 @@
-.vim/plugged
 .vim/.localvimrc_persistent
 .vim/.netrwhist
+.vim/autoload/plug.vim
+.vim/plugged
 .vim/spell/*.spl

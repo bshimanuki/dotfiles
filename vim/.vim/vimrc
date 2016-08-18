@@ -16,23 +16,29 @@ endif
 
 function PluginEnabled(plugin)
 	let l:plugin_path=g:vimpath.'/plugged/'.a:plugin
-	return &rtp =~# l:plugin_path && isdirectory(l:plugin_path.'/.git')
+	return exists('g:plugs') && has_key(g:plugs, a:plugin) && !empty(glob(l:plugin_path.'/.git'))
 endfunction
 
 " vim-plug
 if !filereadable(g:vimpath.'/autoload/plug.vim')
-	echomsg 'vim-plug not installed.'
-else
+	exec 'silent !curl -fLo '.g:vimpath.'/autoload/plug.vim --create-dirs '
+				\ .'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+	if v:shell_error==0
+		autocmd VimEnter * echomsg 'vim-plug installed. Run :PlugInstall to install plugins.'
+	else
+		autocmd VimEnter * echomsg 'vim-plug could not be installed.'
+		let l:vim_plug_not_installed=1
+	endif
+endif
+if !exists('l:vim_plug_not_installed')
 	call plug#begin(g:vimpath.'/plugged')
-
 	Plug 'Lokaltog/vim-easymotion'
 	Plug 'MarcWeber/vim-addon-mw-utils'
-	Plug 'VundleVim/Vundle.vim'
 	Plug 'bkad/CamelCaseMotion'
 	Plug 'ciaranm/detectindent'
 	Plug 'embear/vim-localvimrc'
 	Plug 'garbas/vim-snipmate'
-	Plug 'gerw/vim-latex-suite'
+	Plug 'gerw/vim-latex-suite', {'for': ['context', 'plaintex', 'tex']}
 	Plug 'haya14busa/incsearch-easymotion.vim'
 	Plug 'haya14busa/incsearch.vim'
 	Plug 'jpalardy/vim-slime'
@@ -50,10 +56,8 @@ else
 	Plug 'vim-airline/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
 	if has('unix') && !has('win32unix')
-		" Plug 'Valloric/YouCompleteMe'
 		Plug 'scrooloose/syntastic'
 	endif
-	" Plug 'Rip-Rip/clang_complete'
 	call plug#end()
 endif
 
