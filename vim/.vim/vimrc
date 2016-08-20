@@ -322,8 +322,3 @@ command! Bd b # | bd #
 nnoremap <leader>tt :NERDTreeToggle<CR> <C-w><C-p> :Tagbar<CR>
 nnoremap <leader>to :NERDTree<CR> <C-w><C-p> :TagbarOpen<CR>
 nnoremap <leader>tc :NERDTreeClose<CR> <C-w><C-p> :TagbarClose<CR>
-
-" Automatically open, but do not go to (if there are errors) the quickfix /
-" location list window, or close it when is has become empty.
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow

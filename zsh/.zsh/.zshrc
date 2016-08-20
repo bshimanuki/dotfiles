@@ -2,8 +2,8 @@
 alias compinit='compinit -C'
 
 # Prezto
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-	source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+if [[ -r ${ZDOTDIR:-$HOME}/.zprezto/init.zsh ]]; then
+	source ${ZDOTDIR:-$HOME}/.zprezto/init.zsh
 fi
 
 # Aliases
@@ -38,15 +38,12 @@ unsetopt caseglob
 # Prompt
 autoload promptinit
 promptinit
-# prompt suse
-export PS1="%2>>%n%>>@%2>>%m%>>:%~/> "
+prompt suse
 case $TERM in
 	xterm*)
 		precmd(){print -Pn "\e]0;%~/ >\a"}
 		preexec(){print -Pn "\e]0;%~/ > $1\a"}
 		;;
-esac
-case $TERM in
 	screen*)
 		precmd(){print -Pn "\033]2;%~/ >\033\\"}
 		preexec(){print -Pn "\033]2;%~/ > $1\033\\"}
@@ -54,7 +51,9 @@ case $TERM in
 esac
 
 # Python
-[ -f /usr/share/virtualenvwrapper/virtualenvwrapper.sh ] && source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+(( ${+commands[virtualenvwrapper.sh]} )) &&
+	${VIRTUALENVWRAPPER_PYTHON:-python} -c "import virtualenvwrapper" &> /dev/null &&
+	source virtualenvwrapper.sh
 alias mkvirtualenv='mkvirtualenv -p /usr/bin/python2'
 
 # Help
@@ -68,33 +67,33 @@ alias help=run-help
 # active. Only then are the values from $terminfo valid.
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
 	function zle-line-init () {
-	printf '%s' "${terminfo[smkx]}"
-}
-function zle-line-finish () {
-printf '%s' "${terminfo[rmkx]}"
-		}
-		zle -N zle-line-init
-		zle -N zle-line-finish
-	fi
+		printf '%s' "${terminfo[smkx]}"
+	}
+	function zle-line-finish () {
+		printf '%s' "${terminfo[rmkx]}"
+	}
+	zle -N zle-line-init
+	zle -N zle-line-finish
+fi
 
-	# History
-	HISTFILE=~/.zsh_history
-	HISTSIZE=10000
-	SAVEHIST=10000
-	setopt HIST_IGNORE_DUPS
+# History
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt HIST_IGNORE_DUPS
 
-	# Key Bindings
-	KEYTIMEOUT=1
+# Key Bindings
+KEYTIMEOUT=1
 
-	bindkey '\e[1;5D' backward-word # ctrl-left
-	bindkey '\e[1;5C' forward-word # ctrl-right
+bindkey '\e[1;5D' backward-word # ctrl-left
+bindkey '\e[1;5C' forward-word # ctrl-right
 
-	bindkey '^H' backward-delete-char
-	bindkey '^W' backward-kill-word
-	bindkey '^U' kill-line
-	bindkey -as '\e' '\a'
-	bindkey -r '^X'
-	bindkey '^P' history-substring-search-up
-	bindkey '^N' history-substring-search-down
-	bindkey -a '^P' history-substring-search-up
-	bindkey -a '^N' history-substring-search-down
+bindkey '^H' backward-delete-char
+bindkey '^W' backward-kill-word
+bindkey '^U' kill-line
+bindkey -as '\e' '\a'
+bindkey -r '^X'
+bindkey '^P' history-substring-search-up
+bindkey '^N' history-substring-search-down
+bindkey -a '^P' history-substring-search-up
+bindkey -a '^N' history-substring-search-down
