@@ -7,7 +7,22 @@ GLOBAL_IGNORE_LIST=~/.stow-global-ignore
 STOW_IGNORE_LIST="$DOTFILES"/stow/.stow-global-ignore
 TARGET=~
 PACKAGES="$DOTFILES"/*
+
 GNU_STOW=true
+SIZE=large
+PROTOCOL=default
+LARGE_SUBMODULES_LIST="YouCompleteMe"
+
+for arg in "$@"; do
+	shift
+	case "$arg" in
+		"--https") PROTOCOL=https ;;
+		"--mini") SIZE=minimal ;;
+		"--minimal") SIZE=minimal ;;
+		"--small") SIZE=small ;;
+		*) set -- "$@" "$arg" ;;
+	esac
+done
 
 OPTIND=1
 while getopts :t: opt; do
@@ -20,6 +35,17 @@ shift $((OPTIND-1))
 if [ "$@" ]; then
 	PACKAGES="$@"
 fi
+
+contains() {
+	val="$1"
+	shift
+	args="$@"
+	for arg in $args; do
+		[ "$arg" != "$val" ] || exit
+	done
+	false
+}
+
 
 stow_files() {
 	global_ignore_list="$GLOBAL_IGNORE_LIST"
@@ -128,6 +154,19 @@ stow_clone() {
 	done
 }
 
+GIT_SUBMODULE_UPDATE='git submodule update --init --recursive'
+if [ "$SIZE" = "minimal" ]; then
+	GIT_SUBMODULE_UPDATE="$GIT_SUBMODULE_UPDATE --depth 1"
+fi
+if [ "$SIZE" = "minimal" ] || [ "$SIZE" = "small" ]; then
+	for skip in $LARGE_SUBMODULES_LIST; do
+	GIT_SUBMODULE_UPDATE='[ "$name" = "'"$skip"'" ] || '"$GIT_SUBMODULE_UPDATE"
+	done
+fi
+echo $GIT_SUBMODULE_UPDATE
+git submodule update --init
+git submodule foreach "$GIT_SUBMODULE_UPDATE"
+
 if ! [ $(command -v stow) ]; then
 	read -rp "GNU stow not installed. Symlink directly? [y/N] " yn
 	[ "$yn" = "Y" ] || [ "$yn" = "y" ] || exit
@@ -137,7 +176,7 @@ fi
 if stow_target_exists -v; then
 	read -rp "Target files exist. Remove them? [y/N] " yn
 	[ "$yn" = "Y" ] || [ "$yn" = "y" ] || exit
-	rm -f $(stow_targets)
+	rm -rf $(stow_targets)
 	if stow_target_exists; then
 		if $GNU_STOW; then
 			echo "Could not remove all files."
@@ -153,3 +192,4 @@ if ! $GNU_STOW; then
 	alias stow=stow_clone
 fi
 stow -t "$TARGET" $PACKAGES
+echo Dotfiles stowed.
