@@ -12,14 +12,14 @@ GNU_STOW=true
 FORCE=false
 SIZE=large
 PROTOCOL=default
+SHALLOW=false
 LARGE_SUBMODULES_LIST="YouCompleteMe"
 
 for arg in "$@"; do
 	shift
 	case "$arg" in
 		"--https") PROTOCOL=https ;;
-		"--mini") SIZE=minimal ;;
-		"--minimal") SIZE=minimal ;;
+		"--shallow") SHALLOW=true ;;
 		"--small") SIZE=small ;;
 		*) set -- "$@" "$arg" ;;
 	esac
@@ -143,13 +143,13 @@ stow_clone() {
 
 cd "$DOTFILES"
 git submodule init
-if [ "$SIZE" = "minimal" ] || [ "$SIZE" = "small" ]; then
+if [ "$SIZE" = "small" ]; then
 	for skip in $LARGE_SUBMODULES_LIST; do
 		git submodule deinit $(git config --file .gitmodules submodule."$skip".path)
 	done
 fi
 GIT_SUBMODULE_UPDATE_OPTIONS=""
-if [ "$SIZE" = "minimal" ]; then
+if $SHALLOW; then
 	GIT_SUBMODULE_UPDATE_OPTIONS="--depth 1"
 fi
 git submodule update $GIT_SUBMODULE_UPDATE_OPTIONS
