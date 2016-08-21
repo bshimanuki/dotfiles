@@ -106,7 +106,7 @@ stow_targets() {
 		packages="$@"
 	fi
 	for package in $packages; do
-		for file in $(stow_files -i "$package"); do
+		for file in $(stow_files -s "$package"); do
 			target_file="$target${file#$package}"
 			if [ -e  "$target_file" ]; then
 				echo "$target_file"
@@ -144,12 +144,14 @@ stow_clone() {
 		esac
 	done
 	shift $((OPTIND-1))
-	for file in $(stow_files "$@"); do
+	for file in $(stow_files -s "$@"); do
 		if $nop; then
 			echo ln -srt "$target" "$file"
 		else
-			mkdir -p "$target"
-			ln -srt "$target" "$file"
+			if ! [ -e "$target/$(basename $file)" ]; then
+				mkdir -p "$target"
+				ln -srt "$target" "$file"
+			fi
 		fi
 	done
 }
@@ -158,7 +160,7 @@ GIT_SUBMODULE_UPDATE='git submodule update --init --recursive'
 if [ "$SIZE" = "minimal" ]; then
 	GIT_SUBMODULE_UPDATE="$GIT_SUBMODULE_UPDATE --depth 1"
 fi
-if [ "$SIZE" = "minimal" ] || [ "$SIZE" = "small" ]; then
+if [ "$SIZE" = "m.inimal" ] || [ "$SIZE" = "small" ]; then
 	for skip in $LARGE_SUBMODULES_LIST; do
 	GIT_SUBMODULE_UPDATE='[ "$name" = "'"$skip"'" ] || '"$GIT_SUBMODULE_UPDATE"
 	done
@@ -171,6 +173,13 @@ if ! [ $(command -v stow) ]; then
 	read -rp "GNU stow not installed. Symlink directly? [y/N] " yn
 	[ "$yn" = "Y" ] || [ "$yn" = "y" ] || exit
 	GNU_STOW=false
+fi
+
+if [ -f "$TARGET/vimrc" ]; then
+	rm -f "$TARGET/vimrc"
+fi
+if [ -f "$TARGET/.vimrc" ]; then
+	rm -f "$TARGET/.vimrc"
 fi
 
 if stow_target_exists -v; then
@@ -191,5 +200,10 @@ fi
 if ! $GNU_STOW; then
 	alias stow=stow_clone
 fi
+stow -t "$TARGET" "$DOTFILES/stow"
 stow -t "$TARGET" $PACKAGES
 echo Dotfiles stowed.
+
+if ! [ $(command -v vim) ]; then
+	vim -c "PlugUpdate | qa"
+fi
