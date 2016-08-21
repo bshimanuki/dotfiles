@@ -1,6 +1,7 @@
 [submodule "YouCompleteMe"]
 	path = vim/.vim/ycm/YouCompleteMe
-	url = git@github.com:bshimanuki/YouCompleteMe.git
+	url = https://github.com/bshimanuki/YouCompleteMe.git
+	pushurl = git@github.com:bshimanuki/YouCompleteMe.git
 	ignore = dirty
 [submodule "zprezto"]
 	path = zsh/.zsh/.zprezto
