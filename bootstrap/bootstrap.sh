@@ -38,6 +38,8 @@ if [ "$@" ]; then
 	PACKAGES="$@"
 fi
 
+cd "$DOTFILES"
+
 stow_files() {
 	global_ignore_list="$GLOBAL_IGNORE_LIST"
 	OPTIND=1
@@ -49,7 +51,7 @@ stow_files() {
 	done
 	shift $((OPTIND-1))
 	local_ignore_list=.stow-local-ignore
-	for package in "$@"; do
+	for package in $PACKAGES; do
 		if [ -e "$package" ]; then
 			if [ -f "$package/$local_ignore_list" ]; then
 				ignore_list="$package/$local_ignore_list"
@@ -87,13 +89,8 @@ echo Gathering files...
 STOW_FILES="$(stow_files -s)"
 
 stow_targets() {
-	files="$STOW_FILES"
-	target="$TARGET"
-	if [ "$@" ]; then
-		files="$@"
-	fi
-	for file in $files; do
-		target_file="$target/$(basename $file)"
+	for file in $STOW_FILES; do
+		target_file="$TARGET/$(basename $file)"
 		if [ -e  "$target_file" ]; then
 			echo "$target_file"
 		fi
@@ -109,19 +106,17 @@ stow_target_exists() {
 		esac
 	done
 	shift $((OPTIND-1))
-	target_files=$(stow_targets "$@")
+	target_files=$(stow_targets)
 	if $verbose; then
 		for file in $target_files; do
 			echo $file already exists.
 		done
 	fi
-	[ $target_files ]
+	[ "$target_files" ]
 }
 
 stow_clone() {
 	nop=false
-	files="$STOW_FILES"
-	target="$TARGET"
 	OPTIND=1
 	while getopts :n opt; do
 		case $opt in
@@ -129,19 +124,18 @@ stow_clone() {
 		esac
 	done
 	shift $((OPTIND-1))
-	for file in $files; do
+	for file in $STOW_FILES; do
 		if $nop; then
-			echo ln -srt "$target" "$file"
+			echo ln -srt "$TARGET" "$file"
 		else
-			if ! [ -e "$target/$(basename $file)" ]; then
-				mkdir -p "$target"
-				ln -srt "$target" "$file"
+			if ! [ -e "$TARGET/$(basename $file)" ]; then
+				mkdir -p "$TARGET"
+				ln -srt "$TARGET" "$file"
 			fi
 		fi
 	done
 }
 
-cd "$DOTFILES"
 git submodule init
 if [ "$SIZE" = "small" ]; then
 	for skip in $LARGE_SUBMODULES_LIST; do
@@ -154,7 +148,6 @@ if $SHALLOW; then
 fi
 git submodule update $GIT_SUBMODULE_UPDATE_OPTIONS
 git submodule foreach "git submodule update --init --recursive $GIT_SUBMODULE_UPDATE_OPTIONS"
-cd -
 
 if ! [ $(command -v stow) ]; then
 	if ! $FORCE; then
@@ -192,8 +185,8 @@ if stow_target_exists -v; then
 fi
 
 if $GNU_STOW; then
-	stow -t "$TARGET" -d "$DOTFILES" stow
-	stow -t "$TARGET" -d "$DOTFILES" $PACKAGES
+	stow -t "$TARGET" stow
+	stow -t "$TARGET" $PACKAGES
 else
 	stow_clone
 fi
