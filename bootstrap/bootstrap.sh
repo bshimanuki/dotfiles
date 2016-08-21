@@ -6,7 +6,7 @@ DOTFILES="$(dirname "$BOOTSTRAP_DIR")"
 GLOBAL_IGNORE_LIST=~/.stow-global-ignore
 STOW_IGNORE_LIST="$DOTFILES"/stow/.stow-global-ignore
 TARGET=~
-PACKAGES="$DOTFILES"/*
+PACKAGES="$(ls $DOTFILES)"
 
 GNU_STOW=true
 FORCE=false
@@ -37,17 +37,6 @@ shift $((OPTIND-1))
 if [ "$@" ]; then
 	PACKAGES="$@"
 fi
-
-contains() {
-	val="$1"
-	shift
-	args="$@"
-	for arg in $args; do
-		[ "$arg" != "$val" ] || exit
-	done
-	false
-}
-
 
 stow_files() {
 	global_ignore_list="$GLOBAL_IGNORE_LIST"
@@ -94,26 +83,20 @@ stow_files() {
 	done
 }
 
+echo Gathering files...
+STOW_FILES="$(stow_files -s)"
+
 stow_targets() {
+	files="$STOW_FILES"
 	target="$TARGET"
-	packages=$PACKAGES
-	OPTIND=1
-	while getopts :t: opt; do
-		case $opt in
-			t) target="$OPTARG" ;;
-		esac
-	done
-	shift $((OPTIND-1))
 	if [ "$@" ]; then
-		packages="$@"
+		files="$@"
 	fi
-	for package in $packages; do
-		for file in $(stow_files -s "$package"); do
-			target_file="$target${file#$package}"
-			if [ -e  "$target_file" ]; then
-				echo "$target_file"
-			fi
-		done
+	for file in $files; do
+		target_file="$target/$(basename $file)"
+		if [ -e  "$target_file" ]; then
+			echo "$target_file"
+		fi
 	done
 }
 
@@ -125,28 +108,28 @@ stow_target_exists() {
 			v) verbose=true ;;
 		esac
 	done
-	# no shift, forward all args
+	shift $((OPTIND-1))
 	target_files=$(stow_targets "$@")
 	if $verbose; then
 		for file in $target_files; do
 			echo $file already exists.
 		done
 	fi
-	[ "$target_files" ]
+	[ $target_files ]
 }
 
 stow_clone() {
 	nop=false
-	target=..
+	files="$STOW_FILES"
+	target="$TARGET"
 	OPTIND=1
-	while getopts :nt: opt; do
+	while getopts :n opt; do
 		case $opt in
 			n) nop=true ;;
-			t) target="$OPTARG" ;;
 		esac
 	done
 	shift $((OPTIND-1))
-	for file in $(stow_files -s "$@"); do
+	for file in $files; do
 		if $nop; then
 			echo ln -srt "$target" "$file"
 		else
@@ -158,10 +141,11 @@ stow_clone() {
 	done
 }
 
+cd "$DOTFILES"
 git submodule init
 if [ "$SIZE" = "minimal" ] || [ "$SIZE" = "small" ]; then
 	for skip in $LARGE_SUBMODULES_LIST; do
-		git submodule deinit $(git config --file "$DOTFILES"/.gitmodules submodule."$skip".path)
+		git submodule deinit $(git config --file .gitmodules submodule."$skip".path)
 	done
 fi
 GIT_SUBMODULE_UPDATE_OPTIONS=""
@@ -170,6 +154,7 @@ if [ "$SIZE" = "minimal" ]; then
 fi
 git submodule update $GIT_SUBMODULE_UPDATE_OPTIONS
 git submodule foreach "git submodule update --init --recursive $GIT_SUBMODULE_UPDATE_OPTIONS"
+cd -
 
 if ! [ $(command -v stow) ]; then
 	if ! $FORCE; then
@@ -206,13 +191,14 @@ if stow_target_exists -v; then
 	fi
 fi
 
-if ! $GNU_STOW; then
-	alias stow=stow_clone
+if $GNU_STOW; then
+	stow -t "$TARGET" -d "$DOTFILES" stow
+	stow -t "$TARGET" -d "$DOTFILES" $PACKAGES
+else
+	stow_clone
 fi
-stow -t "$TARGET" "$DOTFILES/stow"
-stow -t "$TARGET" $PACKAGES
 echo Dotfiles stowed.
 
-if ! [ $(command -v vim) ]; then
+if [ $(command -v vim) ]; then
 	vim -c "PlugUpdate | qa"
 fi
