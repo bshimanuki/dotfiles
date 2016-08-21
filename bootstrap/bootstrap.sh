@@ -9,6 +9,7 @@ TARGET=~
 PACKAGES="$DOTFILES"/*
 
 GNU_STOW=true
+FORCE=false
 SIZE=large
 PROTOCOL=default
 LARGE_SUBMODULES_LIST="YouCompleteMe"
@@ -25,8 +26,9 @@ for arg in "$@"; do
 done
 
 OPTIND=1
-while getopts :t: opt; do
+while getopts :ft: opt; do
 	case $opt in
+		f) FORCE=true ;;
 		t) TARGET="$OPTARG" ;;
 	esac
 done
@@ -156,22 +158,24 @@ stow_clone() {
 	done
 }
 
-GIT_SUBMODULE_UPDATE='git submodule update --init --recursive'
-if [ "$SIZE" = "minimal" ]; then
-	GIT_SUBMODULE_UPDATE="$GIT_SUBMODULE_UPDATE --depth 1"
-fi
-if [ "$SIZE" = "m.inimal" ] || [ "$SIZE" = "small" ]; then
+git submodule init
+if [ "$SIZE" = "minimal" ] || [ "$SIZE" = "small" ]; then
 	for skip in $LARGE_SUBMODULES_LIST; do
-	GIT_SUBMODULE_UPDATE='[ "$name" = "'"$skip"'" ] || '"$GIT_SUBMODULE_UPDATE"
+		git submodule deinit $(git config --file "$DOTFILES"/.gitmodules submodule."$skip".path)
 	done
 fi
-echo $GIT_SUBMODULE_UPDATE
-git submodule update --init
-git submodule foreach "$GIT_SUBMODULE_UPDATE"
+GIT_SUBMODULE_UPDATE_OPTIONS=""
+if [ "$SIZE" = "minimal" ]; then
+	GIT_SUBMODULE_UPDATE_OPTIONS="--depth 1"
+fi
+git submodule update $GIT_SUBMODULE_UPDATE_OPTIONS
+git submodule foreach "git submodule update --init --recursive $GIT_SUBMODULE_UPDATE_OPTIONS"
 
 if ! [ $(command -v stow) ]; then
-	read -rp "GNU stow not installed. Symlink directly? [y/N] " yn
-	[ "$yn" = "Y" ] || [ "$yn" = "y" ] || exit
+	if ! $FORCE; then
+		read -rp "GNU stow not installed. Symlink directly? [y/N] " yn
+		[ "$yn" = "Y" ] || [ "$yn" = "y" ] || exit
+	fi
 	GNU_STOW=false
 fi
 
@@ -183,17 +187,22 @@ if [ -f "$TARGET/.vimrc" ]; then
 fi
 
 if stow_target_exists -v; then
-	read -rp "Target files exist. Remove them? [y/N] " yn
-	[ "$yn" = "Y" ] || [ "$yn" = "y" ] || exit
+	if ! $FORCE; then
+		read -rp "Target files exist. Remove them? [y/N] " yn
+		[ "$yn" = "Y" ] || [ "$yn" = "y" ] || exit
+	fi
 	rm -rf $(stow_targets)
 	if stow_target_exists; then
-		if $GNU_STOW; then
-			echo "Could not remove all files."
-			read -rp "Continue without GNU stow and symlink directly? [Y/n] " yn
-		else
-			read -rp "Could not remove all files. Continue? [Y/n] " yn
+		if ! $FORCE; then
+			if $GNU_STOW; then
+				echo "Could not remove all files."
+				read -rp "Continue without GNU stow and symlink directly? [Y/n] " yn
+			else
+				read -rp "Could not remove all files. Continue? [Y/n] " yn
+			fi
+			[ "$yn" = "N" ] || [ "$yn" = "n" ] || exit
 		fi
-		[ "$yn" = "N" ] || [ "$yn" = "n" ] || exit
+		GNU_STOW=false
 	fi
 fi
 
