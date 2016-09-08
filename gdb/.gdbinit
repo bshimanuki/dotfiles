@@ -1,3 +1,6 @@
+# allow local .gdbinit
+set auto-load safe-path /
+
 python
 import os
 import sys

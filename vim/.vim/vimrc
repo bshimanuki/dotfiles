@@ -113,6 +113,7 @@ endif
 
 if PluginEnabled('nerdcommenter')
 	let g:NERDSpaceDelims=1
+	let g:NERDCustomDelimiters={'c':{'left':'//'}} " requires C99
 endif
 
 if PluginEnabled('nerdtree')
@@ -173,6 +174,7 @@ runtime macros/matchit.vim
 
 "" YouCompleteMe
 	let g:ycm_confirm_extra_conf=0
+	let g:ycm_extra_conf_vim_data=['v:version','&filetype']
 	let g:ycm_global_ycm_extra_conf=g:vimpath.'/.ycm_extra_conf.py'
 	let g:ycm_seed_identifiers_with_syntax=1
 	let g:ycm_disable_for_files_larger_than_kb=10000
