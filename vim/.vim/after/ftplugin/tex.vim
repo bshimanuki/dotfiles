@@ -1,13 +1,15 @@
 " Undo some latex-suite macros
-call IMAP('()', '()', 'tex')
-call IMAP('{}', '{}', 'tex')
-call IMAP('[]', '[]', 'tex')
-call IMAP('::', '::', 'tex')
-call IMAP('{{', '{{', 'tex')
-call IMAP('((', '((', 'tex')
-call IMAP('[[', '[[', 'tex')
-call IMAP('$$', '$$', 'tex')
-call IMAP('~~', '~~', 'tex')
-call IMAP('SPA', 'SPA', 'tex')
+if exists('*IMAP')
+  call IMAP('()', '()', 'tex')
+  call IMAP('{}', '{}', 'tex')
+  call IMAP('[]', '[]', 'tex')
+  call IMAP('::', '::', 'tex')
+  call IMAP('{{', '{{', 'tex')
+  call IMAP('((', '((', 'tex')
+  call IMAP('[[', '[[', 'tex')
+  call IMAP('$$', '$$', 'tex')
+  call IMAP('~~', '~~', 'tex')
+  call IMAP('SPA', 'SPA', 'tex')
+endif
 
 silent! unmap <Plug>

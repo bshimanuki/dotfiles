@@ -80,6 +80,12 @@ if PluginEnabled('CamelCaseMotion')
 	call camelcasemotion#CreateMotionMappings(',')
 endif
 
+if PluginEnabled('detectindent')
+	let g:detectindent_preferred_expandtab=1
+	let g:detectindent_preferred_indent=2
+	autocmd FileType * DetectIndent
+endif
+
 if PluginEnabled('vim-easymotion')
 	noremap <Plug>(easymotion-prefix) <Nop>
 endif
@@ -95,9 +101,9 @@ if PluginEnabled('incsearch.vim')
 endif
 
 if PluginEnabled('incsearch-easymotion.vim')
-	map z/ <Plug>(incsearch-easymotion-/)
-	map z? <Plug>(incsearch-easymotion-?)
-	map zg/ <Plug>(incsearch-easymotion-stay)
+	map ,/ <Plug>(incsearch-easymotion-/)
+	map ,? <Plug>(incsearch-easymotion-?)
+	map ,g/ <Plug>(incsearch-easymotion-stay)
 endif
 
 if PluginEnabled('vim-latex-suite')
@@ -113,7 +119,10 @@ endif
 
 if PluginEnabled('nerdcommenter')
 	let g:NERDSpaceDelims=1
-	let g:NERDCustomDelimiters={'c':{'left':'//'}} " requires C99
+	let g:NERDCustomDelimiters={
+		\ 'c':{'left':'//'},
+		\ 'python':{'left':'#'},
+		\} " requires C99
 endif
 
 if PluginEnabled('nerdtree')
@@ -148,7 +157,7 @@ if PluginEnabled('vim-slime')
 	let g:slime_default_config={'socket_name': 'default', 'target_pane': '0'}
 	let g:slime_dont_ask_default=1
 	let g:slime_no_mappings=1
-	let g:slime_python_ipython=1
+	" let g:slime_python_ipython=1
 	xmap <leader>s <Plug>SlimeRegionSend
 	nmap <leader>s <Plug>SlimeMotionSend
 	nmap <leader>ss <Plug>SlimeParagraphSend
@@ -324,3 +333,8 @@ command! Bd b # | bd #
 nnoremap <leader>tt :NERDTreeToggle<CR> <C-w><C-p> :Tagbar<CR>
 nnoremap <leader>to :NERDTree<CR> <C-w><C-p> :TagbarOpen<CR>
 nnoremap <leader>tc :NERDTreeClose<CR> <C-w><C-p> :TagbarClose<CR>
+
+" Automatically open, but do not go to (if there are errors) the quickfix /
+" location list window, or close it when is has become empty.
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
