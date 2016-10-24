@@ -81,7 +81,7 @@ if PluginEnabled('CamelCaseMotion')
 endif
 
 if PluginEnabled('detectindent')
-	let g:detectindent_preferred_expandtab=1
+	let g:detectindent_preferred_expandtab=0
 	let g:detectindent_preferred_indent=2
 	autocmd FileType * DetectIndent
 endif
@@ -267,6 +267,7 @@ hi Cursor guibg=RoyalBlue ctermbg=lightblue
 hi MatchParen guibg=darkblue guifg=cyan ctermbg=darkblue ctermfg=cyan
 hi Folded guibg=Gray11 guifg=darkcyan ctermbg=234 ctermfg=darkcyan " 234=Gray11
 hi DiffDelete ctermfg=lightblue
+hi Todo ctermfg=yellow
 if has('win32unix')
 	let &t_ti.="\e[1 q"
 	let &t_SI.="\e[5 q"
@@ -277,10 +278,10 @@ endif
 " Spell
 set spelllang=en_us
 exec 'set spellfile='.g:vimpath.'/spell/en.utf-8.add'
-hi SpellBad ctermfg=lightred
-hi SpellCap ctermfg=darkblue
-hi SpellRare ctermfg=darkmagenta
-hi SpellLocal ctermfg=darkblue
+hi SpellBad ctermbg=darkred ctermfg=lightred
+hi SpellCap ctermbg=darkblue ctermfg=lightblue
+hi SpellRare ctermbg=darkmagenta ctermfg=lightmagenta
+hi SpellLocal ctermbg=darkblue ctermfg=lightblue
 
 " Shell
 set shellslash
