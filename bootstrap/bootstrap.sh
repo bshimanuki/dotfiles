@@ -1,8 +1,8 @@
 #!/bin/sh -e
 
 # fails if called as a symlink
-BOOTSTRAP_DIR="$(dirname "$0")"
-DOTFILES="$(dirname "$BOOTSTRAP_DIR")"
+BOOTSTRAP_DIR="$(dirname $(readlink -f $0))"
+DOTFILES="$(dirname $BOOTSTRAP_DIR)"
 GLOBAL_IGNORE_LIST=~/.stow-global-ignore
 STOW_IGNORE_LIST="$DOTFILES"/stow/.stow-global-ignore
 TARGET=~
