@@ -227,7 +227,7 @@ set modeline
 set visualbell t_vb=
 autocmd GUIEnter * set t_vb=
 set ruler
-set mouse=a
+set mouse=
 set backspace=indent,eol,start
 set display=lastline,uhex
 set whichwrap+=<,>,[,]
