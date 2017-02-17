@@ -238,7 +238,7 @@ set splitbelow splitright
 set diffopt+=vertical
 set history=100
 set wildignore=bin
-set directory=~/tmp//,~/tmp,/var/tmp,/tmp
+set directory=~/tmp//,~/tmp,/var/tmp,.,/tmp
 
 " Searching
 set incsearch hlsearch
