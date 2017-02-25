@@ -51,9 +51,9 @@ case $TERM in
 esac
 
 # Python
-(( ${+commands[virtualenvwrapper.sh]} )) &&
+(( ${+commands[virtualenvwrapper_lazy.sh]} )) &&
 	${VIRTUALENVWRAPPER_PYTHON:-python} -c "import virtualenvwrapper" &> /dev/null &&
-	source virtualenvwrapper.sh
+	source virtualenvwrapper_lazy.sh
 alias mkvirtualenv='mkvirtualenv -p /usr/bin/python2'
 
 # Help
