@@ -1,7 +1,13 @@
 #!/bin/sh -e
 
+# no readlink -f option on Darwin
+readlink_f(){ perl -MCwd -e 'print Cwd::abs_path shift' "$1"; }
+
+# no grep -P option on Darwin
+grep_P(){ perl -ne 'print if $1'; }
+
 # fails if called as a symlink
-BOOTSTRAP_DIR="$(dirname $(readlink -f $0))"
+BOOTSTRAP_DIR="$(dirname $(readlink_f $0))"
 DOTFILES="$(dirname $BOOTSTRAP_DIR)"
 GLOBAL_IGNORE_LIST=~/.stow-global-ignore
 STOW_IGNORE_LIST="$DOTFILES"/stow/.stow-global-ignore
@@ -69,7 +75,7 @@ stow_files() {
 								ignore_regex="/$ignore_regex/"
 								ignore_regex="$(echo "$ignore_regex" | sed 's:^/^:^:')"
 								ignore_regex="$(echo "$ignore_regex" | sed 's:$/$:/$:')"
-								if [ $(echo "/$base/" | grep -P "$ignore_regex") ]; then
+								if [ $(echo "/$base/" | grep_P "$ignore_regex") ]; then
 									ignore=true
 									break
 								fi

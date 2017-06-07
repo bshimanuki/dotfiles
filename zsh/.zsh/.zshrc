@@ -7,7 +7,12 @@ if [[ -r ${ZDOTDIR:-$HOME}/.zprezto/init.zsh ]]; then
 fi
 
 # Aliases
-alias ls='ls --color=auto -F -v'
+if [[ `uname` == 'Darwin' ]]
+then
+	alias ls='ls -G -F -v'
+else
+	alias ls='ls --color=auto -F -v'
+fi
 alias la='ls -A'
 alias lla='ll -A'
 alias s='ls'
