@@ -34,6 +34,7 @@ if !exists('l:vim_plug_not_installed')
 	call plug#begin(g:vimpath.'/plugged')
 	Plug 'Lokaltog/vim-easymotion'
 	Plug 'MarcWeber/vim-addon-mw-utils'
+	Plug 'Vimjas/vim-python-pep8-indent', {'for': ['python']}
 	Plug 'bkad/CamelCaseMotion'
 	Plug 'ciaranm/detectindent'
 	Plug 'embear/vim-localvimrc'
