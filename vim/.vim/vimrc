@@ -81,6 +81,10 @@ if PluginEnabled('CamelCaseMotion')
 	call camelcasemotion#CreateMotionMappings(',')
 endif
 
+if PluginEnabled('ctrlp.vim')
+	let g:ctrlp_working_path_mode='a'
+endif
+
 if PluginEnabled('detectindent')
 	let g:detectindent_preferred_expandtab=0
 	let g:detectindent_preferred_indent=2
