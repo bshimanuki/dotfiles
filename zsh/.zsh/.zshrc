@@ -102,3 +102,9 @@ bindkey '^P' history-substring-search-up
 bindkey '^N' history-substring-search-down
 bindkey -a '^P' history-substring-search-up
 bindkey -a '^N' history-substring-search-down
+
+# ROS
+# source ~/UROP/multi_car_ws/ros.zshrc
+if [[ $(readlink -f .)/ == /home/brian/MIT/Senior/UROP/* ]]; then
+	source ~/UROP/multi_car_ws/ros.zshrc
+fi
