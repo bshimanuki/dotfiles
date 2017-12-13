@@ -37,6 +37,7 @@ if !exists('l:vim_plug_not_installed')
 	Plug 'Vimjas/vim-python-pep8-indent', {'for': ['python']}
 	Plug 'bkad/CamelCaseMotion'
 	Plug 'ciaranm/detectindent'
+	Plug 'editorconfig/editorconfig-vim'
 	Plug 'embear/vim-localvimrc'
 	Plug 'garbas/vim-snipmate'
 	Plug 'gerw/vim-latex-suite', {'for': ['context', 'plaintex', 'tex']}
