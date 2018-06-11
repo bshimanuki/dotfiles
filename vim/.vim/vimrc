@@ -188,6 +188,7 @@ runtime macros/matchit.vim
 	exec 'command! StartEclim !'.s:eclipse_home.'/eclimd > '.s:null_file.' 2>&1 &'
 
 "" YouCompleteMe
+	let g:ycm_python_binary_path='python3'
 	let g:ycm_confirm_extra_conf=0
 	let g:ycm_extra_conf_vim_data=['v:version','&filetype']
 	let g:ycm_global_ycm_extra_conf=g:vimpath.'/.ycm_extra_conf.py'

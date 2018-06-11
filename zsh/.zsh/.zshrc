@@ -10,13 +10,14 @@ fi
 if [[ `uname` == 'Darwin' ]]
 then
 	alias ls='ls -G -F -v'
+	alias rm='nocorrect rm'
 else
 	alias ls='ls --color=auto -F -v'
+	alias rm='nocorrect rm -I'
 fi
 alias la='ls -A'
 alias lla='ll -A'
 alias s='ls'
-alias rm='nocorrect rm -I'
 setopt rm_star_silent
 alias gt='git status'
 alias tpwd='[ -n "$TMUX" ] && tmux set-option default-command "cd $PWD && $SHELL -l"'
@@ -105,6 +106,6 @@ bindkey -a '^N' history-substring-search-down
 
 # ROS
 # source ~/UROP/multi_car_ws/ros.zshrc
-if [[ $(readlink -f .)/ == /home/brian/MIT/Senior/UROP/* ]]; then
+if [[ `uname` == 'Linux' && $(readlink -f .)/ == /home/brian/MIT/Senior/UROP/* ]]; then
 	source ~/UROP/multi_car_ws/ros.zshrc
 fi
