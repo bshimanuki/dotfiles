@@ -12,7 +12,11 @@ export PATH=${PATH}:/opt/android-studio/bin
 export ANDROID_HOME=/opt/android-studio/sdk
 
 ## C++
-export LD_LIBRARY_PATH=/usr/local/lib
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
+
+## Cuda
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
+export PATH=${PATH}:/usr/local/cuda/bin
 
 ## Java
 export ECLIPSE_HOME=/opt/eclipse
