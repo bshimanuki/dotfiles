@@ -141,3 +141,5 @@ assertability
 disjunction
 invariants
 gaussian
+config
+tensorflow

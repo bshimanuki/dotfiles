@@ -86,7 +86,8 @@ fi
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
-setopt HIST_IGNORE_DUPS
+setopt hist_ignore_dups
+setopt interactive_comments
 
 # Key Bindings
 KEYTIMEOUT=1
