@@ -15,12 +15,13 @@ export ANDROID_HOME=/opt/android-studio/sdk
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
 
 ## Cuda
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
-export PATH=${PATH}:/usr/local/cuda/bin
+export CUDA_HOME=/usr/local/cuda
+export PATH=${PATH}:$CUDA_HOME/bin
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$CUDA_HOME/lib64:$CUDA_HOME/extras/CUPTI/lib64:/usr/lib/nvidia-390
 
 ## Java
 export ECLIPSE_HOME=/opt/eclipse
-export CLASSPATH=.:bin:lib/\*:/usr/share/java/\*
+export CLASSPATH=${CLASSPATH}:.:bin:lib/\*:/usr/share/java/\*
 
 ## Python
 export PYTHONSTARTUP=~/.python/pythonrc.py
