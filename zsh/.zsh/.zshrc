@@ -20,7 +20,7 @@ alias lla='ll -A'
 alias s='ls'
 setopt rm_star_silent
 alias gt='git status'
-alias tpwd='[ -n "$TMUX" ] && tmux set-option default-command "cd $PWD && $SHELL -l"'
+alias tpwd='[ -n "$TMUX" ] && tmux set-option default-command "cd \"$PWD\" && $SHELL -l"'
 alias mmv='noglob zmv -W'
 
 # Directory
