@@ -45,11 +45,12 @@ c_flags = [
 ]
 
 cpp_flags = [
-'-std=c++11',
+'-std=c++14',
+# '-stdlib=libc++',
 '-x',
 'c++',
-'-isystem',
-'/usr/include/c++/4.8',
+# '-isystem',
+# '/usr/include/c++/5',
 ]
 
 objc_flags = [
@@ -146,10 +147,10 @@ def FlagsForFile( filename, **kwargs ):
     # NOTE: This is just for YouCompleteMe; it's highly likely that your project
     # does NOT need to remove the stdlib flag. DO NOT USE THIS IN YOUR
     # ycm_extra_conf IF YOU'RE NOT 100% SURE YOU NEED IT.
-    try:
-      final_flags.remove( '-stdlib=libc++' )
-    except ValueError:
-      pass
+    # try:
+      # final_flags.remove( '-stdlib=libc++' )
+    # except ValueError:
+      # pass
   else:
     relative_to = DirectoryOfThisScript()
     filetype = kwargs['client_data']['&filetype']
