@@ -11,3 +11,7 @@
 	path = tmux/.tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
 	ignore = dirty
+[submodule "gdb/.gdb/pwndbg"]
+	path = gdb/.gdb/pwndbg
+	url = https://github.com/pwndbg/pwndbg
+	ignore = dirty
