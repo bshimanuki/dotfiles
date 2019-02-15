@@ -211,6 +211,7 @@ runtime macros/matchit.vim
 		\}
 	nnoremap <leader>f :YcmCompleter GoTo<CR>
 	nnoremap <leader>h :YcmCompleter GetDoc<CR>
+	nnoremap <leader>x :YcmCompleter FixIt<CR>
 
 " Config
 if has("patch-7.4.338")
