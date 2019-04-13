@@ -13,6 +13,7 @@ export ANDROID_HOME=/opt/android-studio/sdk
 
 ## C++
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
+export CXXFLAGS="${CXXFLAGS} -std=c++1z"
 
 ## Cuda
 export CUDA_HOME=/usr/local/cuda
