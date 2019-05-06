@@ -84,6 +84,14 @@ endif
 
 if PluginEnabled('ctrlp.vim')
 	let g:ctrlp_working_path_mode='a'
+	let s:compiled_ext = '|o|out|pdf|py[cdo]'
+	let s:img_ext = '|jpg|png'
+	let s:data_ext = '|npy|npz|onnx|pb|pkl|pt'
+	let s:tex_ext = '|aux|bbl|bcf|blg|brf|fdb_latexmk|fls|idx|ilg|lof|log|lol|lot|pre|synctex\.gz|synctex\.gz\(busy\)|toc|x\.gnuplot'
+	let g:ctrlp_custom_ignore = {
+				\ 'dir':  '\v[\/]\.(git|hg|svn)$',
+				\ 'file': '\v\.(exe|so|dll' . s:compiled_ext . s:data_ext . s:img_ext . s:tex_ext . ')$',
+				\ }
 endif
 
 if PluginEnabled('detectindent')
@@ -246,7 +254,6 @@ set notimeout ttimeout ttimeoutlen=0
 set splitbelow splitright
 set diffopt+=vertical
 set history=100
-set wildignore=bin
 set directory=~/tmp//,~/tmp,/var/tmp,.,/tmp
 
 " Searching
