@@ -179,7 +179,7 @@ if PluginEnabled('vim-slime')
 endif
 
 if PluginEnabled('tagbar')
-	nnoremap <leader>t :TagbarOpen fj<CR>
+	nnoremap <leader>te :TagbarOpen fj<CR>
 endif
 
 " Other Plugins

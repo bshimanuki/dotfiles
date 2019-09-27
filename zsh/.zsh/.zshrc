@@ -45,6 +45,7 @@ unsetopt caseglob
 autoload promptinit
 promptinit
 prompt suse
+setopt prompt_sp
 case $TERM in
 	xterm*)
 		precmd(){print -Pn "\e]0;%~/ >\a"}

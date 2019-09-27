@@ -38,5 +38,4 @@ Thumbs.db
 
 # Swap Files #
 ##############
-*.swp
-*.swo
+*.sw?
