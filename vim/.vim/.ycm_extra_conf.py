@@ -1,3 +1,4 @@
+import glob
 import os
 import os.path
 import fnmatch
@@ -13,7 +14,7 @@ C_BASE_FLAGS = [
         '-Wno-variadic-macros',
         '-fexceptions',
         '-ferror-limit=10000',
-        '-DNDEBUG',
+        '-DDEBUG',
         '-std=c11',
         '-I/usr/lib/',
         '-I/usr/include/'
@@ -26,7 +27,7 @@ CPP_BASE_FLAGS = [
         '-Wno-variadic-macros',
         '-fexceptions',
         '-ferror-limit=10000',
-        '-DNDEBUG',
+        '-DDEBUG',
         '-std=c++1z',
         '-xc++',
         '-I/usr/lib/',
@@ -58,7 +59,14 @@ HEADER_EXTENSIONS = [
         ]
 
 HEADER_DIRECTORIES = [
-        'include'
+        'include',
+        ]
+
+INCLUDE_DIRECTORIES = [
+        'include',
+        'external/*/include',
+        '/usr/include',
+        '/usr/include/*',
         ]
 
 BUILD_DIRECTORY = 'build';
@@ -70,6 +78,14 @@ def IsSourceFile(filename):
 def IsHeaderFile(filename):
     extension = os.path.splitext(filename)[1]
     return extension in HEADER_EXTENSIONS
+
+def GetProjectRoot(filename):
+    if os.path.exists(os.path.join(filename, '.git')):
+        return filename
+    parent = os.path.dirname(filename)
+    if parent == filename:
+        return None
+    return GetProjectRoot(parent)
 
 def GetCompilationInfoForFile(database, filename):
     if IsHeaderFile(filename):
@@ -148,16 +164,19 @@ def FlagsForClangComplete(root):
         return None
 
 def FlagsForInclude(root):
-    try:
-        include_path = FindNearest(root, 'include')
-        flags = []
-        for dirroot, dirnames, filenames in os.walk(include_path):
-            for dir_path in dirnames:
-                real_path = os.path.join(dirroot, dir_path)
+    flags = []
+    for include_name in INCLUDE_DIRECTORIES:
+        try:
+            include_path = FindNearest(root, include_name)
+            for dirroot, dirnames, filenames in os.walk(include_path):
+                for dir_path in dirnames:
+                    real_path = os.path.join(dirroot, dir_path)
+                    flags = flags + ["-I" + real_path]
+        except:
+            project_root = GetProjectRoot(root)
+            for real_path in glob.glob(os.path.join(project_root, include_name)):
                 flags = flags + ["-I" + real_path]
-        return flags
-    except:
-        return None
+    return flags or None
 
 def FlagsForCompilationDatabase(root, filename):
     try:
@@ -192,6 +211,8 @@ def FlagsForFile(filename):
                 final_flags = C_BASE_FLAGS
             else:
                 final_flags = CPP_BASE_FLAGS
+        else:
+            final_flags = CPP_BASE_FLAGS
 
         clang_flags = FlagsForClangComplete(root)
         if clang_flags:
