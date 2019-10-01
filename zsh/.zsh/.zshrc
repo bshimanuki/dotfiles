@@ -105,3 +105,6 @@ bindkey '^P' history-substring-search-up
 bindkey '^N' history-substring-search-down
 bindkey -a '^P' history-substring-search-up
 bindkey -a '^N' history-substring-search-down
+
+# Broken function in old zsh
+autoload -Uz __git_files
