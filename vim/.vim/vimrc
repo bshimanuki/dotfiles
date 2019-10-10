@@ -84,7 +84,7 @@ endif
 
 if PluginEnabled('ctrlp.vim')
 	let g:ctrlp_working_path_mode='a'
-	let s:compiled_ext = '|o|out|pdf|py[cdo]'
+	let s:compiled_ext = '|d|o|out|pdf|py[cdo]'
 	let s:img_ext = '|jpg|png'
 	let s:data_ext = '|npy|npz|onnx|pb|pkl|pt'
 	let s:tex_ext = '|aux|bbl|bcf|blg|brf|fdb_latexmk|fls|idx|ilg|lof|log|lol|lot|pre|synctex\.gz|synctex\.gz\(busy\)|toc|x\.gnuplot'
