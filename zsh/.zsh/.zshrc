@@ -1,3 +1,5 @@
+export fpath=($fpath ${ZDOTDIR:-$HOME}/.zfunc)
+
 # Don't recompile zcompdump
 alias compinit='compinit -C'
 
@@ -105,6 +107,10 @@ bindkey '^P' history-substring-search-up
 bindkey '^N' history-substring-search-down
 bindkey -a '^P' history-substring-search-up
 bindkey -a '^N' history-substring-search-down
+
+## use v for edit-command-line and move ^V to visual-mode in vicmd mode
+bindkey -a '^V' visual-mode
+bindkey -a 'v' edit-command-line
 
 # Broken function in old zsh
 autoload -Uz __git_files
