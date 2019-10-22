@@ -345,6 +345,11 @@ exec "vnoremap <silent> [[ ?".s:function_match."{<CR> " . s:delete_last_history 
 exec "vnoremap <silent> ]] /".s:function_match."{<CR> " . s:delete_last_history . "gv^"
 exec "vnoremap <silent> [] ?".s:function_match."}<CR> " . s:delete_last_history . "gv^"
 exec "vnoremap <silent> ][ /".s:function_match."}<CR> " . s:delete_last_history . "gv^"
+"" Grep for word under cursor
+""" recursive under cwd
+nnoremap <silent> <expr> gr ":silent vimgrep /\\C\\<" . expand("<cword>") . "\\>/j **/*<CR>"
+""" nonrecursive in same directory
+nnoremap <silent> <expr> gR ":silent vimgrep /\\C\\<" . expand("<cword>") . "\\>/j %:p:h/*<CR>"
 "" Layout
 command! Bd b # | bd #
 nnoremap <leader>tt :NERDTreeToggle<CR> <C-w><C-p> :Tagbar<CR>

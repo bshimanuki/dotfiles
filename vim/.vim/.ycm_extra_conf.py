@@ -17,7 +17,7 @@ C_BASE_FLAGS = [
         '-DDEBUG',
         '-std=c11',
         '-I/usr/lib/',
-        '-I/usr/include/'
+        '-I/usr/include/',
         ]
 
 CPP_BASE_FLAGS = [
@@ -35,7 +35,7 @@ CPP_BASE_FLAGS = [
         ]
 
 C_SOURCE_EXTENSIONS = [
-        '.c'
+        '.c',
         ]
 
 CPP_SOURCE_EXTENSIONS = [
@@ -43,23 +43,24 @@ CPP_SOURCE_EXTENSIONS = [
         '.cxx',
         '.cc',
         '.m',
-        '.mm'
+        '.mm',
         ]
 
 SOURCE_DIRECTORIES = [
         'src',
-        'lib'
+        'lib',
         ]
 
 HEADER_EXTENSIONS = [
         '.h',
         '.hxx',
         '.hpp',
-        '.hh'
+        '.hh',
         ]
 
 HEADER_DIRECTORIES = [
         'include',
+        'inc',
         ]
 
 INCLUDE_DIRECTORIES = [
@@ -67,6 +68,8 @@ INCLUDE_DIRECTORIES = [
         'external/*/include',
         '/usr/include',
         '/usr/include/*',
+        'include',
+        'inc',
         ]
 
 BUILD_DIRECTORY = 'build';
@@ -211,7 +214,7 @@ def FlagsForFile(filename):
                 final_flags = C_BASE_FLAGS
             else:
                 final_flags = CPP_BASE_FLAGS
-        else:
+        elif IsHeaderFile(filename):
             final_flags = CPP_BASE_FLAGS
 
         clang_flags = FlagsForClangComplete(root)
