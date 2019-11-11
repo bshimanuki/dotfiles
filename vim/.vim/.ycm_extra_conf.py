@@ -3,7 +3,6 @@ import os
 import os.path
 import fnmatch
 import logging
-import ycm_core
 import re
 
 C_BASE_FLAGS = [
@@ -65,11 +64,16 @@ HEADER_DIRECTORIES = [
 
 INCLUDE_DIRECTORIES = [
         'include',
+        'external/*',
         'external/*/include',
         '/usr/include',
-        '/usr/include/*',
+        # '/usr/include/*',
         'include',
         'inc',
+        'include/*',
+        'inc/*',
+        '*/include',
+        '*/inc',
         ]
 
 BUILD_DIRECTORY = 'build';
@@ -171,17 +175,17 @@ def FlagsForInclude(root):
     for include_name in INCLUDE_DIRECTORIES:
         try:
             include_path = FindNearest(root, include_name)
-            for dirroot, dirnames, filenames in os.walk(include_path):
-                for dir_path in dirnames:
-                    real_path = os.path.join(dirroot, dir_path)
-                    flags = flags + ["-I" + real_path]
+            flags = flags + ["-I" + include_path]
         except:
             project_root = GetProjectRoot(root)
-            for real_path in glob.glob(os.path.join(project_root, include_name)):
-                flags = flags + ["-I" + real_path]
+            for top in (os.path.abspath('.'), project_root):
+                for real_path in glob.glob(os.path.join(top, include_name)):
+                    if os.path.isdir(real_path):
+                        flags = flags + ["-I" + real_path]
     return flags or None
 
 def FlagsForCompilationDatabase(root, filename):
+    import ycm_core
     try:
         # Last argument of next function is the name of the build folder for
         # out of source projects
