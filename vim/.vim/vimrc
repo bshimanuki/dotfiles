@@ -84,15 +84,17 @@ endif
 
 if PluginEnabled('ctrlp.vim')
 	let g:ctrlp_working_path_mode='a'
-	let s:compiled_ext = '|d|o|out|pdf|py[cdo]'
-	let s:img_ext = '|jpg|png'
-	let s:data_ext = '|npy|npz|onnx|pb|pkl|pt'
-	let s:tex_ext = '|aux|bbl|bcf|blg|brf|fdb_latexmk|fls|idx|ilg|lof|log|lol|lot|pre|synctex\.gz|synctex\.gz\(busy\)|toc|x\.gnuplot'
+	let s:exe_ext = 'exe|so|dll'
+	let s:compiled_ext = 'd|o|out|pdf|py[cdo]'
+	let s:img_ext = 'jpg|png'
+	let s:data_ext = 'npy|npz|onnx|pb|pkl|pt'
+	let s:tex_ext = 'aux|bbl|bcf|blg|brf|fdb_latexmk|fls|idx|ilg|lof|lol|lot|pre|synctex\.gz|synctex\.gz\(busy\)|toc|x\.gnuplot' " exclude: log
+	let s:file_ext = join([s:exe_ext, s:compiled_ext, s:img_ext, s:data_ext, s:tex_ext], '|')
 	let g:ctrlp_custom_ignore = {
 				\ 'dir':  '\v[\/]\.(git|hg|svn)$',
-				\ 'file': '\v\.(exe|so|dll' . s:compiled_ext . s:data_ext . s:img_ext . s:tex_ext . ')$',
+				\ 'file': '\v\.(' . s:file_ext . ')$',
 				\ }
-	let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files . -oc --exclude-standard']
+	let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files . -oc --exclude-standard | grep -v -E "\.(' . s:file_ext . ')$"']
 endif
 
 if PluginEnabled('detectindent')
