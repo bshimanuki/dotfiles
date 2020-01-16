@@ -179,9 +179,10 @@ def FlagsForInclude(root):
         except:
             project_root = GetProjectRoot(root)
             for top in (os.path.abspath('.'), project_root):
-                for real_path in glob.glob(os.path.join(top, include_name)):
-                    if os.path.isdir(real_path):
-                        flags = flags + ["-I" + real_path]
+                if top is not None:
+                    for real_path in glob.glob(os.path.join(top, include_name)):
+                        if os.path.isdir(real_path):
+                            flags = flags + ["-I" + real_path]
     return flags or None
 
 def FlagsForCompilationDatabase(root, filename):
