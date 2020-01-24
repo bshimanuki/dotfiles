@@ -122,7 +122,10 @@ if PluginEnabled('fzf') && PluginEnabled('fzf.vim')
 	let s:fzf_grep_cmd = 'grep -v -E "\.(' . s:file_ext . ')$"'
 	let s:fzf_cmd = '(' . s:fzf_git_lsfiles_cmd . ' || ' . s:fzf_find_cmd . ') | ' . s:fzf_grep_cmd
 	function! Fzfvimfiles()
-		return fzf#vim#files(getcwd(), {'source': s:fzf_cmd})
+		if has('gui')
+			return fzf#vim#files(getcwd(), {'source': s:fzf_cmd, 'sink': 'drop'})
+		else
+			return fzf#vim#files(getcwd(), {'source': s:fzf_cmd})
 	endfunction
 	nnoremap <silent><C-p> :call Fzfvimfiles()<CR>
 endif
