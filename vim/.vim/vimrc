@@ -44,7 +44,6 @@ if !exists('l:vim_plug_not_installed')
 	Plug 'haya14busa/incsearch-easymotion.vim'
 	Plug 'haya14busa/incsearch.vim'
 	Plug 'jpalardy/vim-slime'
-	Plug 'kien/ctrlp.vim'
 	Plug 'luochen1990/rainbow'
 	Plug 'majutsushi/tagbar'
 	Plug 'mattn/emmet-vim'
@@ -59,6 +58,10 @@ if !exists('l:vim_plug_not_installed')
 	Plug 'vim-airline/vim-airline-themes'
 	if has('unix') && !has('win32unix')
 		Plug 'scrooloose/syntastic'
+		Plug 'junegunn/fzf', {'do': './install --bin'}
+		Plug 'junegunn/fzf.vim'
+	else
+		Plug 'kien/ctrlp.vim'
 	endif
 	call plug#end()
 endif
@@ -82,16 +85,17 @@ if PluginEnabled('CamelCaseMotion')
 	call camelcasemotion#CreateMotionMappings(',')
 endif
 
-if PluginEnabled('ctrlp.vim')
+let s:exe_ext = 'exe|so|dll'
+let s:compiled_ext = 'd|o|out|pdf|py[cdo]'
+let s:img_ext = 'gif|jpg|png'
+let s:data_ext = 'npy|npz|onnx|pb|pkl|pt'
+let s:tex_ext = 'aux|bbl|bcf|blg|brf|fdb_latexmk|fls|idx|ilg|lof|lol|lot|pre|synctex\.gz|synctex\.gz\(busy\)|toc|x\.gnuplot' " exclude: log
+let s:file_ext = join([s:exe_ext, s:compiled_ext, s:img_ext, s:data_ext, s:tex_ext], '|')
+let s:dir_ext = 'git|hg|svn'
+if PluginEnabled('ctrlp.vim') && !(PluginEnabled('fzf') && PluginEnabled('fzf.vim'))
 	let g:ctrlp_working_path_mode='a'
-	let s:exe_ext = 'exe|so|dll'
-	let s:compiled_ext = 'd|o|out|pdf|py[cdo]'
-	let s:img_ext = 'jpg|png'
-	let s:data_ext = 'npy|npz|onnx|pb|pkl|pt'
-	let s:tex_ext = 'aux|bbl|bcf|blg|brf|fdb_latexmk|fls|idx|ilg|lof|lol|lot|pre|synctex\.gz|synctex\.gz\(busy\)|toc|x\.gnuplot' " exclude: log
-	let s:file_ext = join([s:exe_ext, s:compiled_ext, s:img_ext, s:data_ext, s:tex_ext], '|')
 	let g:ctrlp_custom_ignore = {
-				\ 'dir':  '\v[\/]\.(git|hg|svn)$',
+				\ 'dir':  '\v[\/]\.(' . s:dir_ext . ')$',
 				\ 'file': '\v\.(' . s:file_ext . ')$',
 				\ }
 	let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files . -oc --exclude-standard | grep -v -E "\.(' . s:file_ext . ')$"']
@@ -109,6 +113,18 @@ endif
 
 if PluginEnabled('emmet-vim')
 	let g:user_emmet_install_global=0
+endif
+
+if PluginEnabled('fzf') && PluginEnabled('fzf.vim')
+	let s:fzf_dir_ext = substitute(s:dir_ext, '|', ' -o -path \*/.', 'g')
+	let s:fzf_find_cmd = 'find -L $dir \( -path \*/.' . s:fzf_dir_ext .  ' \) -prune -o -type f -printf "%P\n" 2> /dev/null'
+	let s:fzf_git_lsfiles_cmd = 'git ls-files $dir -oc --exclude-standard 2> /dev/null'
+	let s:fzf_grep_cmd = 'grep -v -E "\.(' . s:file_ext . ')$"'
+	let s:fzf_cmd = '(' . s:fzf_git_lsfiles_cmd . ' || ' . s:fzf_find_cmd . ') | ' . s:fzf_grep_cmd
+	function! Fzfvimfiles()
+		return fzf#vim#files(getcwd(), {'source': s:fzf_cmd})
+	endfunction
+	nnoremap <silent><C-p> :call Fzfvimfiles()<CR>
 endif
 
 if PluginEnabled('incsearch.vim')
