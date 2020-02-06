@@ -24,6 +24,8 @@ setopt rm_star_silent
 alias gt='git status'
 alias tpwd='[ -n "$TMUX" ] && tmux set-option default-command "cd \"$PWD\" && $SHELL -l"'
 alias mmv='noglob zmv -W'
+alias gff='git pull --ff-only'
+alias gfom='git fetch origin master:master'
 
 # Directory
 unsetopt auto_pushd
@@ -38,6 +40,16 @@ zmodload zsh/complist
 bindkey -M menuselect "^M" .accept-line
 bindkey "\e[Z" reverse-menu-complete # shift-tab
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+function() {
+	local exe_ext='exe|so|dll'
+	local compiled_ext='d|o|out|pdf|py[cdo]'
+	local img_ext='gif|jpg|png'
+	local data_ext='npy|npz|onnx|pb|pkl|pt'
+	local tex_ext='aux|bbl|bcf|blg|brf|fdb_latexmk|fls|idx|ilg|lof|lol|lot|pre|synctex.gz|synctex.gz\\(busy\\)|toc|x.gnuplot' # exclude: log
+	local file_ext="${exe_ext}|${compiled_ext}|${img_ext}|${data_ext}|${tex_ext}"
+	local dir='__pycache__'
+	zstyle ':completion:*:*:vi(m|):*' file-patterns "^(*.(${file_ext})|${dir}):source-files" '%p:all-files'
+}
 
 # Globbing
 setopt glob globdots extendedglob autocd
