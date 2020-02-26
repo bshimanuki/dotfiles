@@ -25,6 +25,7 @@ alias gt='git status'
 alias tpwd='[ -n "$TMUX" ] && tmux set-option default-command "cd \"$PWD\" && $SHELL -l"'
 alias mmv='noglob zmv -W'
 alias gff='git pull --ff-only'
+alias gmf='git merge --ff-only'
 alias gfom='git fetch origin master:master'
 
 # Directory
@@ -42,7 +43,7 @@ bindkey "\e[Z" reverse-menu-complete # shift-tab
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 function() {
 	local exe_ext='exe|so|dll'
-	local compiled_ext='d|o|out|pdf|py[cdo]'
+	local compiled_ext='d|o|pdf|py[cdo]'
 	local img_ext='gif|jpg|png'
 	local data_ext='npy|npz|onnx|pb|pkl|pt'
 	local tex_ext='aux|bbl|bcf|blg|brf|fdb_latexmk|fls|idx|ilg|lof|lol|lot|pre|synctex.gz|synctex.gz\\(busy\\)|toc|x.gnuplot' # exclude: log
