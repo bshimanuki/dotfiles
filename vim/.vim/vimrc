@@ -47,6 +47,7 @@ if !exists('l:vim_plug_not_installed')
 	Plug 'luochen1990/rainbow'
 	Plug 'majutsushi/tagbar'
 	Plug 'mattn/emmet-vim'
+	Plug 'octol/vim-cpp-enhanced-highlight'
 	Plug 'scrooloose/nerdcommenter'
 	Plug 'scrooloose/nerdtree'
 	Plug 'terryma/vim-multiple-cursors'
@@ -131,7 +132,7 @@ if PluginEnabled('fzf') && PluginEnabled('fzf.vim')
 endif
 
 if PluginEnabled('vim-fugitive')
-	nnoremap <silent><leader>g :silent Ggrep! "\b<cword>\b"<CR>
+	nnoremap <silent><leader>g :silent Ggrep! "\b<cword>\b"<CR>:copen<CR>
 endif
 
 if PluginEnabled('incsearch.vim')
@@ -205,6 +206,7 @@ if PluginEnabled('vim-slime')
 endif
 
 if PluginEnabled('tagbar')
+	let g:tagbar_sort=0
 	nnoremap <leader>te :TagbarOpen fj<CR>
 endif
 
@@ -386,5 +388,5 @@ nnoremap <leader>tc :NERDTreeClose<CR> <C-w><C-p> :TagbarClose<CR>
 
 " Automatically open, but do not go to (if there are errors) the quickfix /
 " location list window, or close it when is has become empty.
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
+autocmd QuickFixCmdPost [^l]* nested belowright cwindow
+autocmd QuickFixCmdPost    l* nested belowright lwindow
