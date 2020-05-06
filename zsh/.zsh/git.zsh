@@ -9,7 +9,7 @@ function insub() {(
 	fi
 )}
 
-alias gsts='insub git status -sb'
+alias gsts="insub \"git symbolic-ref --short HEAD > /dev/null 2>&1 && git status -sb || (printf '## ' ; git -c color.status=always status | head -n 1 ; git -c color.status=always status -sb | tail -n +2)\""
 
 function git-track-sub() {(
 	set -e
