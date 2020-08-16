@@ -33,13 +33,10 @@ endif
 if !exists('l:vim_plug_not_installed')
 	call plug#begin(g:vimpath.'/plugged')
 	Plug 'Lokaltog/vim-easymotion'
-	Plug 'MarcWeber/vim-addon-mw-utils'
 	Plug 'Vimjas/vim-python-pep8-indent', {'for': ['python']}
 	Plug 'bkad/CamelCaseMotion'
 	Plug 'ciaranm/detectindent'
-	Plug 'editorconfig/editorconfig-vim'
 	Plug 'embear/vim-localvimrc'
-	Plug 'garbas/vim-snipmate'
 	Plug 'gerw/vim-latex-suite', {'for': ['context', 'plaintex', 'tex']}
 	Plug 'haya14busa/incsearch-easymotion.vim'
 	Plug 'haya14busa/incsearch.vim'
@@ -51,14 +48,12 @@ if !exists('l:vim_plug_not_installed')
 	Plug 'scrooloose/nerdcommenter'
 	Plug 'scrooloose/nerdtree'
 	Plug 'terryma/vim-multiple-cursors'
-	Plug 'tomtom/tlib_vim'
 	Plug 'tpope/vim-fugitive'
 	Plug 'tpope/vim-surround'
 	Plug 'tpope/vim-unimpaired'
 	Plug 'vim-airline/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
 	if has('unix') && !has('win32unix')
-		Plug 'scrooloose/syntastic'
 		Plug 'junegunn/fzf', {'do': './install --bin'}
 		Plug 'junegunn/fzf.vim'
 	else
@@ -66,6 +61,9 @@ if !exists('l:vim_plug_not_installed')
 	endif
 	call plug#end()
 endif
+
+" Other Plugins
+runtime macros/matchit.vim
 
 if PluginEnabled('vim-airline')
 	if has('gui_running') || &t_Co==256
@@ -110,10 +108,6 @@ endif
 
 if PluginEnabled('vim-easymotion')
 	noremap <Plug>(easymotion-prefix) <Nop>
-endif
-
-if PluginEnabled('emmet-vim')
-	let g:user_emmet_install_global=0
 endif
 
 if PluginEnabled('fzf') && PluginEnabled('fzf.vim')
@@ -187,12 +181,6 @@ if PluginEnabled('rainbow')
 		\}
 endif
 
-if PluginEnabled('syntastic')
-	let g:syntastic_always_populate_loc_list=1
-	let g:syntastic_check_on_open=1
-	let g:syntastic_check_on_wq=0
-endif
-
 if PluginEnabled('vim-slime')
 	let g:slime_target='tmux'
 	let g:slime_default_config={'socket_name': 'default', 'target_pane': '0'}
@@ -210,46 +198,44 @@ if PluginEnabled('tagbar')
 	nnoremap <leader>te :TagbarOpen fj<CR>
 endif
 
-" Other Plugins
-runtime macros/matchit.vim
-
 "" Eclim
-	let g:EclimCompletionMethod='omnifunc'
-	let s:eclipse_home=$ECLIPSE_HOME
-	if has("win32")
-		let s:null_file='NUL'
-	else
-		let s:null_file='/dev/null'
-	endif
-	exec 'command! StartEclim !'.s:eclipse_home.'/eclimd > '.s:null_file.' 2>&1 &'
+let g:EclimCompletionMethod='omnifunc'
+let s:eclipse_home=$ECLIPSE_HOME
+if has("win32")
+	let s:null_file='NUL'
+else
+	let s:null_file='/dev/null'
+endif
+exec 'command! StartEclim !'.s:eclipse_home.'/eclimd > '.s:null_file.' 2>&1 &'
 
 "" YouCompleteMe
-	let g:ycm_python_binary_path='python3'
-	let g:ycm_confirm_extra_conf=1
-	let g:ycm_extra_conf_globlist=[]
-	let g:ycm_extra_conf_vim_data=['v:version','&filetype']
-	let g:ycm_global_ycm_extra_conf=g:vimpath.'/.ycm_extra_conf.py'
-	let g:ycm_seed_identifiers_with_syntax=1
-	let g:ycm_disable_for_files_larger_than_kb=10000
-	let g:ycm_collect_identifiers_from_tag_files=1
-	let g:ycm_collect_identifiers_from_comments_and_strings=1
-	let g:ycm_filetype_blacklist={
-		\ 'tagbar' : 1,
-		\ 'qf' : 1,
-		\ 'notes' : 1,
-		\ 'markdown' : 1,
-		\ 'unite' : 1,
-		\ 'text' : 1,
-		\ 'vimwiki' : 1,
-		\ 'pandoc' : 1,
-		\ 'infolog' : 1,
-		\ 'mail' : 1,
-		\ 'tex' : 1
-		\}
-	nnoremap <leader>f :YcmCompleter GoTo<CR>
-	nnoremap <leader>r :YcmCompleter GoToReferences<CR>
-	nnoremap <leader>h :YcmCompleter GetDoc<CR>
-	nnoremap <leader>x :YcmCompleter FixIt<CR>
+let g:ycm_python_binary_path='python3'
+let g:ycm_confirm_extra_conf=1
+let g:ycm_extra_conf_globlist=[]
+let g:ycm_extra_conf_vim_data=['v:version','&filetype']
+let g:ycm_global_ycm_extra_conf=g:vimpath.'/.ycm_extra_conf.py'
+let g:ycm_always_populate_location_list = 1
+let g:ycm_seed_identifiers_with_syntax=1
+let g:ycm_disable_for_files_larger_than_kb=10000
+let g:ycm_collect_identifiers_from_tag_files=1
+let g:ycm_collect_identifiers_from_comments_and_strings=1
+let g:ycm_filetype_blacklist={
+	\ 'tagbar' : 1,
+	\ 'qf' : 1,
+	\ 'notes' : 1,
+	\ 'markdown' : 1,
+	\ 'unite' : 1,
+	\ 'text' : 1,
+	\ 'vimwiki' : 1,
+	\ 'pandoc' : 1,
+	\ 'infolog' : 1,
+	\ 'mail' : 1,
+	\ 'tex' : 1
+	\}
+nnoremap <leader>f :YcmCompleter GoTo<CR>
+nnoremap <leader>r :YcmCompleter GoToReferences<CR>
+nnoremap <leader>h :YcmCompleter GetDoc<CR>
+nnoremap <leader>x :YcmCompleter FixIt<CR>
 
 " Config
 if has("patch-7.4.338")
