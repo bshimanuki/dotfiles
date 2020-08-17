@@ -242,8 +242,7 @@ set cinoptions=:0,ls,g0,i2s,N-s
 set showcmd cmdheight=2
 set tabstop=2 shiftwidth=2
 set nojoinspaces
-set nofoldenable foldmethod=syntax
-set laststatus=2
+set nofoldenable foldmethod=indent " foldmethod=syntax slows vim considerably
 set linebreak
 set lazyredraw
 set scrolloff=8 sidescrolloff=8
