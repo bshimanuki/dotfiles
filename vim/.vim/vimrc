@@ -198,16 +198,6 @@ if PluginEnabled('tagbar')
 	nnoremap <leader>te :TagbarOpen fj<CR>
 endif
 
-"" Eclim
-let g:EclimCompletionMethod='omnifunc'
-let s:eclipse_home=$ECLIPSE_HOME
-if has("win32")
-	let s:null_file='NUL'
-else
-	let s:null_file='/dev/null'
-endif
-exec 'command! StartEclim !'.s:eclipse_home.'/eclimd > '.s:null_file.' 2>&1 &'
-
 "" YouCompleteMe
 let g:ycm_python_binary_path='python3'
 let g:ycm_confirm_extra_conf=1
