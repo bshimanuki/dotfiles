@@ -126,7 +126,7 @@ if PluginEnabled('fzf') && PluginEnabled('fzf.vim')
 endif
 
 if PluginEnabled('vim-fugitive')
-	nnoremap <silent><leader>g :silent Ggrep! "\b<cword>\b"<CR>:copen<CR>
+	nnoremap <silent><leader>g :silent Ggrep! "\b<cword>\b"<CR>:copen<CR>:redraw!<CR>
 endif
 
 if PluginEnabled('incsearch.vim')
