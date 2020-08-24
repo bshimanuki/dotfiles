@@ -44,7 +44,8 @@ if !exists('l:vim_plug_not_installed')
 	Plug 'luochen1990/rainbow'
 	Plug 'majutsushi/tagbar'
 	Plug 'mattn/emmet-vim'
-	Plug 'octol/vim-cpp-enhanced-highlight'
+	Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'cpp']}
+	Plug 'pangloss/vim-javascript', {'for': ['html', 'js']}
 	Plug 'scrooloose/nerdcommenter'
 	Plug 'scrooloose/nerdtree'
 	Plug 'terryma/vim-multiple-cursors'
