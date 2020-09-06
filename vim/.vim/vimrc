@@ -43,11 +43,9 @@ if !exists('l:vim_plug_not_installed')
 	Plug 'jpalardy/vim-slime'
 	Plug 'luochen1990/rainbow'
 	Plug 'majutsushi/tagbar'
-	Plug 'mattn/emmet-vim'
-	Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'cpp']}
-	Plug 'pangloss/vim-javascript', {'for': ['html', 'js']}
 	Plug 'scrooloose/nerdcommenter'
 	Plug 'scrooloose/nerdtree'
+	Plug 'sheerun/vim-polyglot'
 	Plug 'terryma/vim-multiple-cursors'
 	Plug 'tpope/vim-fugitive'
 	Plug 'tpope/vim-surround'
@@ -278,6 +276,7 @@ else
 	if &t_Co==256
 		set cursorline
 		hi CursorLine cterm=NONE ctermbg=236 " 236=Gray19
+		hi CursorLineNr cterm=NONE ctermbg=236 " 236=Gray19
 	endif
 endif
 if has('unix')
