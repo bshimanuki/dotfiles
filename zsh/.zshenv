@@ -26,6 +26,8 @@ export ECLIPSE_HOME=/opt/eclipse
 export CLASSPATH=${CLASSPATH}:.:bin:lib/\*:/usr/share/java/\*
 
 ## Python
+export PYENV_ROOT=~/.pyenv
+export PATH=${PATH}:$PYENV_ROOT/bin
 export PYTHONSTARTUP=~/.python/pythonrc.py
 export WORKON_HOME=~/.python/venv
 export VIRTUALENVWRAPPER_PYTHON=python3

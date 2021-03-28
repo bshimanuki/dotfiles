@@ -1,1 +1,1 @@
-set formatprg=astyle
+setlocal formatprg=astyle
