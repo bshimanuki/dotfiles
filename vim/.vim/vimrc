@@ -19,6 +19,9 @@ function PluginEnabled(plugin)
 	return exists('g:plugs') && has_key(g:plugs, a:plugin) && !empty(glob(l:plugin_path.'/.git'))
 endfunction
 
+" vim-polyglot
+let g:polyglot_disabled = ['sensible']
+
 " vim-plug
 if !filereadable(g:vimpath.'/autoload/plug.vim')
 	exec 'silent !wget --directory-prefix="'.g:vimpath.'/autoload/" '

@@ -18,6 +18,7 @@ export CXXFLAGS="${CXXFLAGS} -std=c++1z"
 
 ## Cuda
 export CUDA_HOME=/usr/local/cuda
+export CUDA_PATH=$CUDA_HOME
 export PATH=${PATH}:$CUDA_HOME/bin
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$CUDA_HOME/lib64:$CUDA_HOME/extras/CUPTI/lib64:/usr/lib/nvidia-390
 
@@ -34,4 +35,6 @@ export VIRTUALENVWRAPPER_PYTHON=python3
 export PIP_VIRTUALENV_BASE=$WORKON_HOME
 # source virtualenvwrapper.sh in .zprofile
 
-# Check system environmental variables in /etc/environment
+## Ruby
+export RBENV_HOME=$HOME/.rbenv
+export PATH=$RBENV_HOME/shims:${PATH}:$RBENV_HOME/bin:$RBENV_HOME/plugins/ruby-build/bin

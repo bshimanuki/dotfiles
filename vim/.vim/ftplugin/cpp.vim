@@ -1,5 +1,4 @@
 setlocal spell
-setlocal formatprg=clang-format
 let b:pyclewn_args="--prefix=L"
 nmap <C-F9> :w<CR>:CXX<CR>
 nmap <C-F10> :Crun<CR>
