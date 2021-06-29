@@ -202,10 +202,18 @@ if PluginEnabled('tagbar')
 endif
 
 "" YouCompleteMe
-let g:ycm_python_binary_path='python3'
+let g:ycm_python_interpreter_path='' " custom
+let g:ycm_python_system_path='' " custom
+let g:ycm_compilation_database_directory='' " custom, suffix directories to search
 let g:ycm_confirm_extra_conf=1
 let g:ycm_extra_conf_globlist=[]
-let g:ycm_extra_conf_vim_data=['v:version','&filetype']
+let g:ycm_extra_conf_vim_data=[
+			\ 'g:ycm_python_interpreter_path',
+			\ 'g:ycm_python_system_path',
+			\ 'g:ycm_compilation_database_directory',
+			\ 'v:version',
+			\ '&filetype'
+			\]
 let g:ycm_global_ycm_extra_conf=g:vimpath.'/.ycm_extra_conf.py'
 let g:ycm_disable_signature_help=1
 let g:ycm_always_populate_location_list = 1
