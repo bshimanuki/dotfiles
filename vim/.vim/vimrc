@@ -251,7 +251,7 @@ set nofixendofline
 set number
 filetype plugin indent on
 syntax on
-set cinoptions=:0,ls,g0,i2s,N-s
+set cinoptions=:0,ls,g0,N-s,(s,u0,m1
 set showcmd cmdheight=2
 set tabstop=2 shiftwidth=2
 set nojoinspaces
