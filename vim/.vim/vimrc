@@ -78,7 +78,8 @@ if PluginEnabled('vim-airline')
 	if !exists('g:airline_symbols')
 		let g:airline_symbols={}
 	endif
-	let g:airline_symbols.space="\ua0"
+	let g:airline_symbols.colnr = ' ㏇:'
+	let g:airline_symbols.maxlinenr=''
 	let g:airline_section_y='' " turn off file encoding, file format
 endif
 
