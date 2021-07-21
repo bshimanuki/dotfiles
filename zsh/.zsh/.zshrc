@@ -21,9 +21,10 @@ alias la='ls -A'
 alias lla='ll -A'
 alias s='ls'
 setopt rm_star_silent
-alias gt='git status'
 alias tpwd='[ -n "$TMUX" ] && tmux set-option default-command "cd \"$PWD\" && $SHELL -l"'
 alias mmv='noglob zmv -W'
+alias gt='git status'
+glgl(){git log --topo-order --graph --pretty=format:"${_git_log_oneline_format}" $(git for-each-ref --format='%(refname:short) %(upstream:short)' refs/heads)}
 alias gff='git pull --ff-only'
 alias gmf='git merge --ff-only'
 alias gfom='git fetch origin master:master'
