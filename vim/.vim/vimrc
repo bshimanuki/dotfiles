@@ -127,6 +127,7 @@ if PluginEnabled('fzf') && PluginEnabled('fzf.vim')
 			return fzf#vim#files(getcwd(), {'source': s:fzf_cmd})
 	endfunction
 	nnoremap <silent><C-p> :call Fzfvimfiles()<CR>
+	nnoremap <silent><C-f> :silent Buffers<CR>
 endif
 
 if PluginEnabled('vim-fugitive')
@@ -147,8 +148,8 @@ endif
 
 if PluginEnabled('vim-latex-suite')
 	let g:tex_flavor='latex'
-	imap <C-f> <Plug>IMAP_JumpForward
-	map <C-f> <Plug>IMAP_JumpForward
+	" imap <C-f> <Plug>IMAP_JumpForward
+	" map <C-f> <Plug>IMAP_JumpForward
 endif
 
 if PluginEnabled('vim-localvimrc')
