@@ -176,4 +176,17 @@ def Settings(**kwargs):
 
 		ls_settings['fallbackFlags'] = final_flags
 
+	if kwargs['language'] == 'rust':
+		settings['ls'] = {
+			'cargo': {
+				'loadOutDirsFromCheck': True,
+			},
+			'experimental': {
+				'procAttrMacros': True,
+			},
+			'procMacro': {
+				'enable': True,
+			},
+		}
+
 	return settings

@@ -248,6 +248,7 @@ if has("patch-7.4.338")
 	set breakindent
 	set breakindentopt=shift:0
 endif
+set backupcopy=yes
 set fileformats=unix,dos
 set nofixendofline
 set number
