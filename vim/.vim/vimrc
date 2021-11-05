@@ -45,7 +45,7 @@ if !exists('l:vim_plug_not_installed')
 	Plug 'haya14busa/incsearch.vim'
 	Plug 'jpalardy/vim-slime'
 	Plug 'luochen1990/rainbow'
-	Plug 'majutsushi/tagbar'
+	Plug 'majutsushi/tagbar', {'on': ['TagbarOpen', 'TagbarToggle']}
 	Plug 'scrooloose/nerdcommenter'
 	Plug 'scrooloose/nerdtree'
 	Plug 'sheerun/vim-polyglot'
