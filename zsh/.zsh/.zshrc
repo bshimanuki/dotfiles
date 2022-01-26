@@ -28,6 +28,7 @@ glgl(){git log --topo-order --graph --pretty=format:"${_git_log_oneline_format}"
 alias gff='git pull --ff-only'
 alias gmf='git merge --ff-only'
 alias gfom='git fetch origin master:master'
+rg(){command rg -p "$@" | less -FRX}
 
 # Directory
 unsetopt auto_pushd
@@ -128,3 +129,16 @@ bindkey -a 'v' edit-command-line
 
 # Broken function in old zsh
 autoload -Uz __git_files
+
+setupwacom() {
+	local wacom_device='Wacom Intuos Pro S Pad pad'
+	if [ -x "$(command -v xsetwacom)" ] && (xsetwacom list devices | grep "$wacom_device" > /dev/null); then
+		xsetwacom --set "$wacom_device" Button 1 'key +alt tab -alt'
+		xsetwacom --set "$wacom_device" Button 2 'key +ctrl z -ctrl'
+		xsetwacom --set "$wacom_device" Button 3 'key +ctrl y -ctrl'
+		xsetwacom --set "$wacom_device" Button 8 'key shift'
+		xsetwacom --set "$wacom_device" Button 9 'key ctrl'
+		xsetwacom --set "$wacom_device" Button 10 'key alt'
+	fi
+}
+setupwacom
