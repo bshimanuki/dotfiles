@@ -18,9 +18,9 @@ export CXXFLAGS="${CXXFLAGS} -std=c++1z"
 
 ## Cuda
 export CUDA_HOME=/usr/local/cuda
-export CUDA_PATH=$CUDA_HOME
-export PATH=${PATH}:$CUDA_HOME/bin
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$CUDA_HOME/lib64:$CUDA_HOME/extras/CUPTI/lib64:/usr/lib/nvidia-390
+export CUDA_PATH=${CUDA_HOME}
+export PATH=${PATH}:${CUDA_HOME}/bin
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${CUDA_HOME}/lib64:${CUDA_HOME}/extras/CUPTI/lib64:/usr/lib/nvidia-390
 
 ## Java
 export ECLIPSE_HOME=/opt/eclipse
@@ -28,13 +28,14 @@ export CLASSPATH=${CLASSPATH}:.:bin:lib/\*:/usr/share/java/\*
 
 ## Python
 export PYENV_ROOT=~/.pyenv
-export PATH=${PATH}:$PYENV_ROOT/bin
+export POETRY_ROOT=~/.poetry
+export PATH=${PYENV_ROOT}/shims:${PATH}:${PYENV_ROOT}/bin:~/${POETRY_ROOT}/bin
 export PYTHONSTARTUP=~/.python/pythonrc.py
 export WORKON_HOME=~/.python/venv
 export VIRTUALENVWRAPPER_PYTHON=python3
-export PIP_VIRTUALENV_BASE=$WORKON_HOME
+export PIP_VIRTUALENV_BASE=${WORKON_HOME}
 # source virtualenvwrapper.sh in .zprofile
 
 ## Ruby
-export RBENV_HOME=$HOME/.rbenv
-export PATH=$RBENV_HOME/shims:${PATH}:$RBENV_HOME/bin:$RBENV_HOME/plugins/ruby-build/bin
+export RBENV_HOME=~/.rbenv
+export PATH=${RBENV_HOME}/shims:${PATH}:${RBENV_HOME}/bin:${RBENV_HOME}/plugins/ruby-build/bin

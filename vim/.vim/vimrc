@@ -21,6 +21,7 @@ endfunction
 
 " vim-polyglot
 let g:polyglot_disabled = ['sensible']
+let g:NERDDelimiterMap={} " workaround for broken caddyfile ftplugin
 
 " vim-plug
 if !filereadable(g:vimpath.'/autoload/plug.vim')

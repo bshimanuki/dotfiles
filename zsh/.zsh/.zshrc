@@ -29,6 +29,7 @@ alias gff='git pull --ff-only'
 alias gmf='git merge --ff-only'
 alias gfom='git fetch origin master:master'
 rg(){command rg -p "$@" | less -FRX}
+alias docker-run='docker run --rm -it -v "$(pwd):/host" -w /host -u "$(id -u):$(id -g)"'
 
 # Directory
 unsetopt auto_pushd
