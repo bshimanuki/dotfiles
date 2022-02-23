@@ -11,3 +11,5 @@
 [merge]
 	tool = vimdiff
 	conflictstyle = diff3
+[advice]
+	detachedHead = false

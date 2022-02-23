@@ -28,6 +28,7 @@ glgl(){git log --topo-order --graph --pretty=format:"${_git_log_oneline_format}"
 alias gff='git pull --ff-only'
 alias gmf='git merge --ff-only'
 alias gfom='git fetch origin master:master'
+alias gfomm='git fetch origin main:main'
 rg(){command rg -p "$@" | less -FRX}
 alias docker-run='docker run --rm -it -v "$(pwd):/host" -w /host -u "$(id -u):$(id -g)"'
 
