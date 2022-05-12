@@ -19,7 +19,7 @@ FORCE=false
 SIZE=large
 PROTOCOL=default
 SHALLOW=false
-LARGE_SUBMODULES_LIST="YouCompleteMe"
+LARGE_SUBMODULES_LIST=
 
 for arg in "$@"; do
 	shift

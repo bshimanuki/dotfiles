@@ -176,7 +176,7 @@ def Settings(**kwargs):
 
 		ls_settings['fallbackFlags'] = final_flags
 
-	if kwargs['language'] == 'rust':
+	if language == 'rust':
 		settings['ls'] = {
 			'cargo': {
 				'loadOutDirsFromCheck': True,

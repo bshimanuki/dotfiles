@@ -10,10 +10,6 @@ if has('win32')
 	let g:vimpath=$HOME.'/vimfiles'
 endif
 
-if has('unix') && !has('win32unix')
-	exec 'set rtp+='.g:vimpath.'/ycm/YouCompleteMe'
-endif
-
 function PluginEnabled(plugin)
 	let l:plugin_path=g:vimpath.'/plugged/'.a:plugin
 	return exists('g:plugs') && has_key(g:plugs, a:plugin) && !empty(glob(l:plugin_path.'/.git'))
@@ -59,6 +55,7 @@ if !exists('l:vim_plug_not_installed')
 	if has('unix') && !has('win32unix')
 		Plug 'junegunn/fzf', {'do': './install --bin'}
 		Plug 'junegunn/fzf.vim'
+		Plug 'ycm-core/YouCompleteMe'
 	else
 		Plug 'kien/ctrlp.vim'
 	endif
@@ -215,11 +212,11 @@ let g:ycm_extra_conf_vim_data=[
 			\ 'g:ycm_python_system_path',
 			\ 'g:ycm_compilation_database_directory',
 			\ 'v:version',
-			\ '&filetype'
+			\ '&filetype',
 			\]
 let g:ycm_global_ycm_extra_conf=g:vimpath.'/.ycm_extra_conf.py'
 let g:ycm_disable_signature_help=1
-let g:ycm_always_populate_location_list = 1
+let g:ycm_always_populate_location_list=1
 let g:ycm_auto_hover=''
 let g:ycm_seed_identifiers_with_syntax=1
 let g:ycm_disable_for_files_larger_than_kb=10000
