@@ -31,6 +31,12 @@ alias gfom='git fetch origin master:master'
 alias gfomm='git fetch origin main:main'
 rg(){command rg -p "$@" | less -FRX}
 alias docker-run='docker run --rm -it -v "$(pwd):/host" -w /host -u "$(id -u):$(id -g)"'
+if [ ! -x "$(command -v docker)" ] && [ -x "$(command -v podman)" ] ; then
+	alias docker='podman'
+	if [ -x "$(command -v podman-compose)" ] ; then
+		alias docker-compose='podman-compose'
+	fi
+fi
 
 # Directory
 unsetopt auto_pushd
