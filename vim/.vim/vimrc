@@ -33,13 +33,10 @@ endif
 if !exists('l:vim_plug_not_installed')
 	call plug#begin(g:vimpath.'/plugged')
 	Plug 'Lokaltog/vim-easymotion'
-	Plug 'Vimjas/vim-python-pep8-indent', {'for': ['python']}
 	Plug 'bkad/CamelCaseMotion'
 	Plug 'ciaranm/detectindent'
 	Plug 'embear/vim-localvimrc'
 	Plug 'gerw/vim-latex-suite', {'for': ['context', 'plaintex', 'tex']}
-	Plug 'haya14busa/incsearch-easymotion.vim'
-	Plug 'haya14busa/incsearch.vim'
 	Plug 'jpalardy/vim-slime'
 	Plug 'luochen1990/rainbow'
 	Plug 'majutsushi/tagbar', {'on': ['TagbarOpen', 'TagbarToggle']}
@@ -116,7 +113,7 @@ if PluginEnabled('fzf') && PluginEnabled('fzf.vim')
 	let s:fzf_find_cmd = 'find -L $dir \( -path \*/.' . s:fzf_dir_ext .  ' \) -prune -o -type f -printf "%P\n" 2> /dev/null'
 	let s:fzf_git_gitignore_cmd = 'git check-ignore -q ${dir:-' . getcwd() . '} 2> /dev/null'
 	let s:fzf_git_lsfiles_cmd = 'git ls-files $dir -oc --exclude-standard 2> /dev/null'
-	let s:fzf_grep_cmd = 'grep -v -E "\.(' . s:file_ext . ')$"'
+	let s:fzf_grep_cmd = '(grep -v -E "\.(' . s:file_ext . ')$" || [[ $? == 1 ]])'
 	let s:fzf_cmd = '(' . s:fzf_git_gitignore_cmd . ' ; [ $? -eq 1 ] && ' . s:fzf_git_lsfiles_cmd . ' || ' . s:fzf_find_cmd . ') | ' . s:fzf_grep_cmd
 	function! Fzfvimfiles()
 		if has('gui')
@@ -130,18 +127,6 @@ endif
 
 if PluginEnabled('vim-fugitive')
 	nnoremap <silent><leader>g :silent Ggrep! -w <cword><CR>:copen<CR>:redraw!<CR>
-endif
-
-if PluginEnabled('incsearch.vim')
-	map /  <Plug>(incsearch-forward)
-	map ?  <Plug>(incsearch-backward)
-	map g/ <Plug>(incsearch-stay)
-endif
-
-if PluginEnabled('incsearch-easymotion.vim')
-	map ,/ <Plug>(incsearch-easymotion-/)
-	map ,? <Plug>(incsearch-easymotion-?)
-	map ,g/ <Plug>(incsearch-easymotion-stay)
 endif
 
 if PluginEnabled('vim-latex-suite')
