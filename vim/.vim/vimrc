@@ -45,6 +45,7 @@ if !exists('l:vim_plug_not_installed')
 	Plug 'sheerun/vim-polyglot'
 	Plug 'terryma/vim-multiple-cursors'
 	Plug 'tpope/vim-fugitive'
+	Plug 'tpope/vim-rhubarb'
 	Plug 'tpope/vim-surround'
 	Plug 'tpope/vim-unimpaired'
 	Plug 'vim-airline/vim-airline'
@@ -127,6 +128,12 @@ endif
 
 if PluginEnabled('vim-fugitive')
 	nnoremap <silent><leader>g :silent Ggrep! -w <cword><CR>:copen<CR>:redraw!<CR>
+	nnoremap <silent><leader>bb :exec line('.') . 'GBrowse!'<CR>
+	vnoremap <silent><leader>bb :GBrowse!<CR>
+	nnoremap <silent><leader>bf :GBrowse!<CR>
+	vnoremap <silent><leader>bf <Esc>:GBrowse!<CR>gv
+	nnoremap <silent><leader>bo :exec line('.') . 'GBrowse'<CR>
+	vnoremap <silent><leader>bo :GBrowse<CR>
 endif
 
 if PluginEnabled('vim-latex-suite')
