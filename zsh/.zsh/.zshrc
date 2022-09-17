@@ -24,6 +24,7 @@ setopt rm_star_silent
 alias tpwd='[ -n "$TMUX" ] && tmux set-option default-command "cd \"$PWD\" && $SHELL -l"'
 alias mmv='noglob zmv -W'
 alias gt='git status'
+alias gtt='git status -uno'
 glgl(){git log --topo-order --graph --pretty=format:"${_git_log_oneline_format}" HEAD $(git show-ref $(git for-each-ref --format='%(refname:short) %(upstream:short)' refs/heads) | cut -d' ' -f2)}
 alias gff='git pull --ff-only'
 alias gmf='git merge --ff-only'
