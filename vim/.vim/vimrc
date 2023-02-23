@@ -367,7 +367,7 @@ nnoremap <silent> <expr> gr ":silent vimgrep /\\C\\<" . expand("<cword>") . "\\>
 nnoremap <silent> <expr> gR ":silent vimgrep /\\C\\<" . expand("<cword>") . "\\>/j %:p:h/*<CR>"
 "" Layout
 command! Bd b # | bd #
-nnoremap <leader>tt :NERDTreeToggle<CR> <C-w><C-p> :Tagbar<CR>
+nnoremap <leader>tt :NERDTreeToggle<CR> <C-w><C-p> :TagbarToggle<CR>
 nnoremap <leader>to :NERDTree<CR> <C-w><C-p> :TagbarOpen<CR>
 nnoremap <leader>tc :NERDTreeClose<CR> <C-w><C-p> :TagbarClose<CR>
 

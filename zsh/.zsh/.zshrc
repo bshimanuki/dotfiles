@@ -38,6 +38,7 @@ if [ ! -x "$(command -v docker)" ] && [ -x "$(command -v podman)" ] ; then
 		alias docker-compose='podman-compose'
 	fi
 fi
+dessh(){ command ssh -G "$1" | awk '$1 == "hostname" { print $2 }' } # dealias
 
 # Directory
 unsetopt auto_pushd
