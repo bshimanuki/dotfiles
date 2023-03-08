@@ -29,7 +29,7 @@ export CLASSPATH=${CLASSPATH}:.:bin:lib/\*:/usr/share/java/\*
 ## Python
 export PYENV_ROOT=~/.pyenv
 export POETRY_ROOT=~/.poetry
-export PATH=${PYENV_ROOT}/shims:${PATH}:${PYENV_ROOT}/bin:~/${POETRY_ROOT}/bin
+export PATH=${PYENV_ROOT}/shims:${PATH}:${PYENV_ROOT}/bin:${POETRY_ROOT}/bin
 export PYTHONSTARTUP=~/.python/pythonrc.py
 export WORKON_HOME=~/.python/venv
 export VIRTUALENVWRAPPER_PYTHON=python3

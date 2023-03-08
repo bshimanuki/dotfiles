@@ -39,6 +39,7 @@ if [ ! -x "$(command -v docker)" ] && [ -x "$(command -v podman)" ] ; then
 	fi
 fi
 dessh(){ command ssh -G "$1" | awk '$1 == "hostname" { print $2 }' } # dealias
+alias issh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
 
 # Directory
 unsetopt auto_pushd

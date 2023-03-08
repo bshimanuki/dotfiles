@@ -34,7 +34,6 @@ if !exists('l:vim_plug_not_installed')
 	call plug#begin(g:vimpath.'/plugged')
 	Plug 'Lokaltog/vim-easymotion'
 	Plug 'bkad/CamelCaseMotion'
-	Plug 'ciaranm/detectindent'
 	Plug 'embear/vim-localvimrc'
 	Plug 'gerw/vim-latex-suite', {'for': ['context', 'plaintex', 'tex']}
 	Plug 'jpalardy/vim-slime'
@@ -46,6 +45,7 @@ if !exists('l:vim_plug_not_installed')
 	Plug 'terryma/vim-multiple-cursors'
 	Plug 'tpope/vim-fugitive'
 	Plug 'tpope/vim-rhubarb'
+	Plug 'tpope/vim-sleuth'
 	Plug 'tpope/vim-surround'
 	Plug 'tpope/vim-unimpaired'
 	Plug 'vim-airline/vim-airline'
@@ -97,12 +97,6 @@ if PluginEnabled('ctrlp.vim') && !(PluginEnabled('fzf') && PluginEnabled('fzf.vi
 				\ 'file': '\v\.(' . s:file_ext . ')$',
 				\ }
 	let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files . -oc --exclude-standard | grep -v -E "\.(' . s:file_ext . ')$"']
-endif
-
-if PluginEnabled('detectindent')
-	let g:detectindent_preferred_expandtab=0
-	let g:detectindent_preferred_indent=2
-	autocmd FileType * DetectIndent
 endif
 
 if PluginEnabled('vim-easymotion')

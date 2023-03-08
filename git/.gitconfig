@@ -2,7 +2,7 @@
 	name = Brian Shimanuki
 	email = brianshimanuki@gmail.com
 [core]
-	excludesfile = .gitignore_global
+	excludesfile = ~/.gitignore_global
 	pager = less -x1,5
 [include]
 	path = .gitconfig_system
