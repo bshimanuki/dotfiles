@@ -20,6 +20,8 @@ fi
 alias la='ls -A'
 alias lla='ll -A'
 alias s='ls'
+alias v='vi'
+alias vv='v -X'
 setopt rm_star_silent
 alias tpwd='[ -n "$TMUX" ] && tmux set-option default-command "cd \"$PWD\" && $SHELL -l"'
 alias mmv='noglob zmv -W'

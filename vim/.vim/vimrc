@@ -137,6 +137,9 @@ if PluginEnabled('vim-latex-suite')
 endif
 
 if PluginEnabled('vim-localvimrc')
+	" use `if g:localvimrc_sourced_once_for_file | finish | endif`
+	" as an include guard
+	let g:localvimrc_event=['BufNewFile', 'BufReadPre', 'BufWinEnter']
 	let g:localvimrc_persistent=1
 	let g:localvimrc_persistence_file=g:vimpath.'/.localvimrc_persistent'
 endif
