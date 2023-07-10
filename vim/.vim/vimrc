@@ -132,6 +132,7 @@ endif
 
 if PluginEnabled('vim-latex-suite')
 	let g:tex_flavor='latex'
+	let g:Tex_DefaultTargetFormat='pdf'
 	" imap <C-f> <Plug>IMAP_JumpForward
 	" map <C-f> <Plug>IMAP_JumpForward
 endif
