@@ -30,6 +30,11 @@ alias gtt='git status -uno'
 glgl(){git log --topo-order --graph --pretty=format:"${_git_log_oneline_format}" HEAD $(git show-ref $(git for-each-ref --format='%(refname:short) %(upstream:short)' refs/heads) | cut -d' ' -f2)}
 alias gff='git pull --ff-only'
 alias gmf='git merge --ff-only'
+alias gpcf="$aliases[gpc] --force-with-lease"
+alias gpn="$aliases[gp] --no-verify"
+alias gpcn="$aliases[gpc] --no-verify"
+alias gpfn="$aliases[gpf] --no-verify"
+alias gpcfn="$aliases[gpcf] --no-verify"
 alias gfom='git fetch origin master:master'
 alias gfomm='git fetch origin main:main'
 rg(){command rg -p "$@" | less -FRX}
