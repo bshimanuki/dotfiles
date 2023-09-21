@@ -118,6 +118,9 @@ if PluginEnabled('fzf') && PluginEnabled('fzf.vim')
 	endfunction
 	nnoremap <silent><C-p> :call Fzfvimfiles()<CR>
 	nnoremap <silent><C-f> :silent Buffers<CR>
+	nnoremap <silent>g[ :silent Lines<CR>
+	nnoremap <silent>g/ :silent BLines<CR>
+	nnoremap <silent>g9 :silent Rg<CR>
 endif
 
 if PluginEnabled('vim-fugitive')
@@ -360,9 +363,9 @@ exec "vnoremap <silent> [] ?".s:function_match."}<CR> " . s:delete_last_history 
 exec "vnoremap <silent> ][ /".s:function_match."}<CR> " . s:delete_last_history . "gv^"
 "" Grep for word under cursor
 """ recursive under cwd
-nnoremap <silent> <expr> gr ":silent vimgrep /\\C\\<" . expand("<cword>") . "\\>/j **/*<CR>"
+nnoremap <silent> <expr> gy ":silent vimgrep /\\C\\<" . expand("<cword>") . "\\>/j **/*<CR>"
 """ nonrecursive in same directory
-nnoremap <silent> <expr> gR ":silent vimgrep /\\C\\<" . expand("<cword>") . "\\>/j %:p:h/*<CR>"
+nnoremap <silent> <expr> gY ":silent vimgrep /\\C\\<" . expand("<cword>") . "\\>/j %:p:h/*<CR>"
 "" Layout
 command! Bd b # | bd #
 nnoremap <leader>tt :NERDTreeToggle<CR> <C-w><C-p> :TagbarToggle<CR>

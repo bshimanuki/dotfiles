@@ -6,6 +6,9 @@ skip_global_compinit=1
 export PATH=${PATH}:~/bin
 export EDITOR=vim
 
+# fzf
+export PATH=${PATH}:~/.vim/plugged/fzf/bin
+
 ## Android
 export PATH=${PATH}:/opt/android-studio/sdk/tools
 export PATH=${PATH}:/opt/android-studio/sdk/platform-tools

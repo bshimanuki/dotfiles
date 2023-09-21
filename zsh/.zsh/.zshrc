@@ -8,6 +8,16 @@ if [[ -r ${ZDOTDIR:-$HOME}/.zprezto/init.zsh ]]; then
 	source ${ZDOTDIR:-$HOME}/.zprezto/init.zsh
 fi
 
+# fzf
+if (( $+commands[fzf] )); then
+	if [[ -r ${HOME}/.vim/plugged/fzf/shell/completion.zsh ]]; then
+		source ${HOME}/.vim/plugged/fzf/shell/completion.zsh
+	fi
+	if [[ -r ${HOME}/.vim/plugged/fzf/shell/key-bindings.zsh ]]; then
+		source ${HOME}/.vim/plugged/fzf/shell/key-bindings.zsh
+	fi
+fi
+
 # Aliases
 if [[ `uname` == 'Darwin' ]]
 then
@@ -20,8 +30,8 @@ fi
 alias la='ls -A'
 alias lla='ll -A'
 alias s='ls'
-alias v='vi'
-alias vv='v -X'
+v(){if [ $# -eq 0 ]; then vi -c "if exists(':FZF') | FZF!"; else vi "$@"; fi}
+alias vv='vi -X'
 setopt rm_star_silent
 alias tpwd='[ -n "$TMUX" ] && tmux set-option default-command "cd \"$PWD\" && $SHELL -l"'
 alias mmv='noglob zmv -W'
