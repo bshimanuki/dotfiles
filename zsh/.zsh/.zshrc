@@ -30,11 +30,17 @@ fi
 alias la='ls -A'
 alias lla='ll -A'
 alias s='ls'
+setopt rm_star_silent
+alias mmv='noglob zmv -W'
+rg(){command rg -p "$@" | less -FRX}
+# tmux
+alias tpwd='[ -n "$TMUX" ] && tmux set-option default-command "cd \"$PWD\" && $SHELL -l"'
+alias tw='tmux new -A -s work'
+alias tp='tmux new -A -s puzzle'
+## vim
 v(){if [ $# -eq 0 ]; then vi -c "if exists(':FZF') | FZF!"; else vi "$@"; fi}
 alias vv='vi -X'
-setopt rm_star_silent
-alias tpwd='[ -n "$TMUX" ] && tmux set-option default-command "cd \"$PWD\" && $SHELL -l"'
-alias mmv='noglob zmv -W'
+## git
 alias gt='git status'
 alias gtt='git status -uno'
 glgl(){git log --topo-order --graph --pretty=format:"${_git_log_oneline_format}" HEAD $(git show-ref $(git for-each-ref --format='%(refname:short) %(upstream:short)' refs/heads) | cut -d' ' -f2)}
@@ -47,16 +53,28 @@ alias gpfn="$aliases[gpf] --no-verify"
 alias gpcfn="$aliases[gpcf] --no-verify"
 alias gfom='git fetch origin master:master'
 alias gfomm='git fetch origin main:main'
-rg(){command rg -p "$@" | less -FRX}
+## docker
 alias docker-run='docker run --rm -it -v "$(pwd):/host" -w /host -u "$(id -u):$(id -g)"'
+alias docker-ip='docker inspect \
+	  -f "{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}"'
 if [ ! -x "$(command -v docker)" ] && [ -x "$(command -v podman)" ] ; then
 	alias docker='podman'
 	if [ -x "$(command -v podman-compose)" ] ; then
 		alias docker-compose='podman-compose'
 	fi
 fi
+## ssh
 dessh(){ command ssh -G "$1" | awk '$1 == "hostname" { print $2 }' } # dealias
 alias issh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+## gdb
+gcore(){
+	local core="${1:-core}"
+	local exe
+	exe="$(file "$core" | sed "s/^core.*execfn: '\([^']*\)'.*/\1/;t p;Q1;:p q")"
+	local ret=$?
+	(exit $ret) || {>&2 echo "Error: Could not find file '$core'" && return $ret}
+	gdb "$exe" "$core" "${@:2}"
+}
 
 # Directory
 unsetopt auto_pushd
@@ -107,6 +125,10 @@ esac
 	${VIRTUALENVWRAPPER_PYTHON:-python} -c "import virtualenvwrapper" &> /dev/null &&
 	source virtualenvwrapper_lazy.sh
 alias mkvirtualenv='mkvirtualenv -p /usr/bin/python2'
+if (( $+commands[pyenv] )); then
+	eval "$(pyenv init -)"
+fi
+
 
 # Help
 autoload -U run-help
@@ -170,3 +192,6 @@ setupwacom() {
 	fi
 }
 setupwacom
+
+# Git management
+source ${ZDOTDIR:-$HOME}/git.zsh
