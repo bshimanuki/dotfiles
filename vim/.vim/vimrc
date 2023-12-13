@@ -1,4 +1,5 @@
 set nocompatible
+
 filetype off
 
 if has('unix')
@@ -196,6 +197,10 @@ endif
 
 "" YouCompleteMe
 let g:ycm_python_interpreter_path='' " custom
+let s:pyenv_binary=$HOME.'/.pyenv/shims/python'
+if filereadable(s:pyenv_binary)
+	let g:ycm_python_interpreter_path=s:pyenv_binary
+endif
 let g:ycm_python_system_path='' " custom
 let g:ycm_compilation_database_directory='' " custom, suffix directories to search
 let g:ycm_confirm_extra_conf=1
