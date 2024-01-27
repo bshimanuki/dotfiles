@@ -1,5 +1,6 @@
 # allow local .gdbinit
 set auto-load safe-path /
+set pagination off
 
 python
 import os
