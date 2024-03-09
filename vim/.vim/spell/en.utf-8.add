@@ -149,3 +149,6 @@ tesseract
 struct
 linux
 detections
+destructor
+syslog
+noop

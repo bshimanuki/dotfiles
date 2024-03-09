@@ -37,8 +37,9 @@ rg(){command rg -p "$@" | less -FRX}
 alias tpwd='[ -n "$TMUX" ] && tmux set-option default-command "cd \"$PWD\" && $SHELL -l"'
 alias tw='tmux new -A -s work'
 alias tp='tmux new -A -s puzzle'
+alias tcl='clear && tmux clear-history'
 ## vim
-v(){if [ $# -eq 0 ]; then vi -c "if exists(':FZF') | FZF!"; else vi "$@"; fi}
+v(){if [ $# -eq 0 ]; then vi -c "if exists(':Fzfvimfiles') | :Fzfvimfiles"; else vi "$@"; fi}
 alias vv='vi -X'
 ## git
 alias gt='git status'
@@ -128,7 +129,6 @@ alias mkvirtualenv='mkvirtualenv -p /usr/bin/python2'
 if (( $+commands[pyenv] )); then
 	eval "$(pyenv init -)"
 fi
-
 
 # Help
 autoload -U run-help

@@ -113,11 +113,14 @@ if PluginEnabled('fzf') && PluginEnabled('fzf.vim')
 	let s:fzf_cmd = '(' . s:fzf_git_gitignore_cmd . ' ; [ $? -eq 1 ] && ' . s:fzf_git_lsfiles_cmd . ' || ' . s:fzf_find_cmd . ') | ' . s:fzf_grep_cmd
 	function! Fzfvimfiles()
 		if has('gui')
-			return fzf#vim#files(getcwd(), {'source': s:fzf_cmd, 'sink': 'drop'})
+			call fzf#vim#files(getcwd(), {'source': s:fzf_cmd, 'sink': 'drop'})
 		else
-			return fzf#vim#files(getcwd(), {'source': s:fzf_cmd})
+			call fzf#vim#files(getcwd(), {'source': s:fzf_cmd})
+		endif
+		stopinsert
 	endfunction
-	nnoremap <silent><C-p> :call Fzfvimfiles()<CR>
+	command Fzfvimfiles :silent! call Fzfvimfiles()
+	nnoremap <silent><C-p> :Fzfvimfiles<CR>
 	nnoremap <silent><C-f> :silent Buffers<CR>
 	nnoremap <silent>g[ :silent Lines<CR>
 	nnoremap <silent>g/ :silent BLines<CR>
