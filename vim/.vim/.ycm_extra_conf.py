@@ -1,6 +1,7 @@
 import glob
 import os
 import os.path
+from pathlib import Path
 import logging
 import re
 
@@ -140,15 +141,24 @@ def get_compilation_database_dir(root, compilation_database_directory):
 
 
 def Settings(**kwargs):
-	filename = kwargs['filename']
+	filename = Path(kwargs['filename'])
 	language = kwargs['language']
 	client_data = kwargs['client_data']
 	settings = {}
 	settings['do_cache'] = True
 
-	interpreter_path = client_data.get('g:ycm_python_interpreter_path')
 	sys_path = client_data.get('g:ycm_python_sys_path')
 	compilation_database_directory = client_data.get('g:ycm_compilation_database_directory')
+	interpreter_path = client_data.get('g:ycm_default_python_interpreter_path')
+	if not interpreter_path:
+		# search for .venv
+		for d in filename.parents:
+			maybe_interpreter_path = d / '.venv' / 'bin' / 'python'
+			if maybe_interpreter_path.is_file():
+				interpreter_path = maybe_interpreter_path
+				break
+	if not interpreter_path:
+		interpreter_path = client_data.get('g:ycm_python_interpreter_path')
 	if interpreter_path:
 		settings['interpreter_path'] = interpreter_path
 	if sys_path:

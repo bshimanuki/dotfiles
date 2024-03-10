@@ -54,7 +54,8 @@ if !exists('l:vim_plug_not_installed')
 	if has('unix') && !has('win32unix')
 		Plug 'junegunn/fzf', {'do': './install --bin'}
 		Plug 'junegunn/fzf.vim'
-		Plug 'ycm-core/YouCompleteMe'
+		" last version before Vim 8.2.3995+ required (from Ubuntu 22.04)
+		Plug 'ycm-core/YouCompleteMe', {'commit': '7b83740'}
 	else
 		Plug 'kien/ctrlp.vim'
 	endif
@@ -199,10 +200,15 @@ if PluginEnabled('tagbar')
 endif
 
 "" YouCompleteMe
+" Interpreter python priority:
+"   1) g:ycm_python_interpreter_path
+"   2) search for .venv in parent directories
+"   3) g:ycm_default_python_interpreter_path
 let g:ycm_python_interpreter_path='' " custom
+let g:default_ycm_python_interpreter_path='' " custom
 let s:pyenv_binary=$HOME.'/.pyenv/shims/python'
 if filereadable(s:pyenv_binary)
-	let g:ycm_python_interpreter_path=s:pyenv_binary
+	let g:default_ycm_python_interpreter_path=s:pyenv_binary
 endif
 let g:ycm_python_system_path='' " custom
 let g:ycm_compilation_database_directory='' " custom, suffix directories to search
