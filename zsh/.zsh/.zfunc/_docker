@@ -1,0 +1,30 @@
+#compdef docker
+# zsh completion for docker
+
+if [ -x "$(command -v docker)" ] ; then
+  source <(docker completion zsh | grep -v '^\s*_docker$')
+  functions[_docker_completion_zsh]=$functions[_docker]
+fi
+
+if [ -f /usr/share/zsh/vendor-completions/_docker ] ; then
+  source <(cat /usr/share/zsh/vendor-completions/_docker | grep -v '^_docker "$@"$')
+  functions[_docker_vendor_completions]=$functions[_docker]
+fi
+
+_choose_docker_completion() {
+  local _docker=_docker_completion_zsh
+  # use docker completion zsh for compose only
+  if [[ "$words[2]" == "compose" ]] ; then
+  else
+    if [[ -n "${functions[_docker_vendor_completions]}" ]] ; then
+      local _docker=_docker_vendor_completions
+    fi
+  fi
+  "$_docker" "$@"
+}
+
+# don't run the completion function when being source-ed or eval-ed
+if [ "$funcstack[1]" = "_docker" ]; then
+  _choose_docker_completion "$@"
+fi
+compdef _choose_docker_completion docker

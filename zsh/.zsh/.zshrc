@@ -1,20 +1,20 @@
-export fpath=($fpath ${ZDOTDIR:-$HOME}/.zfunc)
+export fpath=("${ZDOTDIR:-$HOME}/.zfunc" "${fpath[@]}")
 
 # Don't recompile zcompdump
 alias compinit='compinit -C'
 
 # Prezto
-if [[ -r ${ZDOTDIR:-$HOME}/.zprezto/init.zsh ]]; then
-	source ${ZDOTDIR:-$HOME}/.zprezto/init.zsh
+if [[ -r "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+	source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
 # fzf
 if (( $+commands[fzf] )); then
-	if [[ -r ${HOME}/.vim/plugged/fzf/shell/completion.zsh ]]; then
-		source ${HOME}/.vim/plugged/fzf/shell/completion.zsh
+	if [[ -r "${HOME}/.vim/plugged/fzf/shell/completion.zsh" ]]; then
+		source "${HOME}/.vim/plugged/fzf/shell/completion.zsh"
 	fi
-	if [[ -r ${HOME}/.vim/plugged/fzf/shell/key-bindings.zsh ]]; then
-		source ${HOME}/.vim/plugged/fzf/shell/key-bindings.zsh
+	if [[ -r "${HOME}/.vim/plugged/fzf/shell/key-bindings.zsh" ]]; then
+		source "${HOME}/.vim/plugged/fzf/shell/key-bindings.zsh"
 	fi
 fi
 
@@ -47,17 +47,20 @@ alias gtt='git status -uno'
 glgl(){git log --topo-order --graph --pretty=format:"${_git_log_oneline_format}" HEAD $(git show-ref $(git for-each-ref --format='%(refname:short) %(upstream:short)' refs/heads) | cut -d' ' -f2)}
 alias gff='git pull --ff-only'
 alias gmf='git merge --ff-only'
-alias gpcf="$aliases[gpc] --force-with-lease"
-alias gpn="$aliases[gp] --no-verify"
-alias gpcn="$aliases[gpc] --no-verify"
-alias gpfn="$aliases[gpf] --no-verify"
-alias gpcfn="$aliases[gpcf] --no-verify"
+alias gpcf="${aliases[gpc]} --force-with-lease"
+alias gpn="${aliases[gp]} --no-verify"
+alias gpcn="${aliases[gpc]} --no-verify"
+alias gpfn="${aliases[gpf]} --no-verify"
+alias gpcfn="${aliases[gpcf]} --no-verify"
 alias gfom='git fetch origin master:master'
 alias gfomm='git fetch origin main:main'
 ## docker
-alias docker-run='docker run --rm -it -v "$(pwd):/host" -w /host -u "$(id -u):$(id -g)"'
+alias dk='docker'
+alias dc='docker compose'
+alias dkr='docker run --rm -i -t'
+alias dkrr='docker run --rm -i -t -v "$(pwd):/host" -w /host -u "$(id -u):$(id -g)"'
 alias docker-ip='docker inspect \
-	  -f "{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}"'
+	-f "{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}"'
 if [ ! -x "$(command -v docker)" ] && [ -x "$(command -v podman)" ] ; then
 	alias docker='podman'
 	if [ -x "$(command -v podman-compose)" ] ; then
@@ -81,7 +84,7 @@ gcore(){
 unsetopt auto_pushd
 unsetopt cd_able_vars
 typeset -U path
-path=(~/bin $path)
+path=(~/bin "${path[@]}")
 
 # Completion
 setopt autolist
@@ -122,11 +125,7 @@ case $TERM in
 esac
 
 # Python
-(( ${+commands[virtualenvwrapper_lazy.sh]} )) &&
-	${VIRTUALENVWRAPPER_PYTHON:-python} -c "import virtualenvwrapper" &> /dev/null &&
-	source virtualenvwrapper_lazy.sh
-alias mkvirtualenv='mkvirtualenv -p /usr/bin/python2'
-if (( $+commands[pyenv] )); then
+if (( ${+commands[pyenv]} )); then
 	eval "$(pyenv init -)"
 fi
 
@@ -194,4 +193,4 @@ setupwacom() {
 setupwacom
 
 # Git management
-source ${ZDOTDIR:-$HOME}/git.zsh
+source "${ZDOTDIR:-$HOME}/git.zsh"
