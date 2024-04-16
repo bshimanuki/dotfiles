@@ -10,6 +10,7 @@ fi
 
 # fzf
 if (( $+commands[fzf] )); then
+	export FZF_DEFAULT_OPTS='--bind ctrl-n:page-down,ctrl-p:page-up'
 	if [[ -r "${HOME}/.vim/plugged/fzf/shell/completion.zsh" ]]; then
 		source "${HOME}/.vim/plugged/fzf/shell/completion.zsh"
 	fi
@@ -41,6 +42,7 @@ alias tcl='clear && tmux clear-history'
 ## vim
 v(){if [ $# -eq 0 ]; then vi -c "if exists(':Fzfvimfiles') | :Fzfvimfiles"; else vi "$@"; fi}
 alias vv='vi -X'
+alias nv='nvim'
 ## git
 alias gt='git status'
 alias gtt='git status -uno'
@@ -74,7 +76,7 @@ alias issh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
 gcore(){
 	local core="${1:-core}"
 	local exe
-	exe="$(file "$core" | sed "s/^core.*execfn: '\([^']*\)'.*/\1/;t p;Q1;:p q")"
+	exe="$(file "$core" | sed "s/^.*core file.*execfn: '\([^']*\)'.*/\1/;t p;Q1;:p q")"
 	local ret=$?
 	(exit $ret) || {>&2 echo "Error: Could not find file '$core'" && return $ret}
 	gdb "$exe" "$core" "${@:2}"
