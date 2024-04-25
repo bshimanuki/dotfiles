@@ -54,8 +54,27 @@ alias gpn="${aliases[gp]} --no-verify"
 alias gpcn="${aliases[gpc]} --no-verify"
 alias gpfn="${aliases[gpf]} --no-verify"
 alias gpcfn="${aliases[gpcf]} --no-verify"
-alias gfom='git fetch origin master:master'
+git_master_or_main(){ {echo master; git branch -l main master --format '%(refname:short)'} | tail -n 1 }
+gfom(){
+	local master=$(git_master_or_main)
+	git fetch origin "${master:?}:${master:?}"
+}
 alias gfomm='git fetch origin main:main'
+gumd(){
+	local master=$(git_master_or_main)
+	git fetch origin "${master:?}:${master:?}"
+	local current=$(git rev-parse --abbrev-ref HEAD)
+	git switch ${master:?}
+	echo git diff --quiet ${master:?} ${current:?}
+	if git diff --quiet ${master:?} ${current:?}; then
+		git branch -d "${current:?}"
+	else
+		>&2 echo "error: the branch '${current}' does not match '${master}'"
+		return 1
+	fi
+}
+gcom(){ git switch "$(git_master_or_main)" }
+alias grp='git rev-parse'
 ## docker
 alias dk='docker'
 alias dc='docker compose'
@@ -78,7 +97,7 @@ gcore(){
 	local exe
 	exe="$(file "$core" | sed "s/^.*core file.*execfn: '\([^']*\)'.*/\1/;t p;Q1;:p q")"
 	local ret=$?
-	(exit $ret) || {>&2 echo "Error: Could not find file '$core'" && return $ret}
+	(exit $ret) || {>&2 echo "Error: Could not find file '$core'"; return $ret}
 	gdb "$exe" "$core" "${@:2}"
 }
 

@@ -17,7 +17,7 @@ function PluginEnabled(plugin)
 endfunction
 
 " vim-polyglot
-let g:polyglot_disabled = ['sensible']
+let g:polyglot_disabled = ['sensible', 'autoindent']
 let g:NERDDelimiterMap={} " workaround for broken caddyfile ftplugin
 
 " vim-plug
@@ -180,6 +180,10 @@ if PluginEnabled('rainbow')
 		\  'scheme': {},
 		\ }
 		\}
+endif
+
+if PluginEnabled('vim-sleuth')
+	let g:sleuth_heuristics=1
 endif
 
 if PluginEnabled('vim-slime')
