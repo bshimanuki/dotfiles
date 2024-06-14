@@ -74,6 +74,7 @@ require('lazy').setup({
 	},
 })
 
+-- Language Server Protocol
 local lsp_zero = require('lsp-zero')
 lsp_zero.on_attach(function(client, bufnr)
 	lsp_zero.default_keymaps({buffer = bufnr})
@@ -92,7 +93,7 @@ require('mason-lspconfig').setup({
 		'jsonls',
 		'lua_ls',
 		'pyright',
-		'ruff',
+		'ruff_lsp',
 		'rust_analyzer',
 		'tsserver',
 		'yamlls',
@@ -108,6 +109,7 @@ require('mason-lspconfig').setup({
 	}
 })
 
+-- Completion
 local cmp = require('cmp')
 local cmp_format = lsp_zero.cmp_format()
 
@@ -128,4 +130,13 @@ cmp.setup({
 })
 vim.keymap.set('i', '<C-e>', "<Cmd>lua require('cmp').complete()<CR>")
 
+-- Source common settings between vim and neovim
+vim.g.PluginEnabled = function(name)
+	local plugins = require("lazy.core.config").plugins
+	return plugins[name] and plugins[name]._.loaded ~= nil
+end
+vim.g.vimpath = vim.fn.expand('$HOME/.vim')
+vim.cmd('source ' .. vim.g.vimpath .. '/common.vim')
+
+-- Source other vimscript settings
 vim.cmd('source ' .. vim.fn.stdpath('config') .. '/init2.vim')
