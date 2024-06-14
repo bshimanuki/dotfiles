@@ -203,53 +203,54 @@ if PluginEnabled('tagbar')
 	nnoremap <leader>te :TagbarOpen fj<CR>
 endif
 
-"" YouCompleteMe
-" Interpreter python priority:
-"   1) g:ycm_python_interpreter_path
-"   2) search for .venv in parent directories
-"   3) g:ycm_default_python_interpreter_path
-let g:ycm_python_interpreter_path='' " custom
-let g:default_ycm_python_interpreter_path='' " custom
-let s:pyenv_binary=$HOME.'/.pyenv/shims/python'
-if filereadable(s:pyenv_binary)
-	let g:default_ycm_python_interpreter_path=s:pyenv_binary
+if PluginEnabled('YouCompleteMe')
+	" Interpreter python priority:
+	"   1) g:ycm_python_interpreter_path
+	"   2) search for .venv in parent directories
+	"   3) g:ycm_default_python_interpreter_path
+	let g:ycm_python_interpreter_path='' " custom
+	let g:default_ycm_python_interpreter_path='' " custom
+	let s:pyenv_binary=$HOME.'/.pyenv/shims/python'
+	if filereadable(s:pyenv_binary)
+		let g:default_ycm_python_interpreter_path=s:pyenv_binary
+	endif
+	let g:ycm_python_system_path='' " custom
+	let g:ycm_compilation_database_directory='' " custom, suffix directories to search
+	let g:ycm_confirm_extra_conf=1
+	let g:ycm_extra_conf_globlist=[]
+	let g:ycm_extra_conf_vim_data=[
+				\ 'g:ycm_python_interpreter_path',
+				\ 'g:ycm_python_system_path',
+				\ 'g:ycm_compilation_database_directory',
+				\ 'v:version',
+				\ '&filetype',
+				\]
+	let g:ycm_global_ycm_extra_conf=g:vimpath.'/.ycm_extra_conf.py'
+	let g:ycm_disable_signature_help=1
+	let g:ycm_always_populate_location_list=1
+	let g:ycm_auto_hover=''
+	let g:ycm_seed_identifiers_with_syntax=1
+	let g:ycm_disable_for_files_larger_than_kb=10000
+	let g:ycm_collect_identifiers_from_tag_files=1
+	let g:ycm_collect_identifiers_from_comments_and_strings=1
+	let g:ycm_filetype_blacklist={
+		\ 'tagbar' : 1,
+		\ 'qf' : 1,
+		\ 'notes' : 1,
+		\ 'markdown' : 1,
+		\ 'unite' : 1,
+		\ 'text' : 1,
+		\ 'vimwiki' : 1,
+		\ 'pandoc' : 1,
+		\ 'infolog' : 1,
+		\ 'mail' : 1,
+		\ 'tex' : 1
+		\}
+	nnoremap <leader>f :YcmCompleter GoTo<CR>
+	nnoremap <leader>r :YcmCompleter GoToReferences<CR>
+	nnoremap <leader>h :YcmCompleter GetDoc<CR>
+	nnoremap <leader>x :YcmCompleter FixIt<CR>
 endif
-let g:ycm_python_system_path='' " custom
-let g:ycm_compilation_database_directory='' " custom, suffix directories to search
-let g:ycm_confirm_extra_conf=1
-let g:ycm_extra_conf_globlist=[]
-let g:ycm_extra_conf_vim_data=[
-			\ 'g:ycm_python_interpreter_path',
-			\ 'g:ycm_python_system_path',
-			\ 'g:ycm_compilation_database_directory',
-			\ 'v:version',
-			\ '&filetype',
-			\]
-let g:ycm_global_ycm_extra_conf=g:vimpath.'/.ycm_extra_conf.py'
-let g:ycm_disable_signature_help=1
-let g:ycm_always_populate_location_list=1
-let g:ycm_auto_hover=''
-let g:ycm_seed_identifiers_with_syntax=1
-let g:ycm_disable_for_files_larger_than_kb=10000
-let g:ycm_collect_identifiers_from_tag_files=1
-let g:ycm_collect_identifiers_from_comments_and_strings=1
-let g:ycm_filetype_blacklist={
-	\ 'tagbar' : 1,
-	\ 'qf' : 1,
-	\ 'notes' : 1,
-	\ 'markdown' : 1,
-	\ 'unite' : 1,
-	\ 'text' : 1,
-	\ 'vimwiki' : 1,
-	\ 'pandoc' : 1,
-	\ 'infolog' : 1,
-	\ 'mail' : 1,
-	\ 'tex' : 1
-	\}
-nnoremap <leader>f :YcmCompleter GoTo<CR>
-nnoremap <leader>r :YcmCompleter GoToReferences<CR>
-nnoremap <leader>h :YcmCompleter GetDoc<CR>
-nnoremap <leader>x :YcmCompleter FixIt<CR>
 
 " Config
 if has("patch-7.4.338")
@@ -294,18 +295,12 @@ nnoremap <silent><Space> :noh<CR>
 vnoremap <silent><Space> <Esc>:noh<CR>gv
 
 " Font, Colorscheme
-if has('gui_running')
-	colorscheme torte
+colorscheme koehler
+if &t_Co==256
 	set cursorline
-	highlight CursorLine guibg=gray20
-else
-	colorscheme koehler
-	if &t_Co==256
-		set cursorline
-		highlight CursorLine cterm=NONE ctermbg=236 " 236=Gray19
-		highlight CursorLineNr cterm=NONE ctermbg=236 " 236=Gray19
-		highlight LineNr ctermbg=238 " 238=Gray27
-	endif
+	highlight CursorLine cterm=NONE ctermbg=236 " 236=Gray19
+	highlight CursorLineNr cterm=NONE ctermbg=236 " 236=Gray19
+	highlight LineNr ctermbg=238 " 238=Gray27
 endif
 if has('unix')
 	set guifont=Lucida\ Console\ 11
@@ -379,11 +374,6 @@ exec "vnoremap <silent> [[ ?".s:function_match."{<CR> " . s:delete_last_history 
 exec "vnoremap <silent> ]] /".s:function_match."{<CR> " . s:delete_last_history . "gv^"
 exec "vnoremap <silent> [] ?".s:function_match."}<CR> " . s:delete_last_history . "gv^"
 exec "vnoremap <silent> ][ /".s:function_match."}<CR> " . s:delete_last_history . "gv^"
-"" Grep for word under cursor
-""" recursive under cwd
-nnoremap <silent> <expr> gy ":silent vimgrep /\\C\\<" . expand("<cword>") . "\\>/j **/*<CR>"
-""" nonrecursive in same directory
-nnoremap <silent> <expr> gY ":silent vimgrep /\\C\\<" . expand("<cword>") . "\\>/j %:p:h/*<CR>"
 "" Layout
 command! Bd b # | bd #
 nnoremap <leader>tt :NERDTreeToggle<CR> <C-w><C-p> :TagbarToggle<CR>
