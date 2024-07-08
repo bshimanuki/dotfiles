@@ -61,16 +61,35 @@ gfom(){
 }
 alias gfomm='git fetch origin main:main'
 gumd(){
+	local red_if_error(){
+		exec 3>&1
+		stderr=$("$@" 2>&1 1>&3)
+		ret=$?
+		exec 3>&-
+		if [ -n "$stderr" ]; then
+			if [ $ret -ne 0 ]; then
+				# output in red to stderr
+				printf >&2 '\e[31m%s\e[m\n' "$stderr"
+			else
+				# output normal to stderr
+				printf >&2 '%s\n' "$stderr"
+			fi
+		fi
+		return $ret
+	}
 	local master=$(git_master_or_main)
-	git fetch origin "${master:?}:${master:?}"
+	red_if_error git fetch origin "${master:?}:${master:?}"
 	local current=$(git rev-parse --abbrev-ref HEAD)
-	git switch ${master:?}
-	echo git diff --quiet ${master:?} ${current:?}
-	if git diff --quiet ${master:?} ${current:?}; then
-		git branch -d "${current:?}"
+	red_if_error git switch ${master:?}
+	red_if_error echo git diff --quiet ${master:?} ${current:?}
+	if red_if_error git diff --quiet ${master:?} ${current:?}; then
+		red_if_error git branch -d "${current:?}"
 	else
-		>&2 echo "error: the branch '${current}' does not match '${master}'"
-		return 1
+		local printerror() {
+			>&2 echo "error: the branch '${current}' does not match '${master}'"
+			return 1
+		}
+		red_if_error printerror
 	fi
 }
 gcom(){ git switch "$(git_master_or_main)" }
@@ -136,12 +155,12 @@ prompt suse
 setopt prompt_sp
 case $TERM in
 	xterm*)
-		precmd(){print -Pn "\e]0;%~/ >\a"}
-		preexec(){print -Pn "\e]0;%~/ > $1\a"}
+		precmd(){printf "\e]0;%s/ >\a" "${(%):-%~}"}
+		preexec(){printf "\e]0;%s/ > %s\a" "${(%):-%~}" "$1"}
 		;;
 	screen*)
-		precmd(){print -Pn "\033]2;%~/ >\033\\"}
-		preexec(){print -Pn "\033]2;%~/ > $1\033\\"}
+		precmd(){printf "\033]2;%s/ >\033\\" "${(%):-%~}"}
+		preexec(){printf "\033]2;%s/ > %s\033\\" "${(%):-%~}" "$1"}
 		;;
 esac
 
