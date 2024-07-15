@@ -131,4 +131,5 @@ nnoremap <leader>tc :NERDTreeClose<CR> <C-w><C-p> :TagbarClose<CR>
 autocmd QuickFixCmdPost [^l]* nested belowright cwindow
 autocmd QuickFixCmdPost    l* nested belowright lwindow
 
+exec "source ".g:vimpath."/common_before_plugins.vim"
 exec "source ".g:vimpath."/common.vim"

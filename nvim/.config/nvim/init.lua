@@ -1,3 +1,4 @@
+vim.g.vimpath = vim.fn.expand('$HOME/.vim')
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	vim.fn.system({
@@ -11,49 +12,67 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup({
-	spec = {
-		'folke/tokyonight.nvim',
-		'Lokaltog/vim-easymotion',
-		'bkad/CamelCaseMotion',
-		'embear/vim-localvimrc',
-		'jpalardy/vim-slime',
-		'luochen1990/rainbow',
-		'scrooloose/nerdcommenter',
-		'terryma/vim-multiple-cursors',
-		'tpope/vim-fugitive',
-		'tpope/vim-rhubarb',
-		'tpope/vim-sleuth',
-		'tpope/vim-surround',
-		'tpope/vim-unimpaired',
-		'vim-airline/vim-airline',
-		'vim-airline/vim-airline-themes',
-		{'junegunn/fzf.vim', dependencies = { 'junegunn/fzf' }},
+local plugin_spec = {
+	'folke/tokyonight.nvim',
+	'Lokaltog/vim-easymotion',
+	'bkad/CamelCaseMotion',
+	'embear/vim-localvimrc',
+	'jpalardy/vim-slime',
+	'luochen1990/rainbow',
+	'scrooloose/nerdcommenter',
+	'terryma/vim-multiple-cursors',
+	'tpope/vim-fugitive',
+	'tpope/vim-rhubarb',
+	'tpope/vim-sleuth',
+	'tpope/vim-surround',
+	'tpope/vim-unimpaired',
+	'vim-airline/vim-airline',
+	'vim-airline/vim-airline-themes',
+	{'junegunn/fzf.vim', dependencies = { 'junegunn/fzf' }},
 
-		{'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
-		'williamboman/mason.nvim',
-		'williamboman/mason-lspconfig.nvim',
-		'neovim/nvim-lspconfig',
-		'hrsh7th/cmp-nvim-lsp',
-		'hrsh7th/nvim-cmp',
+	{'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
+	'williamboman/mason.nvim',
+	'williamboman/mason-lspconfig.nvim',
+	'neovim/nvim-lspconfig',
+	'hrsh7th/cmp-nvim-lsp',
+	'hrsh7th/nvim-cmp',
 
-		{
-			'Exafunction/codeium.vim',
-			enable = true,
-			keys = {
-				{ '<C-o>', mode='n'},
-				{ '<C-o>', mode='i'},
-			},
-			config = function()
-				vim.cmd('CodeiumEnable')
-				vim.g.codeium_disable_bindings = 1
-				vim.keymap.set('i', '<Tab>', function () return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
-				vim.keymap.set('i', '<C-o>', function() return vim.fn['codeium#CycleOrComplete']() end, { expr = true, silent = true })
-				vim.keymap.set('i', '<C-l>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
-				vim.keymap.set('i', '<C-Space>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
-			end
+	{
+		'Exafunction/codeium.vim',
+		enable = true,
+		keys = {
+			{ '<leader>o', mode='n'},
+			{ '<C-o>', mode='i'},
 		},
+		config = function()
+			vim.cmd('CodeiumEnable')
+			vim.g.codeium_disable_bindings = 1
+			vim.keymap.set('i', '<Tab>', function () return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
+			vim.keymap.set('i', '<C-o>', function() return vim.fn['codeium#CycleOrComplete']() end, { expr = true, silent = true })
+			vim.keymap.set('i', '<C-l>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
+			vim.keymap.set('i', '<C-Space>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
+		end
 	},
+}
+
+local plugin_names = {}
+for _, plugin in ipairs(plugin_spec) do
+	-- Add plugin name after last slash to plugin_names
+	if type(plugin) == 'table' then
+		plugin = plugin[1]
+	end
+	local chunks = vim.split(plugin, '/')
+	plugin_names[chunks[#chunks]] = plugin
+end
+
+-- Source common plugin settings before loading plugins
+vim.g.PluginEnabled = function(name)
+	return plugin_names[name] ~= nil
+end
+vim.cmd('source ' .. vim.g.vimpath .. '/common_before_plugins.vim')
+
+require('lazy').setup({
+	spec = plugin_spec,
 	colorscheme = 'tokyonight',
 	ui = {
 		icons = {
@@ -79,6 +98,7 @@ local lsp_zero = require('lsp-zero')
 lsp_zero.on_attach(function(client, bufnr)
 	lsp_zero.default_keymaps({buffer = bufnr})
 end)
+vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float)
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
@@ -131,11 +151,6 @@ cmp.setup({
 vim.keymap.set('i', '<C-e>', "<Cmd>lua require('cmp').complete()<CR>")
 
 -- Source common settings between vim and neovim
-vim.g.PluginEnabled = function(name)
-	local plugins = require("lazy.core.config").plugins
-	return plugins[name] and plugins[name]._.loaded ~= nil
-end
-vim.g.vimpath = vim.fn.expand('$HOME/.vim')
 vim.cmd('source ' .. vim.g.vimpath .. '/common.vim')
 
 -- Source other vimscript settings

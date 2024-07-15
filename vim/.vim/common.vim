@@ -26,7 +26,7 @@ let s:data_ext = 'npy|npz|onnx|pb|pkl|pt'
 let s:tex_ext = 'aux|bbl|bcf|blg|brf|fdb_latexmk|fls|idx|ilg|lof|lol|lot|pre|synctex\.gz|synctex\.gz\(busy\)|toc|x\.gnuplot' " exclude: log
 let s:file_ext = join([s:exe_ext, s:compiled_ext, s:img_ext, s:data_ext, s:tex_ext], '|')
 let s:dir_ext = 'git|hg|svn'
-if PluginEnabled('ctrlp.vim') && !(PluginEnabled('fzf') && PluginEnabled('fzf.vim'))
+if PluginEnabled('ctrlp.vim') && !PluginEnabled('fzf.vim')
 	let g:ctrlp_working_path_mode='a'
 	let g:ctrlp_custom_ignore = {
 				\ 'dir':  '\v[\/]\.(' . s:dir_ext . ')$',
@@ -39,7 +39,7 @@ if PluginEnabled('vim-easymotion')
 	noremap <Plug>(easymotion-prefix) <Nop>
 endif
 
-if PluginEnabled('fzf') && PluginEnabled('fzf.vim')
+if PluginEnabled('fzf.vim')
 	let s:fzf_dir_ext = substitute(s:dir_ext, '|', ' -o -path \\*/.', 'g')
 	let s:fzf_find_cmd = 'find -L $dir \( -path \*/.' . s:fzf_dir_ext .  ' \) -prune -o -type f -printf "%P\n" 2> /dev/null'
 	let s:fzf_git_gitignore_cmd = 'git check-ignore -q ${dir:-' . getcwd() . '} 2> /dev/null'
@@ -52,7 +52,6 @@ if PluginEnabled('fzf') && PluginEnabled('fzf.vim')
 		else
 			call fzf#vim#files(getcwd(), {'source': s:fzf_cmd})
 		endif
-		stopinsert
 	endfunction
 	command Fzfvimfiles :silent! call Fzfvimfiles()
 	nnoremap <silent><C-p> :Fzfvimfiles<CR>
@@ -77,14 +76,6 @@ if PluginEnabled('vim-latex-suite')
 	let g:Tex_DefaultTargetFormat='pdf'
 	" imap <C-f> <Plug>IMAP_JumpForward
 	" map <C-f> <Plug>IMAP_JumpForward
-endif
-
-if PluginEnabled('vim-localvimrc')
-	" use `if g:localvimrc_sourced_once_for_file | finish | endif`
-	" as an include guard
-	let g:localvimrc_event=['BufNewFile', 'BufReadPre', 'BufWinEnter']
-	let g:localvimrc_persistent=1
-	let g:localvimrc_persistence_file=g:vimpath.'/.localvimrc_persistent'
 endif
 
 if PluginEnabled('nerdcommenter')
@@ -118,18 +109,6 @@ endif
 
 if PluginEnabled('vim-sleuth')
 	let g:sleuth_heuristics=1
-endif
-
-if PluginEnabled('vim-slime')
-	let g:slime_target='tmux'
-	let g:slime_default_config={'socket_name': 'default', 'target_pane': '0'}
-	let g:slime_dont_ask_default=1
-	let g:slime_no_mappings=1
-	" let g:slime_python_ipython=1
-	xmap <leader>s <Plug>SlimeRegionSend
-	nmap <leader>s <Plug>SlimeMotionSend
-	nmap <leader>ss <Plug>SlimeParagraphSend
-	nmap <leader>sv <Plug>SlimeConfig
 endif
 
 if PluginEnabled('tagbar')
