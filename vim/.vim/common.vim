@@ -52,6 +52,11 @@ if PluginEnabled('fzf.vim')
 		else
 			call fzf#vim#files(getcwd(), {'source': s:fzf_cmd})
 		endif
+		if !has('nvim')
+			" NB: fzf puts vim into insert after opening a file otherwise but
+			" stopinsert puts vim into normal mode while selecting a file
+			stopinsert
+		endif
 	endfunction
 	command Fzfvimfiles :silent! call Fzfvimfiles()
 	nnoremap <silent><C-p> :Fzfvimfiles<CR>
