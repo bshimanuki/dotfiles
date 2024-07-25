@@ -46,6 +46,8 @@ alias nv='nvim'
 ## git
 alias gt='git status'
 alias gtt='git status -uno'
+unalias gcm
+gcm(){git commit -m "$*"}
 glgl(){git log --topo-order --graph --pretty=format:"${_git_log_oneline_format}" HEAD $(git show-ref $(git for-each-ref --format='%(refname:short) %(upstream:short)' refs/heads) | cut -d' ' -f2)}
 alias gff='git pull --ff-only'
 alias gmf='git merge --ff-only'
@@ -191,8 +193,8 @@ fi
 
 # History
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=100000
+SAVEHIST=100000
 setopt hist_ignore_dups
 setopt interactive_comments
 
