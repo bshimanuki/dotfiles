@@ -18,6 +18,14 @@ local plugin_spec = {
 	'bkad/CamelCaseMotion',
 	'embear/vim-localvimrc',
 	'jpalardy/vim-slime',
+	{
+		'klen/nvim-config-local',
+		config = function()
+			require('config-local').setup {
+				lookup_parents = true,
+			}
+		end
+	},
 	'luochen1990/rainbow',
 	'scrooloose/nerdcommenter',
 	'terryma/vim-multiple-cursors',
@@ -44,6 +52,7 @@ local plugin_spec = {
 			{ '<leader>o', mode='n'},
 			{ '<C-o>', mode='i'},
 		},
+		cmd = 'CodeiumEnable',
 		config = function()
 			vim.cmd('CodeiumEnable')
 			vim.g.codeium_disable_bindings = 1
