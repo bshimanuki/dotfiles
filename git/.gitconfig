@@ -13,3 +13,5 @@
 	conflictstyle = diff3
 [advice]
 	detachedHead = false
+[push]
+	autoSetupRemote = false
