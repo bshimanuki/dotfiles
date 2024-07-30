@@ -13,6 +13,9 @@ GLOBAL_IGNORE_LIST=~/.stow-global-ignore
 STOW_IGNORE_LIST="$DOTFILES"/stow/.stow-global-ignore
 TARGET=~
 PACKAGES="$(ls $DOTFILES)"
+SHARED_DIRECTORIES=(
+	.config
+)
 
 GNU_STOW=true
 FORCE=false
@@ -64,10 +67,18 @@ stow_files() {
 			else
 				ignore_list="$global_ignore_list"
 			fi
-			for file in "$package"/* "$package"/.[!.]* "$package"/..?*; do
+			shared_glob=${SHARED_DIRECTORIES[*]/%//*}
+			for file in "$package"/* "$package"/.[!.]* "$package"/..?* ${shared_glob/#/$package/}; do
+				echo "$file" >&2
 				base="${file#$package/}"
 				if [ -e "$file" ] && [ "$base" != "$local_ignore_list" ]; then
 					ignore=false
+					for shared_directory in "${SHARED_DIRECTORIES[@]}"; do
+						if [ "$base" = "$shared_directory" ]; then
+							ignore=true
+							break
+						fi
+					done
 					if [ -f "$ignore_list" ]; then
 						while read ignore_line; do
 							ignore_regex=${ignore_line%% *}
@@ -190,6 +201,9 @@ if stow_target_exists -v; then
 	fi
 fi
 
+for shared_directory in "${SHARED_DIRECTORIES[@]}"; do
+	mkdir -p "$TARGET/$shared_directory"
+done
 if $GNU_STOW; then
 	stow -t "$TARGET" stow
 	stow -t "$TARGET" $PACKAGES

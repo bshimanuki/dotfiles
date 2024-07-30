@@ -236,3 +236,14 @@ setupwacom
 
 # Git management
 source "${ZDOTDIR:-$HOME}/git.zsh"
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# gcloud
+[ -f '/opt/google-cloud-sdk/path.zsh.inc' ] && . '/opt/google-cloud-sdk/path.zsh.inc'
+[ -f '/opt/google-cloud-sdk/completion.zsh.inc' ] && . '/opt/google-cloud-sdk/completion.zsh.inc'
+
+# homebrew
+[ -f '/opt/homebrew/bin/brew' ] && eval "$(/opt/homebrew/bin/brew shellenv)"
