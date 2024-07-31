@@ -1,4 +1,5 @@
-#!/bin/sh -e
+#!/usr/bin/env bash
+set -euo pipefail
 
 # no readlink -f option on Darwin
 readlink_f(){ perl -MCwd -e 'print Cwd::abs_path shift' "$1"; }
@@ -69,7 +70,6 @@ stow_files() {
 			fi
 			shared_glob=${SHARED_DIRECTORIES[*]/%//*}
 			for file in "$package"/* "$package"/.[!.]* "$package"/..?* ${shared_glob/#/$package/}; do
-				echo "$file" >&2
 				base="${file#$package/}"
 				if [ -e "$file" ] && [ "$base" != "$local_ignore_list" ]; then
 					ignore=false
