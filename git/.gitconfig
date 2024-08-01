@@ -15,3 +15,5 @@
 	detachedHead = false
 [push]
 	autoSetupRemote = false
+[includeIf "gitdir:~/dotfiles/"]
+	path = ~/dotfiles/.gitconfig
