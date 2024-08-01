@@ -202,7 +202,7 @@ set incsearch hlsearch
 nnoremap <silent><Space> :noh<CR>
 vnoremap <silent><Space> <Esc>:noh<CR>gv
 
-" Font, Colorscheme
+" Font
 if &t_Co==256
 	set cursorline
 	highlight CursorLine cterm=NONE ctermbg=236 " 236=Gray19
