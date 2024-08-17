@@ -243,3 +243,7 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap gb :bn<CR>
 nnoremap gB :bp<CR>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <M-b> <S-Left>
+cnoremap <M-f> <S-Right>

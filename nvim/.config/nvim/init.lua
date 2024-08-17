@@ -28,6 +28,7 @@ local plugin_spec = {
 	},
 	'luochen1990/rainbow',
 	'scrooloose/nerdcommenter',
+	'stevearc/aerial.nvim',
 	'terryma/vim-multiple-cursors',
 	'tpope/vim-fugitive',
 	'tpope/vim-rhubarb',
@@ -158,6 +159,12 @@ cmp.setup({
 	},
 })
 vim.keymap.set('i', '<C-e>', "<Cmd>lua require('cmp').complete()<CR>")
+
+-- Other plugins
+require('aerial').setup({
+	vim.keymap.set('n', '<leader>a', ':AerialToggle<CR>'),
+})
+
 
 -- Source common settings between vim and neovim
 vim.cmd('source ' .. vim.g.vimpath .. '/common.vim')
