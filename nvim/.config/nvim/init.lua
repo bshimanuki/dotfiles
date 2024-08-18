@@ -108,19 +108,19 @@ require('lazy').setup({
 	colorscheme = 'tokyonight',
 	ui = {
 		icons = {
-			cmd = "⌘",
-			config = "🛠",
-			event = "📅",
-			ft = "📂",
-			init = "⚙",
-			keys = "🗝",
-			plugin = "🔌",
-			runtime = "💻",
-			require = "🌙",
-			source = "📄",
-			start = "🚀",
-			task = "📌",
-			lazy = "💤 ",
+			cmd = '⌘',
+			config = '🛠',
+			event = '📅',
+			ft = '📂',
+			init = '⚙',
+			keys = '🗝',
+			plugin = '🔌',
+			runtime = '💻',
+			require = '🌙',
+			source = '📄',
+			start = '🚀',
+			task = '📌',
+			lazy = '💤 ',
 		},
 	},
 })
@@ -128,7 +128,11 @@ require('lazy').setup({
 -- Language Server Protocol
 local lsp_zero = require('lsp-zero')
 lsp_zero.on_attach(function(client, bufnr)
-	lsp_zero.default_keymaps({buffer = bufnr})
+	lsp_zero.default_keymaps({
+		buffer = bufnr,
+		exclude = { 'gi' },
+	})
+	vim.keymap.set('n', 'gR', vim.lsp.buf.implementation)
 end)
 vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float)
 vim.keymap.set('n', '<leader>w', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end)
@@ -181,12 +185,21 @@ cmp.setup({
 		end,
 	},
 })
-vim.keymap.set('i', '<C-e>', "<Cmd>lua require('cmp').complete()<CR>")
+vim.keymap.set('i', '<C-e>', '<Cmd>lua require("cmp").complete()<CR>')
 
 -- Other plugins
 require('aerial').setup({
-	vim.keymap.set('n', '<leader>a', ':AerialToggle<CR>'),
+	backends = { 'lsp', 'treesitter', 'markdown', 'asciidoc', 'man' },
+	attach_mode = 'global',
+	layout = {
+		default_direction = 'right',
+		placement = 'edge',
+		preserve_equality = true,
+	},
 })
+vim.keymap.set('n', '<leader>a', ':AerialOpen<CR>')
+vim.keymap.set('n', '[c', ':AerialPrev<CR>')
+vim.keymap.set('n', ']c', ':AerialNext<CR>')
 
 
 -- Source common settings between vim and neovim
