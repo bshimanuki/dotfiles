@@ -27,6 +27,28 @@ local plugin_spec = {
 		end
 	},
 	'luochen1990/rainbow',
+	{
+		'nvim-treesitter/nvim-treesitter',
+		build = ':TSUpdate',
+		config = function()
+			require('nvim-treesitter.configs').setup({
+				ensure_installed = 'all',
+				highlight = {
+					enable = true,
+				},
+				incremental_selection = {
+					enable = true,
+					keymaps = {
+						init_selection = '<CR>',
+						scope_incremental = '<CR>',
+						node_incremental = '<TAB>',
+						node_decremental = '<S-TAB>',
+					},
+				}
+			})
+		end
+	},
+	'RRethy/vim-illuminate',
 	'scrooloose/nerdcommenter',
 	'stevearc/aerial.nvim',
 	'terryma/vim-multiple-cursors',
@@ -109,6 +131,7 @@ lsp_zero.on_attach(function(client, bufnr)
 	lsp_zero.default_keymaps({buffer = bufnr})
 end)
 vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float)
+vim.keymap.set('n', '<leader>w', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end)
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
