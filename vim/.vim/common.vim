@@ -203,6 +203,17 @@ set incsearch hlsearch
 nnoremap <silent><Space> :noh<CR>
 vnoremap <silent><Space> <Esc>:noh<CR>gv
 
+" Config
+filetype plugin indent on
+syntax on
+set formatoptions+=ro
+set cinoptions=:0,ls,g0,N-s,(s,u0,m1
+set nofoldenable foldmethod=indent " foldmethod=syntax slows vim considerably
+set visualbell t_vb=
+autocmd GUIEnter * set t_vb=
+set mouse=
+set notimeout ttimeout ttimeoutlen=0
+
 " Font
 if &t_Co==256
 	set cursorline
