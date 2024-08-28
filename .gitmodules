@@ -1,12 +1,9 @@
 [submodule "zprezto"]
 	path = zsh/.zsh/.zprezto
 	url = https://github.com/sorin-ionescu/prezto.git
-	ignore = dirty
 [submodule "tpm"]
 	path = tmux/.tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
-	ignore = dirty
 [submodule "gdb/.gdb/pwndbg"]
 	path = gdb/.gdb/pwndbg
 	url = https://github.com/pwndbg/pwndbg
-	ignore = dirty

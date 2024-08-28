@@ -174,8 +174,6 @@ fi
 # Help
 autoload -U run-help
 autoload run-help-git
-autoload run-help-svn
-autoload run-help-svk
 alias help=run-help
 
 # Finally, make sure the terminal is in application mode, when zle is

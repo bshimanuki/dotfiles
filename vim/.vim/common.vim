@@ -64,6 +64,7 @@ if PluginEnabled('fzf.vim')
 	nnoremap <silent>g[ :silent Lines<CR>
 	nnoremap <silent>g/ :silent BLines<CR>
 	nnoremap <silent>g9 :silent Rg<CR>
+	nnoremap <silent>g0 :silent Changes<CR>
 endif
 
 if PluginEnabled('vim-fugitive')
