@@ -78,14 +78,20 @@ local plugin_spec = {
 		cmd = 'CodeiumEnable',
 		config = function()
 			vim.cmd('CodeiumEnable')
-			vim.g.codeium_disable_bindings = 1
 			vim.keymap.set('i', '<Tab>', function () return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
+			vim.keymap.set('i', '<C-]>', function () return vim.fn['codeium#AcceptNextWord']() end, { expr = true, silent = true })
+			vim.keymap.set('i', '<S-Tab>', function ()
+				local value = vim.fn['codeium#AcceptNextLine']()
+				if value:match('^%s*$') then value = '' end
+				return value .. vim.api.nvim_replace_termcodes('<CR>', true, false, true)
+			end, { expr = true, silent = true })
 			vim.keymap.set('i', '<C-o>', function() return vim.fn['codeium#CycleOrComplete']() end, { expr = true, silent = true })
 			vim.keymap.set('i', '<C-l>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
 			vim.keymap.set('i', '<C-Space>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
 		end
 	},
 }
+vim.g.codeium_disable_bindings = 1
 
 local plugin_names = {}
 for _, plugin in ipairs(plugin_spec) do
