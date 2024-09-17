@@ -67,6 +67,7 @@ local plugin_spec = {
 	'neovim/nvim-lspconfig',
 	'hrsh7th/cmp-nvim-lsp',
 	'hrsh7th/nvim-cmp',
+	'L3MON4D3/LuaSnip',
 
 	{
 		'Exafunction/codeium.vim',
@@ -79,8 +80,8 @@ local plugin_spec = {
 		config = function()
 			vim.cmd('CodeiumEnable')
 			vim.keymap.set('i', '<Tab>', function () return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
-			vim.keymap.set('i', '<C-]>', function () return vim.fn['codeium#AcceptNextWord']() end, { expr = true, silent = true })
-			vim.keymap.set('i', '<S-Tab>', function ()
+			vim.keymap.set('i', '<S-Tab>', function () return vim.fn['codeium#AcceptNextWord']() end, { expr = true, silent = true })
+			vim.keymap.set('i', '<C-]>', function ()
 				local value = vim.fn['codeium#AcceptNextLine']()
 				if value:match('^%s*$') then value = '' end
 				return value .. vim.api.nvim_replace_termcodes('<CR>', true, false, true)
