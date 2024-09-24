@@ -186,7 +186,7 @@ set tabstop=2 shiftwidth=2
 set nojoinspaces
 set linebreak
 set scrolloff=8 sidescrolloff=8
-set modeline
+set nomodeline
 set ruler
 set backspace=indent,eol,start
 set display=lastline,uhex
