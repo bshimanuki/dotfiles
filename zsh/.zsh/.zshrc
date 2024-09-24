@@ -103,12 +103,24 @@ alias dkr='docker run --rm -i -t'
 alias dkrr='docker run --rm -i -t -v "$(pwd):/host" -w /host -u "$(id -u):$(id -g)"'
 alias docker-ip='docker inspect \
 	-f "{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}"'
+	docker-ss(){ sudo nsenter -t "$(docker inspect -f '{{.State.Pid}}' "${1:?}")" -n ss "${@:2}" }
 if [ ! -x "$(command -v docker)" ] && [ -x "$(command -v podman)" ] ; then
 	alias docker='podman'
 	if [ -x "$(command -v podman-compose)" ] ; then
 		alias docker-compose='podman-compose'
 	fi
 fi
+## kubectl
+alias k='kubectl'
+alias kc='kubectl config get-contexts'
+alias kcc='kubectl config use-context'
+alias kg='kubectl get'
+alias kgp='kubectl get pods'
+alias kgpp='kubectl get pods -o wide --field-selector status.phase!=Succeeded'
+alias kgn='kubectl get nodes'
+alias kgnn='kubectl get nodes -o wide'
+alias kwd='kubectl diff --context'
+alias kp='kubectl apply --context'
 ## ssh
 dessh(){ command ssh -G "$1" | awk '$1 == "hostname" { print $2 }' } # dealias
 alias issh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
