@@ -39,6 +39,7 @@ alias tpwd='[ -n "$TMUX" ] && tmux set-option default-command "cd \"$PWD\" && $S
 alias tw='tmux new -A -s work'
 alias tp='tmux new -A -s puzzle'
 alias tcl='clear && tmux clear-history'
+alias ts='export SSH_AUTH_SOCK="$(tmux show-env SSH_AUTH_SOCK | cut -sd= -f2)"'
 ## vim
 v(){if [ $# -eq 0 ]; then vi -c "if exists(':Fzfvimfiles') | :Fzfvimfiles"; else vi "$@"; fi}
 alias vv='vi -X'
