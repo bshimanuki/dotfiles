@@ -102,6 +102,7 @@ local plugin_spec = {
 					chat_client_port = os.getenv('NEOCODEIUM_CHAT_CLIENT_PORT'),
 					chat_enabled = true,
 				},
+				open_chat_in_browser = false,
 				silent = true,
 			})
 			vim.keymap.set('i', '<Tab>', neocodeium.accept)
@@ -181,7 +182,7 @@ require('mason-lspconfig').setup({
 		'pyright',
 		'ruff_lsp',
 		'rust_analyzer',
-		'tsserver',
+		'ts_ls',
 		'yamlls',
 	},
 	handlers = {
