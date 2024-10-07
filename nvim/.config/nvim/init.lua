@@ -69,27 +69,49 @@ local plugin_spec = {
 	'hrsh7th/nvim-cmp',
 	'L3MON4D3/LuaSnip',
 
+	-- {
+		-- 'Exafunction/codeium.vim',
+		-- enable = true,
+		-- keys = {
+			-- { '<leader>o', mode='n'},
+			-- { '<C-o>', mode='i'},
+		-- },
+		-- cmd = 'CodeiumEnable',
+		-- config = function()
+			-- vim.cmd('CodeiumEnable')
+			-- vim.keymap.set('i', '<Tab>', function () return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
+			-- vim.keymap.set('i', '<S-Tab>', function () return vim.fn['codeium#AcceptNextWord']() end, { expr = true, silent = true })
+			-- vim.keymap.set('i', '<C-]>', function ()
+				-- local value = vim.fn['codeium#AcceptNextLine']()
+				-- if value:match('^%s*$') then value = '' end
+				-- return value .. vim.api.nvim_replace_termcodes('<CR>', true, false, true)
+			-- end, { expr = true, silent = true })
+			-- vim.keymap.set('i', '<C-o>', function() return vim.fn['codeium#CycleOrComplete']() end, { expr = true, silent = true })
+			-- vim.keymap.set('i', '<C-l>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
+			-- vim.keymap.set('i', '<C-Space>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
+		-- end
+	-- },
 	{
-		'Exafunction/codeium.vim',
-		enable = true,
-		keys = {
-			{ '<leader>o', mode='n'},
-			{ '<C-o>', mode='i'},
-		},
-		cmd = 'CodeiumEnable',
+		'bshimanuki/neocodeium',
 		config = function()
-			vim.cmd('CodeiumEnable')
-			vim.keymap.set('i', '<Tab>', function () return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
-			vim.keymap.set('i', '<S-Tab>', function () return vim.fn['codeium#AcceptNextWord']() end, { expr = true, silent = true })
-			vim.keymap.set('i', '<C-]>', function ()
-				local value = vim.fn['codeium#AcceptNextLine']()
-				if value:match('^%s*$') then value = '' end
-				return value .. vim.api.nvim_replace_termcodes('<CR>', true, false, true)
-			end, { expr = true, silent = true })
-			vim.keymap.set('i', '<C-o>', function() return vim.fn['codeium#CycleOrComplete']() end, { expr = true, silent = true })
-			vim.keymap.set('i', '<C-l>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
-			vim.keymap.set('i', '<C-Space>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
-		end
+			local neocodeium = require('neocodeium')
+			neocodeium.setup({
+				enabled = false,
+				server = {
+					chat_web_server_port = os.getenv('NEOCODEIUM_CHAT_WEB_SERVER_PORT'),
+					chat_client_port = os.getenv('NEOCODEIUM_CHAT_CLIENT_PORT'),
+					chat_enabled = true,
+				},
+				silent = true,
+			})
+			vim.keymap.set('i', '<Tab>', neocodeium.accept)
+			vim.keymap.set('i', '<S-Tab>', neocodeium.accept_word)
+			vim.keymap.set('i', '<C-]>', neocodeium.accept_line)
+			vim.keymap.set('i', '<C-o>', neocodeium.cycle_or_complete)
+			vim.keymap.set('i', '<C-l>', function() neocodeium.cycle_or_complete(-1) end)
+			vim.keymap.set('i', '<C-Space>', neocodeium.clear)
+			vim.keymap.set('n', '<leader>o', neocodeium.chat)
+		end,
 	},
 }
 vim.g.codeium_disable_bindings = 1

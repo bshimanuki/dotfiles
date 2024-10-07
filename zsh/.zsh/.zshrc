@@ -3,6 +3,11 @@ export fpath=("${ZDOTDIR:-$HOME}/.zfunc" "${fpath[@]}")
 # Don't recompile zcompdump
 alias compinit='compinit -C'
 
+# Local options
+if [[ -r "${ZDOTDIR:-$HOME}/local.zsh" ]]; then
+	source "${ZDOTDIR:-$HOME}/local.zsh"
+fi
+
 # Prezto
 if [[ -r "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 	source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
@@ -43,11 +48,38 @@ alias ts='export SSH_AUTH_SOCK="$(tmux show-env SSH_AUTH_SOCK | cut -sd= -f2)"'
 ## vim
 v(){if [ $# -eq 0 ]; then vi -c "if exists(':Fzfvimfiles') | :Fzfvimfiles"; else vi "$@"; fi}
 alias vv='vi -X'
-alias nv='nvim'
+get_available_port() {
+	min_port="${1:?args: min_port max_port}"
+	max_port="${2:-65535}"
+
+	declare -A ports
+	for hex_port in $(grep -Eo ':[0-9A-F]{4}\b' /proc/net/tcp | grep -Eo '[0-9A-F]{4}'); do
+		ports["$((0x${hex_port}))"]=1
+	done
+
+	for port in $(seq "$min_port" "$max_port"); do
+		if [[ -z "${ports["$port"]:-}" ]]; then
+			echo "$port"
+			return
+		fi
+	done
+
+	>&2 echo "Error: no available port in range $min_port-$max_port"
+	return 1
+}
+nv(){
+	(
+	export NEOCODEIUM_CHAT_WEB_SERVER_PORT=$(get_available_port "${CODEIUM_PORT_MIN:-51234}" "${CODEIUM_PORT_MAX:-65535}")
+	export NEOCODEIUM_CHAT_CLIENT_PORT=$(get_available_port "$(($NEOCODEIUM_CHAT_WEB_SERVER_PORT + 1))" "${CODEIUM_PORT_MAX:-65535}")
+	nvim "$@"
+	)
+}
 ## git
 alias gt='git status'
 alias gtt='git status -uno'
-unalias gcm
+if alias gcm &> /dev/null; then
+	unalias gcm
+fi
 gcm(){git commit -m "$*"}
 glgl(){git log --topo-order --graph --pretty=format:"${_git_log_oneline_format}" HEAD $(git show-ref $(git for-each-ref --format='%(refname:short) %(upstream:short)' refs/heads) | cut -d' ' -f2)}
 alias gff='git pull --ff-only'
