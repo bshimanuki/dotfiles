@@ -102,7 +102,7 @@ local plugin_spec = {
 					chat_client_port = os.getenv('NEOCODEIUM_CHAT_CLIENT_PORT'),
 					chat_enabled = true,
 				},
-				open_chat_in_browser = false,
+				open_in_browser = false,
 				silent = true,
 			})
 			vim.keymap.set('i', '<Tab>', neocodeium.accept)
