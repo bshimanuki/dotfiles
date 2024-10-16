@@ -1,6 +1,6 @@
 export ZDOTDIR=~/.zsh
-export fpath=($fpath ${ZDOTDIR:-$HOME}/.zfunc)
-skip_global_compinit=1
+export fpath=("${ZDOTDIR:-$HOME}/.zfunc" "${fpath[@]}")
+export skip_global_compinit=1
 
 # Custom Environmental Variables
 export PATH=${PATH}:~/bin
