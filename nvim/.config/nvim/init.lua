@@ -167,6 +167,12 @@ end)
 vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float)
 vim.keymap.set('n', '<leader>w', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end)
 
+
+local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
+lsp_capabilities = vim.tbl_deep_extend('force', lsp_capabilities, require('cmp_nvim_lsp').default_capabilities())
+local server_opts = {
+	lua_ls = lsp_zero.nvim_lua_ls(),
+}
 require('mason').setup({})
 require('mason-lspconfig').setup({
 	ensure_installed = {
@@ -187,11 +193,9 @@ require('mason-lspconfig').setup({
 	},
 	handlers = {
 		function(server_name)
-			require('lspconfig')[server_name].setup({})
-		end,
-		lua_ls = function()
-			local lua_opts = lsp_zero.nvim_lua_ls()
-			require('lspconfig').lua_ls.setup(lua_opts)
+			local opts = server_opts[server_name] or {}
+			opts.capabilities = vim.tbl_deep_extend('force', {}, lsp_capabilities, opts.capabilities or {})
+			require('lspconfig')[server_name].setup(opts)
 		end,
 	}
 })
@@ -201,6 +205,7 @@ local cmp = require('cmp')
 local cmp_format = lsp_zero.cmp_format()
 
 cmp.setup({
+	preselect = 'none',
 	formatting = cmp_format,
 	mapping = cmp.mapping.preset.insert({
 		-- scroll up and down the documentation window
