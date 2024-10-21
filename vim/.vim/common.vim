@@ -235,6 +235,7 @@ exec 'set spellfile='.g:vimpath.'/spell/en.utf-8.add'
 " Shell
 set shellslash
 set grepprg=grep\ -nH\ $*
+let $ZSH_ENV = g:vimpath.'/env.zsh'
 
 " Remaps
 "" Save and Quit
