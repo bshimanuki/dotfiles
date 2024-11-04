@@ -19,7 +19,7 @@ local plugin_spec = {
 	'embear/vim-localvimrc',
 	'jpalardy/vim-slime',
 	{
-		'klen/nvim-config-local',
+		'mrjohannchang/nvim-config-local',
 		config = function()
 			require('config-local').setup {
 				lookup_parents = true,
@@ -95,16 +95,19 @@ local plugin_spec = {
 		'bshimanuki/neocodeium',
 		config = function()
 			local neocodeium = require('neocodeium')
-			neocodeium.setup({
+			local settings = {
 				enabled = false,
-				server = {
+				open_in_browser = false,
+				silent = true,
+			}
+			if os.getenv('NEOCODEIUM_CHAT_WEB_SERVER_PORT') then
+				settings.server = {
 					chat_web_server_port = os.getenv('NEOCODEIUM_CHAT_WEB_SERVER_PORT'),
 					chat_client_port = os.getenv('NEOCODEIUM_CHAT_CLIENT_PORT'),
 					chat_enabled = true,
-				},
-				open_in_browser = false,
-				silent = true,
-			})
+				}
+			end
+			neocodeium.setup(settings)
 			vim.keymap.set('i', '<Tab>', neocodeium.accept)
 			vim.keymap.set('i', '<S-Tab>', neocodeium.accept_word)
 			vim.keymap.set('i', '<C-]>', neocodeium.accept_line)

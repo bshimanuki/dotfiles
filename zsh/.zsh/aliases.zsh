@@ -42,8 +42,10 @@ get_available_port() {
 }
 nv(){
 	(
-	export NEOCODEIUM_CHAT_WEB_SERVER_PORT=$(get_available_port "${CODEIUM_PORT_MIN:-51234}" "${CODEIUM_PORT_MAX:-65535}")
-	export NEOCODEIUM_CHAT_CLIENT_PORT=$(get_available_port "$(($NEOCODEIUM_CHAT_WEB_SERVER_PORT + 1))" "${CODEIUM_PORT_MAX:-65535}")
+	if [ -e /proc ]; then
+		export NEOCODEIUM_CHAT_WEB_SERVER_PORT=$(get_available_port "${CODEIUM_PORT_MIN:-51234}" "${CODEIUM_PORT_MAX:-65535}")
+		export NEOCODEIUM_CHAT_CLIENT_PORT=$(get_available_port "$(($NEOCODEIUM_CHAT_WEB_SERVER_PORT + 1))" "${CODEIUM_PORT_MAX:-65535}")
+	fi
 	nvim "$@"
 	)
 }
