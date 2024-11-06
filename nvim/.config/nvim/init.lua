@@ -175,6 +175,10 @@ local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
 lsp_capabilities = vim.tbl_deep_extend('force', lsp_capabilities, require('cmp_nvim_lsp').default_capabilities())
 local server_opts = {
 	lua_ls = lsp_zero.nvim_lua_ls(),
+	clangd = {
+		-- no proto
+		filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'hpp'},
+	},
 }
 require('mason').setup({})
 require('mason-lspconfig').setup({
@@ -188,6 +192,7 @@ require('mason-lspconfig').setup({
 		'jdtls',
 		'jsonls',
 		'lua_ls',
+		-- 'pbls',
 		'pyright',
 		'ruff_lsp',
 		'rust_analyzer',

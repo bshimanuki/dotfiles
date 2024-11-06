@@ -9,6 +9,7 @@ fi
 alias la='ls -A'
 alias lla='ll -A'
 alias s='ls'
+alias sl='ls'
 setopt rm_star_silent
 alias mmv='noglob zmv -W'
 rg(){command rg -p "$@" | less -FRX}
@@ -57,6 +58,7 @@ if alias gcm &> /dev/null; then
 fi
 gcm(){git commit -m "$*"}
 glgl(){git log --topo-order --graph --pretty=format:"${_git_log_oneline_format}" HEAD $(git show-ref $(git for-each-ref --format='%(refname:short) %(upstream:short)' refs/heads) | cut -d' ' -f2)}
+alias gfp='git fetch --prune'
 alias gff='git pull --ff-only'
 alias gmf='git merge --ff-only'
 alias gpcf="${aliases[gpc]} --force-with-lease"
@@ -125,10 +127,13 @@ alias kcc='kubectl config use-context'
 alias kg='kubectl get'
 alias kgp='kubectl get pods'
 alias kgpp='kubectl get pods -o wide --field-selector status.phase!=Succeeded'
+alias kgpip="kubectl get pods -o jsonpath='{.status.podIP}'"
 alias kgn='kubectl get nodes'
 alias kgnn='kubectl get nodes -o wide'
 alias kwd='kubectl diff --context'
 alias kp='kubectl apply --context'
+# nvidia
+alias smi='nvidia-smi'
 ## ssh
 dessh(){ command ssh -G "$1" | awk '$1 == "hostname" { print $2 }' } # dealias
 alias issh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'

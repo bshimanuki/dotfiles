@@ -43,4 +43,9 @@ export PIP_VIRTUALENV_BASE=${WORKON_HOME}
 export RBENV_HOME=~/.rbenv
 export PATH=${RBENV_HOME}/shims:${PATH}:${RBENV_HOME}/bin:${RBENV_HOME}/plugins/ruby-build/bin
 
+## Rust
+export RUSTUP_HOME=~/.rustup
+export CARGO_HOME=~/.cargo
+export PATH=${PATH}:${CARGO_HOME}/bin
+
 if [ -n "$ZSH_ENV" ]; then source "$ZSH_ENV"; fi
