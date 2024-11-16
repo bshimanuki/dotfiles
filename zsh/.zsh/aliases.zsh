@@ -58,6 +58,7 @@ if alias gcm &> /dev/null; then
 fi
 gcm(){git commit -m "$*"}
 glgl(){git log --topo-order --graph --pretty=format:"${_git_log_oneline_format}" HEAD $(git show-ref $(git for-each-ref --format='%(refname:short) %(upstream:short)' refs/heads) | cut -d' ' -f2)}
+alias gcod='git checkout --detach'
 alias gfp='git fetch --prune'
 alias gff='git pull --ff-only'
 alias gmf='git merge --ff-only'
@@ -67,6 +68,8 @@ alias gpcn="${aliases[gpc]} --no-verify"
 alias gpfn="${aliases[gpf]} --no-verify"
 alias gpcfn="${aliases[gpcf]} --no-verify"
 git_master_or_main(){ {echo master; git branch -l main master --format '%(refname:short)'} | tail -n 1 }
+gmm() { git merge "$(git_master_or_main)" "$@" }
+grm() { git rebase "$(git_master_or_main)" "$@" }
 gfom(){
 	local master=$(git_master_or_main)
 	git fetch origin "${master:?}:${master:?}"
@@ -104,7 +107,8 @@ gumd(){
 		red_if_error printerror
 	fi
 }
-gcom(){ git switch "$(git_master_or_main)" }
+gcom(){ git switch "$(git_master_or_main)" "$@" }
+gcomd(){ git switch "$(git_master_or_main)" --detach "$@" }
 alias grp='git rev-parse'
 ## docker
 alias dk='docker'
@@ -130,6 +134,9 @@ alias kgpp='kubectl get pods -o wide --field-selector status.phase!=Succeeded'
 alias kgpip="kubectl get pods -o jsonpath='{.status.podIP}'"
 alias kgn='kubectl get nodes'
 alias kgnn='kubectl get nodes -o wide'
+alias kl='kubectl logs'
+alias klf='kubectl logs -f'
+alias klp='kubectl logs -p'
 alias kwd='kubectl diff --context'
 alias kp='kubectl apply --context'
 # nvidia
