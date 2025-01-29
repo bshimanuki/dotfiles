@@ -179,6 +179,17 @@ local server_opts = {
 		-- no proto
 		filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'hpp'},
 	},
+	pyright = {
+		settings = {
+			python = {
+				analysis = {
+					extraPaths = {
+						'~/.local/lib/python3.8/site-packages',
+					}
+				}
+			}
+		}
+	}
 }
 require('mason').setup({})
 require('mason-lspconfig').setup({
@@ -194,7 +205,7 @@ require('mason-lspconfig').setup({
 		'lua_ls',
 		-- 'pbls',
 		'pyright',
-		'ruff_lsp',
+		'ruff',
 		'rust_analyzer',
 		'ts_ls',
 		'yamlls',

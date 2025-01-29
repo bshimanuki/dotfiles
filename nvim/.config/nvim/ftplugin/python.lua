@@ -6,3 +6,5 @@ vim.g.python_indent = {
 	open_paren	= 'shiftwidth()',
 	nested_paren = 'shiftwidth()',
 }
+-- disable pyright diagnostics for unreachable code
+vim.api.nvim_set_hl(0, 'DiagnosticUnnecessary', { fg = 'none', bg = 'none' })
