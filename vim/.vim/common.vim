@@ -75,6 +75,7 @@ if PluginEnabled('vim-fugitive')
 	vnoremap <silent><leader>bf <Esc>:GBrowse!<CR>gv
 	nnoremap <silent><leader>bo :exec line('.') . 'GBrowse'<CR>
 	vnoremap <silent><leader>bo :GBrowse<CR>
+	nnoremap gb :silent Git blame -C<CR>
 endif
 
 if PluginEnabled('vim-latex-suite')
@@ -254,8 +255,6 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-nnoremap gb :bn<CR>
-nnoremap gB :bp<CR>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <M-b> <S-Left>
