@@ -44,7 +44,7 @@ local plugin_spec = {
 						node_incremental = '<TAB>',
 						node_decremental = '<S-TAB>',
 					},
-				}
+				},
 			})
 		end
 	},
