@@ -184,7 +184,7 @@ local server_opts = {
 			python = {
 				analysis = {
 					extraPaths = {
-						'~/.local/lib/python3.8/site-packages',
+						unpack(vim.fn.glob(vim.fn.expand('~/.local/lib/python*/site-packages'), false, true))
 					}
 				}
 			}
