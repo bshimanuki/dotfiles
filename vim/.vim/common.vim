@@ -40,10 +40,11 @@ if PluginEnabled('vim-easymotion')
 endif
 
 if PluginEnabled('fzf.vim')
+	let s:fzf_dir = '"${dir:-' . getcwd() . '}"'
 	let s:fzf_dir_ext = substitute(s:dir_ext, '|', ' -o -path \\*/.', 'g')
-	let s:fzf_find_cmd = 'find -L $dir \( -path \*/.' . s:fzf_dir_ext .  ' \) -prune -o -type f -printf "%P\n" 2> /dev/null'
-	let s:fzf_git_gitignore_cmd = 'git check-ignore -q ${dir:-' . getcwd() . '} 2> /dev/null'
-	let s:fzf_git_lsfiles_cmd = 'git ls-files $dir -oc --exclude-standard 2> /dev/null'
+	let s:fzf_find_cmd = '(find -L ' . s:fzf_dir . ' \( -path \*/.' . s:fzf_dir_ext .  ' \) -prune -o -type f | sed "s|^' . s:fzf_dir . '/||")'
+	let s:fzf_git_gitignore_cmd = 'git check-ignore -q ' . s:fzf_dir . ' 2> /dev/null'
+	let s:fzf_git_lsfiles_cmd = 'git ls-files ' . s:fzf_dir . ' -oc --exclude-standard 2> /dev/null'
 	let s:fzf_grep_cmd = '(grep -v -E "\.(' . s:file_ext . ')$" || [[ $? == 1 ]])'
 	let s:fzf_cmd = '(' . s:fzf_git_gitignore_cmd . ' ; [ $? -eq 1 ] && ' . s:fzf_git_lsfiles_cmd . ' || ' . s:fzf_find_cmd . ') | ' . s:fzf_grep_cmd
 	function! Fzfvimfiles()
