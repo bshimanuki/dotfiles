@@ -3,11 +3,6 @@ export fpath=("${ZDOTDIR:-$HOME}/.zfunc" "${fpath[@]}")
 # Don't recompile zcompdump
 alias compinit='compinit -C'
 
-# Local options
-if [[ -r "${ZDOTDIR:-$HOME}/local.zsh" ]]; then
-	source "${ZDOTDIR:-$HOME}/local.zsh"
-fi
-
 # Prezto
 if [[ -r "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 	source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
@@ -152,3 +147,8 @@ export NVM_DIR="$HOME/.nvm"
 
 # homebrew
 [ -f '/opt/homebrew/bin/brew' ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Local options
+if [[ -r "${ZDOTDIR:-$HOME}/local.zsh" ]]; then
+	source "${ZDOTDIR:-$HOME}/local.zsh"
+fi
