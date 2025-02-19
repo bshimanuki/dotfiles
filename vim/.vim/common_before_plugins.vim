@@ -8,6 +8,11 @@ if PluginEnabled('vim-localvimrc')
 	let g:localvimrc_persistence_file=g:vimpath.'/.localvimrc_persistent'
 endif
 
+if PluginEnabled('vim-polyglot')
+	let g:polyglot_disabled = ['sensible', 'autoindent']
+	let g:NERDDelimiterMap={} " workaround for broken caddyfile ftplugin
+endif
+
 if PluginEnabled('vim-slime')
 	let g:slime_target='tmux'
 	let g:slime_default_config={'socket_name': 'default', 'target_pane': '0'}

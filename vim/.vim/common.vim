@@ -19,6 +19,7 @@ if PluginEnabled('CamelCaseMotion')
 	call camelcasemotion#CreateMotionMappings(',')
 endif
 
+
 let s:exe_ext = 'exe|so|dll'
 let s:compiled_ext = 'd|o|pdf|py[cdo]'
 let s:img_ext = 'gif|jpg|png'
