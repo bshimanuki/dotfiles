@@ -95,6 +95,7 @@ fi
 HISTFILE=~/.zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
+SHELL_SESSIONS_DISABLE=1 # prevent mac from creating .zsh_sessions directory
 setopt hist_ignore_dups
 setopt interactive_comments
 

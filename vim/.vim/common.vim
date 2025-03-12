@@ -22,7 +22,7 @@ endif
 
 let s:exe_ext = 'exe|so|dll'
 let s:compiled_ext = 'd|o|pdf|py[cdo]'
-let s:img_ext = 'gif|jpg|png'
+let s:img_ext = 'gif|jpg|png|webp'
 let s:data_ext = 'npy|npz|onnx|pb|pkl|pt'
 let s:tex_ext = 'aux|bbl|bcf|blg|brf|fdb_latexmk|fls|idx|ilg|lof|lol|lot|pre|synctex\.gz|synctex\.gz\(busy\)|toc|x\.gnuplot' " exclude: log
 let s:file_ext = join([s:exe_ext, s:compiled_ext, s:img_ext, s:data_ext, s:tex_ext], '|')
