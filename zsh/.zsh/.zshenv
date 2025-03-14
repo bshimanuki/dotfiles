@@ -23,7 +23,7 @@ export CXXFLAGS="${CXXFLAGS} -std=c++1z"
 export CUDA_HOME=/usr/local/cuda
 export CUDA_PATH=${CUDA_HOME}
 export PATH=${PATH}:${CUDA_HOME}/bin
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${CUDA_HOME}/lib64:${CUDA_HOME}/extras/CUPTI/lib64:/usr/lib/nvidia-390
+# export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${CUDA_HOME}/lib64:${CUDA_HOME}/extras/CUPTI/lib64:/usr/lib/nvidia-390
 
 ## Java
 export ECLIPSE_HOME=/opt/eclipse
