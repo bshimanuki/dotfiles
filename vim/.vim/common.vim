@@ -249,6 +249,7 @@ command! W w
 command! Wq wq
 command! WQ wq
 command! -bang E e<bang>
+command! E1 e!
 "" Movement
 noremap <Up> gk
 noremap <Down> gj
