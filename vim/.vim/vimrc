@@ -16,6 +16,8 @@ function PluginEnabled(plugin)
 	return exists('g:plugs') && has_key(g:plugs, a:plugin) && !empty(glob(l:plugin_path.'/.git'))
 endfunction
 
+exec "source ".g:vimpath."/common_before_plugins.vim"
+
 " vim-plug
 if !filereadable(g:vimpath.'/autoload/plug.vim')
 	exec 'silent !wget --directory-prefix="'.g:vimpath.'/autoload/" '
@@ -116,5 +118,4 @@ nnoremap <leader>tc :NERDTreeClose<CR> <C-w><C-p> :TagbarClose<CR>
 autocmd QuickFixCmdPost [^l]* nested belowright cwindow
 autocmd QuickFixCmdPost    l* nested belowright lwindow
 
-exec "source ".g:vimpath."/common_before_plugins.vim"
 exec "source ".g:vimpath."/common.vim"

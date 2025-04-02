@@ -149,7 +149,8 @@ alias kr='DISPLAY= kubectl rollout restart deployment'
 alias kwd='DISPLAY= kubectl diff --context'
 alias kp='DISPLAY= kubectl apply --context'
 # nvidia
-alias smi='nvidia-smi'
+alias smi='nvidia-smi --query-gpu=index,utilization.gpu,memory.free,memory.used --format=csv | column -s, -t'
+alias smil='while ; do nvidia-smi --query-gpu=timestamp,index,utilization.gpu,memory.free,memory.used --format=csv | column -s, -t; sleep 1; done'
 ## ssh
 dessh(){ command ssh -G "$1" | awk '$1 == "hostname" { print $2 }' } # dealias
 alias issh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
