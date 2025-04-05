@@ -71,6 +71,7 @@ endif
 
 if PluginEnabled('vim-fugitive')
 	nnoremap <silent><leader>g :silent Ggrep! -w <cword><CR>:copen<CR>:redraw!<CR>
+	nnoremap <silent><leader><leader>g :silent execute 'Ggrep! -w <cword> -- ' . getcwd() <CR>:copen<CR>:redraw!<CR>
 	nnoremap <silent><leader>bb :exec line('.') . 'GBrowse!'<CR>
 	vnoremap <silent><leader>bb :GBrowse!<CR>
 	nnoremap <silent><leader>bf :GBrowse!<CR>
