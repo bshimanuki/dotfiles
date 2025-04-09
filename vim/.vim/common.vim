@@ -79,6 +79,7 @@ if PluginEnabled('vim-fugitive')
 	nnoremap <silent><leader>bo :exec line('.') . 'GBrowse'<CR>
 	vnoremap <silent><leader>bo :GBrowse<CR>
 	nnoremap gb :silent Git blame -C<CR>
+	nnoremap gh :silent Ghdiffsplit!<CR>
 endif
 
 if PluginEnabled('vim-latex-suite')
