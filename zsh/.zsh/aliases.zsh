@@ -13,12 +13,14 @@ alias sl='ls'
 setopt rm_star_silent
 alias mmv='noglob zmv -W'
 rg(){command rg -p "$@" | less -FRX}
+
 # tmux
 alias tpwd='[ -n "$TMUX" ] && tmux set-option default-command "cd \"$PWD\" && $SHELL -l"'
 alias tw='tmux new -A -s work'
 alias tp='tmux new -A -s puzzle'
 alias tcl='clear && tmux clear-history'
 alias te='export SSH_AUTH_SOCK="$(tmux show-env SSH_AUTH_SOCK | cut -sd= -f2)" && export DISPLAY="$(tmux show-env DISPLAY | cut -sd= -f2)"'
+
 ## vim
 v(){if [ $# -eq 0 ]; then vi -c "if exists(':Fzfvimfiles') | :Fzfvimfiles"; else vi "$@"; fi}
 alias vv='vi -X'
@@ -50,6 +52,7 @@ nv(){
 	nvim "$@"
 	)
 }
+
 ## git
 alias gt='git status'
 alias gtt='git status -uno'
@@ -110,6 +113,7 @@ gumd(){
 gcom(){ git switch "$(git_master_or_main)" "$@" }
 gcomd(){ git switch "$(git_master_or_main)" --detach "$@" }
 alias grp='git rev-parse'
+
 ## docker
 alias dk='docker'
 alias dc='docker compose'
@@ -124,14 +128,20 @@ if [ ! -x "$(command -v docker)" ] && [ -x "$(command -v podman)" ] ; then
 		alias docker-compose='podman-compose'
 	fi
 fi
+
 ## kubectl
 alias k='DISPLAY= kubectl'
 alias kc='DISPLAY= kubectl config get-contexts'
 alias kcc='DISPLAY= kubectl config use-context'
+alias kd='DISPLAY= kubectl describe'
 alias kdp='DISPLAY= kubectl describe pod'
 alias kdd='DISPLAY= kubectl describe deployment'
 alias kdn='DISPLAY= kubectl describe node'
 alias kds='DISPLAY= kubectl describe service'
+alias kdel='DISPLAY= kubectl delete'
+alias kdeld='DISPLAY= kubectl delete deployment'
+alias kdelp='DISPLAY= kubectl delete pod'
+alias kdels='DISPLAY= kubectl delete service'
 alias ke='DISPLAY= kubectl exec -it'
 alias kg='DISPLAY= kubectl get'
 alias kgd='DISPLAY= kubectl get deployment'
@@ -148,12 +158,15 @@ alias klp='DISPLAY= kubectl logs -p'
 alias kr='DISPLAY= kubectl rollout restart deployment'
 alias kwd='DISPLAY= kubectl diff --context'
 alias kp='DISPLAY= kubectl apply --context'
+
 # nvidia
 alias smi='nvidia-smi --query-gpu=index,utilization.gpu,memory.free,memory.used --format=csv | column -s, -t'
 alias smil='while ; do nvidia-smi --query-gpu=timestamp,index,utilization.gpu,memory.free,memory.used --format=csv | column -s, -t; sleep 1; done'
+
 ## ssh
 dessh(){ command ssh -G "$1" | awk '$1 == "hostname" { print $2 }' } # dealias
 alias issh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+
 ## gdb
 gcore(){
 	local core="${1:-core}"
