@@ -252,6 +252,9 @@ command! Wq wq
 command! WQ wq
 command! -bang E e<bang>
 command! E1 e!
+"" Environment
+command Te let $DISPLAY=system("tmux show-env DISPLAY | cut -sd= -f2")
+command TE Te
 "" Movement
 noremap <Up> gk
 noremap <Down> gj
