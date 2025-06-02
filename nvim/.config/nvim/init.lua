@@ -12,6 +12,9 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local arch = vim.fn.trim(vim.fn.system('arch'))
+local os_name = vim.loop.os_uname().sysname:lower()
+
 local plugin_spec = {
 	'folke/tokyonight.nvim',
 	'Lokaltog/vim-easymotion',
@@ -177,10 +180,10 @@ local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
 lsp_capabilities = vim.tbl_deep_extend('force', lsp_capabilities, require('cmp_nvim_lsp').default_capabilities())
 local server_opts = {
 	lua_ls = lsp_zero.nvim_lua_ls(),
-	clangd = {
+	clangd = vim.tbl_extend('force', {
 		-- no proto
 		filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'hpp'},
-	},
+	}, os_name == 'linux' and arch:match('arm') and { mason = false } or {}),
 	pyright = {
 		settings = {
 			python = {
@@ -195,7 +198,14 @@ local server_opts = {
 }
 require('mason').setup({})
 require('mason-lspconfig').setup({
-	ensure_installed = {
+	ensure_installed = vim.tbl_filter(function(name)
+		if os_name == 'linux' and arch:match('arm') then
+			if name == 'clangd' then
+				return false
+			end
+		end
+		return true
+	end, {
 		'bashls',
 		'clangd',
 		'cmake',
@@ -211,7 +221,7 @@ require('mason-lspconfig').setup({
 		'rust_analyzer',
 		'ts_ls',
 		'yamlls',
-	},
+	}),
 	handlers = {
 		function(server_name)
 			local opts = server_opts[server_name] or {}
