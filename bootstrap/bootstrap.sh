@@ -141,13 +141,14 @@ stow_clone() {
 		esac
 	done
 	shift $((OPTIND-1))
+	mkdir -p "$TARGET"
 	for file in $STOW_FILES; do
 		if $nop; then
-			echo ln -srt "$TARGET" "$file"
+			echo ln -s "$DOTFILES/$file" "$TARGET"
 		else
 			if ! [ -e "$TARGET/$(basename $file)" ]; then
 				mkdir -p "$TARGET"
-				ln -srt "$TARGET" "$file"
+				ln -s "$DOTFILES/$file" "$TARGET"
 			fi
 		fi
 	done
