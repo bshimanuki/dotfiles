@@ -52,8 +52,10 @@ if !exists('l:vim_plug_not_installed')
 	if has('unix') && !has('win32unix')
 		Plug 'junegunn/fzf', {'do': './install --bin'}
 		Plug 'junegunn/fzf.vim'
-		" last version before Vim 8.2.3995+ required (from Ubuntu 22.04)
-		Plug 'ycm-core/YouCompleteMe', {'commit': '7b83740'}
+		if has('python')
+			" last version before Vim 8.2.3995+ required (from Ubuntu 22.04)
+			Plug 'ycm-core/YouCompleteMe', {'commit': '7b83740'}
+		endif
 	else
 		Plug 'kien/ctrlp.vim'
 	endif
