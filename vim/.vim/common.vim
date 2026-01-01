@@ -40,6 +40,10 @@ if PluginEnabled('vim-easymotion')
 	noremap <Plug>(easymotion-prefix) <Nop>
 endif
 
+if PluginEnabled('vim-localvimrc')
+	let g:localvimrc_persistent = 1
+endif
+
 if PluginEnabled('fzf.vim')
 	let s:fzf_dir = '"${dir:-' . getcwd() . '}"'
 	let s:fzf_dir_ext = substitute(s:dir_ext, '|', ' -o -path \\*/.', 'g')
