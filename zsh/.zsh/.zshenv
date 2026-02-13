@@ -3,7 +3,7 @@ export fpath=("${ZDOTDIR:-$HOME}/.zfunc" "${fpath[@]}")
 export skip_global_compinit=1
 
 # Custom Environmental Variables
-export PATH=${PATH}:~/bin
+export PATH=${PATH}:~/bin:~/.local/bin
 export EDITOR=vim
 
 # fzf
@@ -17,7 +17,7 @@ export ANDROID_HOME=/opt/android-studio/sdk
 
 ## C++
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
-export CXXFLAGS="${CXXFLAGS} -std=c++1z"
+export CXXFLAGS="${CXXFLAGS} -std=c++20"
 
 ## Cuda
 export CUDA_HOME=/usr/local/cuda
