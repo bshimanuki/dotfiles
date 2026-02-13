@@ -149,6 +149,12 @@ export NVM_DIR="$HOME/.nvm"
 # homebrew
 [ -f '/opt/homebrew/bin/brew' ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
+# VS Code
+if [ "$VSCODE_INJECTION" -eq 1 ]; then
+	[ -f "$HISTFILE" ] && fc -RI "$HISTFILE"
+	HISTFILE=~/.vscode.zsh_history
+fi
+
 # Local options
 if [[ -r "${ZDOTDIR:-$HOME}/local.zsh" ]]; then
 	source "${ZDOTDIR:-$HOME}/local.zsh"
