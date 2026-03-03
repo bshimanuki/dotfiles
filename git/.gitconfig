@@ -13,6 +13,7 @@
 	conflictStyle = diff3
 [advice]
 	detachedHead = false
+	skippedCherryPicks = false
 [push]
 	autoSetupRemote = false
 [diff]
