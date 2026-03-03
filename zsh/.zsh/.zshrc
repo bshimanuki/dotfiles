@@ -49,8 +49,8 @@ function() {
 }
 
 # Globbing
-setopt glob globdots extendedglob autocd
-unsetopt caseglob
+setopt glob globdots autocd
+unsetopt caseglob extendedglob
 
 # Prompt
 autoload promptinit
